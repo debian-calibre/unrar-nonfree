@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ]; then
+	update-alternatives --install /usr/bin/unrar unrar /usr/bin/unrar-nonfree 40 \
+		--slave /usr/share/man/man1/unrar.1.gz unrar.1.gz \
+		/usr/share/man/man1/unrar-nonfree.1.gz
+fi
+
+#DEBHELPER#

@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+# Made with the aid of dh_make, by Petr Cech.
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# Some lines taken from debmake, by Christoph Lameter.
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp: 
+	dh_testdir
+	make -f makefile.unix
+
+clean:
+	dh_testdir
+	dh_testroot
+
+	make -f makefile.unix clean
+	rm -rf unrar
+	dh_clean
+
+# Build architecture-independent files here.
+binary-indep: build
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	install -o root -g root -s -m 0755 unrar debian/unrar/usr/bin/unrar-nonfree
+
+	dh_installdocs
+	dh_installman debian/unrar-nonfree.1
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

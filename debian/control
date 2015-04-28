@@ -1,0 +1,16 @@
+Source: unrar-nonfree
+Section: non-free/utils
+Priority: optional
+Maintainer: Martin Meredith <mez@debian.org>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.9.2
+XS-Autobuild: yes
+
+Package: unrar
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: rar (<= 2.60-1)
+Homepage: http://www.rarlabs.com/
+Description: Unarchiver for .rar files (non-free version)
+ Unrar can extract files from .rar archives. If you want to create .rar
+ archives, install package rar.
