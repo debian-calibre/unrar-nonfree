@@ -1,0 +1,15 @@
+--- a/makefile
++++ b/makefile
+@@ -3,11 +3,9 @@
+ 
+ # Linux using GCC
+ CXX=g++
+-CXXFLAGS=-O2
+-LIBFLAGS=-fPIC
+ DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+ STRIP=strip
+-LDFLAGS=-pthread
++LDFLAGS+=-pthread
+ DESTDIR=/usr
+ 
+ # Linux using LCC

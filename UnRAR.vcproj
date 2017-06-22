@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="UnRAR"
 	ProjectGUID="{95CC809B-03FC-4EDB-BB20-FD07A698C05F}"
 	RootNamespace="UnRAR"
@@ -369,6 +369,10 @@
 				>
 			</File>
 			<File
+				RelativePath="blake2s.cpp"
+				>
+			</File>
+			<File
 				RelativePath="cmddata.cpp"
 				>
 			</File>
@@ -461,6 +465,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="hash.cpp"
+				>
+			</File>
+			<File
+				RelativePath="headers.cpp"
+				>
+			</File>
+			<File
 				RelativePath="isnt.cpp"
 				>
 			</File>
@@ -478,6 +490,10 @@
 			</File>
 			<File
 				RelativePath="pathfn.cpp"
+				>
+			</File>
+			<File
+				RelativePath="qopen.cpp"
 				>
 			</File>
 			<File
@@ -549,7 +565,7 @@
 				>
 			</File>
 			<File
-				RelativePath="savepos.cpp"
+				RelativePath="rs16.cpp"
 				>
 			</File>
 			<File
@@ -557,7 +573,15 @@
 				>
 			</File>
 			<File
+				RelativePath="secpassword.cpp"
+				>
+			</File>
+			<File
 				RelativePath="sha1.cpp"
+				>
+			</File>
+			<File
+				RelativePath="sha256.cpp"
 				>
 			</File>
 			<File
@@ -577,11 +601,15 @@
 				>
 			</File>
 			<File
+				RelativePath="threadpool.cpp"
+				>
+			</File>
+			<File
 				RelativePath="timefn.cpp"
 				>
 			</File>
 			<File
-				RelativePath="ulinks.cpp"
+				RelativePath="ui.cpp"
 				>
 			</File>
 			<File
@@ -602,10 +630,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="rar.hpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

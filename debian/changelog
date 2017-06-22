@@ -1,15 +1,35 @@
-unrar-nonfree (1:4.1.4-1+deb7u2) wheezy-security; urgency=low
+unrar-nonfree (1:5.2.7-0.1+deb8u1) jessie; urgency=medium
 
-  * Backport fix for CVE-2012-6706 VMSF_DELTA arbitrary memory write
+  * Add bound checks for VMSF_DELTA, VMSF_RGB and VMSF_AUDIO paramters.
+    - Backported from 5.5.5
+    - CVE-2012-6706
+    - Closes: #865461
 
- -- Damian Lukowski <damian.lukowski@credativ.de>  Mon, 26 Jun 2017 11:52:00 +0000
+ -- Felix Geyer <fgeyer@debian.org>  Thu, 22 Jun 2017 20:47:18 +0200
 
-unrar-nonfree (1:4.1.4-1+deb7u1) wheezy; urgency=medium
+unrar-nonfree (1:5.2.7-0.1) unstable; urgency=high
 
-  * Fix a symlink directory traversal vulnerability (Closes: #774171)
-    - Add debian/patches/fix-dir-traversal
+  * Non-maintainer upload.
+  * New upstream release
+    - Fixes a symlink directory traversal vulnerability (Closes: #774171)
 
- -- Felix Geyer <fgeyer@debian.org>  Tue, 28 Apr 2015 21:38:08 +0200
+ -- Felix Geyer <fgeyer@debian.org>  Fri, 27 Mar 2015 22:44:26 +0100
+
+unrar-nonfree (1:5.2.5-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Martin Meredith <mez@debian.org>  Tue, 03 Feb 2015 12:58:01 +0000
+
+unrar-nonfree (1:5.0.10-1) unstable; urgency=low
+
+  * New upstream release
+  * Added hardening support (Closes: #694611)
+  * Bumped Standards version
+  * Updated to debhelper 9
+  * Moved homepage in control file to Source Section
+
+ -- Martin Meredith <mez@debian.org>  Thu, 15 Aug 2013 17:15:19 +0100
 
 unrar-nonfree (1:4.1.4-1) unstable; urgency=low
 
@@ -151,7 +171,7 @@ unrar-nonfree (1:3.5.4-1) unstable; urgency=low
   * New Maintainer (Closes: 350833)
   * Updated dh_compat level
 
- -- Martin Meredith <mez@ubuntu.com>  Wed, 1 Feb 2006 11:20:57 +0000 
+ -- Martin Meredith <mez@ubuntu.com>  Wed, 1 Feb 2006 11:20:57 +0000
 
 unrar-nonfree (1:3.6.8-0ubuntu2) feisty; urgency=low
 
@@ -192,7 +212,7 @@ unrar-nonfree (1:3.5.2-0.1) unstable; urgency=medium
 
 unrar-nonfree (3.4.3-1) unstable; urgency=low
 
-  * New upstream release 
+  * New upstream release
   * Applied Ulf Harnhammar's patch to solve overflows when $HOME was too
     large (closes: #280263).
 
@@ -204,7 +224,7 @@ unrar-nonfree (3.4.2-1) unstable; urgency=low
   * Updated debian/copyright
   * Removed commented / obsolete lines in debian/rules
   * Modified makefile.unix to remove the unrar binary on clean
-  * Updated package to properly use debhelper v4 
+  * Updated package to properly use debhelper v4
 
  -- Chris Anderson <chris@nullcode.org>  Thu, 26 Aug 2004 01:19:48 +0000
 
@@ -214,7 +234,7 @@ unrar-nonfree (3.3.6-2) unstable; urgency=low
   * Removed g++ build dependency.
   * Changed makefile's CXX to g++ from g++-3.3 (closes: #239188).
   * Updated description to reflect new name.
-  * Removed unneeded my-end.h from debian/ and debian/rules. 
+  * Removed unneeded my-end.h from debian/ and debian/rules.
 
  -- Chris Anderson <chris@nullcode.org>  Fri,  2 Jul 2004 01:53:47 +0000
 

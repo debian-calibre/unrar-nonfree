@@ -1,25 +1,24 @@
 #!/usr/bin/make -f
-# Made with the aid of dh_make, by Petr Cech.
-# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
-# Some lines taken from debmake, by Christoph Lameter.
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
 build: build-arch build-indep
 build-arch: build-stamp
 build-indep: build-stamp
-build-stamp: 
+build-stamp:
 	dh_testdir
-	make -f makefile.unix
+	make -f makefile
 
 clean:
 	dh_testdir
 	dh_testroot
 
-	make -f makefile.unix clean
+	make -f makefile clean
 	rm -rf unrar
 	dh_clean
 
-# Build architecture-independent files here.
-binary-indep: build
+binary-indep:
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
