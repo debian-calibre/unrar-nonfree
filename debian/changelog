@@ -1,3 +1,9 @@
+unrar-nonfree (1:4.1.4-1+deb7u2) wheezy-security; urgency=low
+
+  * Backport fix for CVE-2012-6706 VMSF_DELTA arbitrary memory write
+
+ -- Damian Lukowski <damian.lukowski@credativ.de>  Mon, 26 Jun 2017 11:52:00 +0000
+
 unrar-nonfree (1:4.1.4-1+deb7u1) wheezy; urgency=medium
 
   * Fix a symlink directory traversal vulnerability (Closes: #774171)
