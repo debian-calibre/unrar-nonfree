@@ -1,19 +1,17 @@
-unrar-nonfree (1:5.2.7-0.1+deb8u1) jessie; urgency=medium
+unrar-nonfree (1:5.3.2-1+deb9u1) stretch; urgency=medium
 
   * Add bound checks for VMSF_DELTA, VMSF_RGB and VMSF_AUDIO paramters.
     - Backported from 5.5.5
     - CVE-2012-6706
     - Closes: #865461
 
- -- Felix Geyer <fgeyer@debian.org>  Thu, 22 Jun 2017 20:47:18 +0200
+ -- Felix Geyer <fgeyer@debian.org>  Wed, 28 Jun 2017 00:10:20 +0200
 
-unrar-nonfree (1:5.2.7-0.1) unstable; urgency=high
+unrar-nonfree (1:5.3.2-1) unstable; urgency=medium
 
-  * Non-maintainer upload.
-  * New upstream release
-    - Fixes a symlink directory traversal vulnerability (Closes: #774171)
+  * New upstream release (Closes: #759586)
 
- -- Felix Geyer <fgeyer@debian.org>  Fri, 27 Mar 2015 22:44:26 +0100
+ -- Martin Meredith <mez@debian.org>  Mon, 10 Aug 2015 13:49:14 +0100
 
 unrar-nonfree (1:5.2.5-1) unstable; urgency=medium
 
