@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Martin Meredith <mez@debian.org>
 Homepage: http://www.rarlabs.com/
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~)
-Standards-Version: 3.9.6.1
+Standards-Version: 4.0.1
 XS-Autobuild: yes
 
 Package: unrar

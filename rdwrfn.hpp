@@ -4,6 +4,10 @@
 class CmdAdd;
 class Unpack;
 
+#if 0
+// We use external i/o calls for Benchmark command.
+#define COMPRDATAIO_EXTIO
+#endif
 
 class ComprDataIO
 {
@@ -38,8 +42,8 @@ class ComprDataIO
     int64 *SubHeadPos;
 
 #ifndef RAR_NOCRYPT
-    CryptData Crypt;
-    CryptData Decrypt;
+    CryptData *Crypt;
+    CryptData *Decrypt;
 #endif
 
 
@@ -49,6 +53,7 @@ class ComprDataIO
 
   public:
     ComprDataIO();
+    ~ComprDataIO();
     void Init();
     int UnpRead(byte *Addr,size_t Count);
     void UnpWrite(byte *Addr,size_t Count);

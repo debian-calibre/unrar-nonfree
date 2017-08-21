@@ -135,23 +135,29 @@ void Unpack::Init(size_t WinSize,bool Solid)
 }
 
 
-void Unpack::DoUnpack(int Method,bool Solid)
+void Unpack::DoUnpack(uint Method,bool Solid)
 {
+  // Methods <50 will crash in Fragmented mode when accessing NULL Window.
+  // They cannot be called in such mode now, but we check it below anyway
+  // just for extra safety.
   switch(Method)
   {
 #ifndef SFX_MODULE
     case 15: // rar 1.5 compression
-      Unpack15(Solid);
+      if (!Fragmented)
+        Unpack15(Solid);
       break;
     case 20: // rar 2.x compression
     case 26: // files larger than 2GB
-      Unpack20(Solid);
+      if (!Fragmented)
+        Unpack20(Solid);
       break;
 #endif
     case 29: // rar 3.x compression
-      Unpack29(Solid);
+      if (!Fragmented)
+        Unpack29(Solid);
       break;
-    case 0: // RAR 5.0 compression algorithm 0.
+    case 50: // RAR 5.0 compression algorithm.
 #ifdef RAR_SMP
       if (MaxUserThreads>1)
       {
@@ -200,6 +206,7 @@ void Unpack::UnpInitData(bool Solid)
   UnpInitData20(Solid);
 #endif
   UnpInitData30(Solid);
+  UnpInitData50(Solid);
 }
 
 
@@ -253,7 +260,7 @@ void Unpack::MakeDecodeTables(byte *LengthTable,DecodeTable *Dec,uint Size)
 
   // Prepare the copy of DecodePos. We'll modify this copy below,
   // so we cannot use the original DecodePos.
-  uint CopyDecodePos[16];
+  uint CopyDecodePos[ASIZE(Dec->DecodePos)];
   memcpy(CopyDecodePos,Dec->DecodePos,sizeof(CopyDecodePos));
 
   // For every bit length in the bit length table and so for every item
@@ -313,7 +320,7 @@ void Unpack::MakeDecodeTables(byte *LengthTable,DecodeTable *Dec,uint Size)
   
     // Find the upper limit for current bit field and adjust the bit length
     // accordingly if necessary.
-    while (BitField>=Dec->DecodeLen[CurBitLength] && CurBitLength<ASIZE(Dec->DecodeLen))
+    while (CurBitLength<ASIZE(Dec->DecodeLen) && BitField>=Dec->DecodeLen[CurBitLength])
       CurBitLength++;
 
     // Translation of right aligned bit string to bit length.
@@ -331,14 +338,17 @@ void Unpack::MakeDecodeTables(byte *LengthTable,DecodeTable *Dec,uint Size)
     // Now we can calculate the position in the code list. It is the sum
     // of first position for current bit length and right aligned distance
     // between our bit field and start code for current bit length.
-    uint Pos=Dec->DecodePos[CurBitLength]+Dist;
-
-    if (Pos<Size) // Safety check for damaged archives.
+    uint Pos;
+    if (CurBitLength<ASIZE(Dec->DecodePos) &&
+        (Pos=Dec->DecodePos[CurBitLength]+Dist)<Size)
     {
       // Define the code to alphabet number translation.
       Dec->QuickNum[Code]=Dec->DecodeNum[Pos];
     }
     else
+    {
+      // Can be here for length table filled with zeroes only (empty).
       Dec->QuickNum[Code]=0;
+    }
   }
 }
