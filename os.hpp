@@ -12,139 +12,97 @@
 #define SILENT
 #endif
 
-#if defined(_WIN_ALL) || defined(_EMX)
-#define ENABLE_BAD_ALLOC
-#endif
+#include <new>
 
 
 #if defined(_WIN_ALL) || defined(_EMX)
 
 #define LITTLE_ENDIAN
-#define NM  1024
+#define NM  2048
 
 #ifdef _WIN_ALL
 
-  #define STRICT
-  #define UNICODE
-  #undef WINVER
-  #undef _WIN32_WINNT
-  #define WINVER 0x0500
-  #define _WIN32_WINNT 0x0500
+#define STRICT
+#define UNICODE
+#undef WINVER
+#undef _WIN32_WINNT
+#define WINVER 0x0501
+#define _WIN32_WINNT 0x0501
 
+#if !defined(ZIPSFX) && !defined(SHELL_EXT) && !defined(SETUP)
+#define RAR_SMP
+#endif
 
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
 #include <prsht.h>
 #include <shlwapi.h>
-
-#ifndef _WIN_CE
-  #include <shellapi.h>
-  #include <shlobj.h>
-  #include <winioctl.h>
-
-
-#endif // _WIN_CE
+#include <shellapi.h>
+#include <shlobj.h>
+#include <winioctl.h>
+#include <wincrypt.h>
+#include <wchar.h>
+#include <wctype.h>
 
 
 #endif // _WIN_ALL
 
-#ifndef _WIN_CE
-  #include <sys/types.h>
-  #include <sys/stat.h>
-  #include <dos.h>
-#endif // _WIN_CE
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dos.h>
 
-#if !defined(_EMX) && !defined(_MSC_VER) && !defined(_WIN_CE)
+#if !defined(_EMX) && !defined(_MSC_VER)
   #include <dir.h>
 #endif
 #ifdef _MSC_VER
   #if _MSC_VER<1500
     #define for if (0) ; else for
   #endif
-  #ifndef _WIN_CE
-    #include <direct.h>
-  #endif
+  #include <direct.h>
+  #include <intrin.h>
+
+  #define USE_SSE
+  #define SSE_ALIGNMENT 16
 #else
   #include <dirent.h>
 #endif // _MSC_VER
-
-#ifndef _WIN_CE
-  #include <share.h>
-#endif // _WIN_CE
-
-#if defined(ENABLE_BAD_ALLOC) && !defined(_WIN_CE)
-  #include <new.h>
-#endif
-
-#ifdef _EMX
-  #include <unistd.h>
-  #include <pwd.h>
-  #include <grp.h>
-  #include <errno.h>
-  #ifdef _DJGPP
-    #include <utime.h>
-  #else
-    #include <os2.h>
-    #include <sys/utime.h>
-    #include <emx/syscalls.h>
-  #endif
-#else
-  #if defined(_MSC_VER) || defined(__MINGW32__)
-      #include <exception>
-  #else
-    #include <except.h>
-  #endif
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
-#ifndef _WIN_CE
-  #include <fcntl.h>
-  #include <dos.h>
-  #include <io.h>
-  #include <time.h>
-  #include <signal.h>
-#endif
+#include <fcntl.h>
+#include <dos.h>
+#include <io.h>
+#include <time.h>
+#include <signal.h>
 
-/*
-#ifdef _WIN_ALL
-#pragma hdrstop
-#endif // _WIN_ALL
-*/
+
+#define SAVE_LINKS
 
 #define ENABLE_ACCESS
 
-#define DefConfigName  "rar.ini"
-#define DefLogName     "rar.log"
+#define DefConfigName  L"rar.ini"
+#define DefLogName     L"rar.log"
 
 
-#define PATHDIVIDER  "\\"
-#define PATHDIVIDERW L"\\"
+#define SPATHDIVIDER L"\\"
 #define CPATHDIVIDER '\\'
-#define MASKALL      "*"
-#define MASKALLW     L"*"
+#define MASKALL      L"*"
 
 #define READBINARY   "rb"
 #define READTEXT     "rt"
 #define UPDATEBINARY "r+b"
 #define CREATEBINARY "w+b"
+#define WRITEBINARY  "wb"
 #define APPENDTEXT   "at"
 
 #if defined(_WIN_ALL)
   #ifdef _MSC_VER
     #define _stdfunction __cdecl
-
-    #ifdef SFX_MODULE
-      // We want to keep SFX module small, so let compiler to decide.
-      #define _forceinline inline
-    #else
-      #define _forceinline __forceinline
-    #endif
-
+    #define _forceinline __forceinline
   #else
     #define _stdfunction _USERENTRY
     #define _forceinline inline
@@ -158,12 +116,7 @@
 
 #ifdef _UNIX
 
-#define  NM  1024
-
-#ifdef _BEOS
-#include <be/kernel/fs_info.h>
-#include <be/kernel/fs_attr.h>
-#endif
+#define  NM  2048
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -172,14 +125,23 @@
 #if defined(__QNXNTO__)
   #include <sys/param.h>
 #endif
+#if defined(RAR_SMP) && defined(__APPLE__)
+  #include <sys/sysctl.h>
+#endif
+#ifndef SFX_MODULE
+  #ifdef _ANDROID
+    #include <sys/vfs.h>
+    #define statvfs statfs
+  #else
+    #include <sys/statvfs.h>
+  #endif
+#endif
 #if defined(__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined(__APPLE__)
-  #include <sys/param.h>
-  #include <sys/mount.h>
-#else
 #endif
 #include <pwd.h>
 #include <grp.h>
 #include <wchar.h>
+#include <wctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -193,26 +155,31 @@
 #include <utime.h>
 #include <locale.h>
 
+
 #ifdef  S_IFLNK
 #define SAVE_LINKS
 #endif
 
+#if defined(__linux) && !defined (_ANDROID) || defined(__FreeBSD__)
+#include <sys/time.h>
+#define USE_LUTIMES
+#endif
+
 #define ENABLE_ACCESS
 
-#define DefConfigName  ".rarrc"
-#define DefLogName     ".rarlog"
+#define DefConfigName  L".rarrc"
+#define DefLogName     L".rarlog"
 
 
-#define PATHDIVIDER  "/"
-#define PATHDIVIDERW L"/"
+#define SPATHDIVIDER L"/"
 #define CPATHDIVIDER '/'
-#define MASKALL      "*"
-#define MASKALLW     L"*"
+#define MASKALL      L"*"
 
 #define READBINARY   "r"
 #define READTEXT     "r"
 #define UPDATEBINARY "r+"
 #define CREATEBINARY "w+"
+#define WRITEBINARY  "w"
 #define APPENDTEXT   "a"
 
 #define _stdfunction 
@@ -237,12 +204,24 @@
 
 #endif
 
-  typedef const char* MSGID;
+  typedef const wchar* MSGID;
+
+#ifndef SSE_ALIGNMENT // No SSE use and no special data alignment is required.
+  #define SSE_ALIGNMENT 1
+#endif
 
 #define safebuf static
 
+// Solaris defines _LITTLE_ENDIAN or _BIG_ENDIAN.
+#if defined(_LITTLE_ENDIAN) && !defined(LITTLE_ENDIAN)
+  #define LITTLE_ENDIAN
+#endif
+#if defined(_BIG_ENDIAN) && !defined(BIG_ENDIAN)
+  #define BIG_ENDIAN
+#endif
+
 #if !defined(LITTLE_ENDIAN) && !defined(BIG_ENDIAN)
-  #if defined(__i386) || defined(i386) || defined(__i386__)
+  #if defined(__i386) || defined(i386) || defined(__i386__) || defined(__x86_64)
     #define LITTLE_ENDIAN
   #elif defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
     #define LITTLE_ENDIAN
@@ -263,15 +242,9 @@
   #endif
 #endif
 
-#if !defined(BIG_ENDIAN) && !defined(_WIN_CE) && defined(_WIN_ALL)
-/* allow not aligned integer access, increases speed in some operations */
-#define ALLOW_NOT_ALIGNED_INT
-#endif
-
-#if defined(__sparc) || defined(sparc) || defined(__sparcv9)
-/* prohibit not aligned access to data structures in text comression
-   algorithm, increases memory requirements */
-#define STRICT_ALIGNMENT_REQUIRED
+#if !defined(BIG_ENDIAN) && defined(_WIN_ALL) || defined(__i386__) || defined(__x86_64__)
+// Allow not aligned integer access, increases speed in some operations.
+#define ALLOW_MISALIGNED
 #endif
 
 #endif // _RAR_OS_
