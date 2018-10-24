@@ -1,16 +1,30 @@
---- a/makefile
-+++ b/makefile
-@@ -3,12 +3,10 @@
+---
+ makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+--- unrar.orig/makefile
++++ unrar/makefile
+@@ -3,12 +3,12 @@
+ 
  # Linux using GCC
  CXX=c++
--CXXFLAGS=-O2
--LIBFLAGS=-fPIC
+-CXXFLAGS=-O2 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
++CXXFLAGS=-Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
+ LIBFLAGS=-fPIC
  DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
  STRIP=strip
  AR=ar
 -LDFLAGS=-pthread
 +LDFLAGS+=-pthread
  DESTDIR=/usr
-
+ 
  # Linux using LCC
+@@ -156,7 +156,7 @@ lib:	CXXFLAGS+=$(LIBFLAGS)
+ lib:	clean $(OBJECTS) $(LIB_OBJ)
+ 	@rm -f libunrar.so
+ 	@rm -f libunrar.a
+-	$(LINK) -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
++	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
+ 	$(AR) rcs libunrar.a $(OBJECTS) $(LIB_OBJ)
+ 
+ install-unrar:

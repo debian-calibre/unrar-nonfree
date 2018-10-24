@@ -1,3 +1,12 @@
+unrar-nonfree (1:5.6.6-1) unstable; urgency=medium
+
+  * add myself to uploaders with Martin's consent, 
+    terminating the salvage process (Closes: #909795)
+  * add libunrar5 and libunrar-dev packages
+  * bump standards version, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Wed, 24 Oct 2018 11:00:16 +0900
+
 unrar-nonfree (1:5.5.8-1) unstable; urgency=high
 
   * New upstream release
