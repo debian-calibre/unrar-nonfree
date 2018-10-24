@@ -43,7 +43,7 @@ static const wchar *AllocCmdParam(const wchar *CmdLine,wchar **Par)
 }
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ParseCommandLine(bool Preprocess,int argc, char *argv[])
 {
   *Command=0;
@@ -85,7 +85,7 @@ void CommandData::ParseCommandLine(bool Preprocess,int argc, char *argv[])
 #endif
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ParseArg(wchar *Arg)
 {
   if (IsSwitch(*Arg) && !NoMoreSwitches)
@@ -99,14 +99,12 @@ void CommandData::ParseArg(wchar *Arg)
       wcsncpy(Command,Arg,ASIZE(Command));
 
 
-#ifndef GUI
       *Command=toupperw(*Command);
       // 'I' and 'S' commands can contain case sensitive strings after
       // the first character, so we must not modify their case.
       // 'S' can contain SFX name, which case is important in Unix.
       if (*Command!='I' && *Command!='S')
         wcsupper(Command);
-#endif
     }
     else
       if (*ArcName==0)
@@ -137,7 +135,7 @@ void CommandData::ParseArg(wchar *Arg)
 
               RAR_CHARSET Charset=FilelistCharset;
 
-#if defined(_WIN_ALL) && !defined(GUI)
+#if defined(_WIN_ALL)
               // for compatibility reasons we use OEM encoding
               // in Win32 console version by default
 
@@ -177,7 +175,7 @@ void CommandData::ParseDone()
 }
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ParseEnvVar()
 {
   char *EnvStr=getenv("RAR");
@@ -192,7 +190,7 @@ void CommandData::ParseEnvVar()
 
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 // Preprocess those parameters, which must be processed before the rest of
 // command line. Return 'false' to stop further processing.
 void CommandData::PreprocessArg(const wchar *Arg)
@@ -204,7 +202,6 @@ void CommandData::PreprocessArg(const wchar *Arg)
       NoMoreSwitches=true;
     if (wcsicomp(Arg,L"cfg-")==0)
       ConfigDisabled=true;
-#ifndef GUI
     if (wcsnicomp(Arg,L"ilog",4)==0)
     {
       // Ensure that correct log file name is already set
@@ -212,15 +209,12 @@ void CommandData::PreprocessArg(const wchar *Arg)
       ProcessSwitch(Arg);
       InitLogOptions(LogName,ErrlogCharset);
     }
-#endif
     if (wcsnicomp(Arg,L"sc",2)==0)
     {
       // Process -sc before reading any file lists.
       ProcessSwitch(Arg);
-#ifndef GUI
       if (*LogName!=0)
         InitLogOptions(LogName,ErrlogCharset);
-#endif
     }
   }
   else
@@ -230,7 +224,7 @@ void CommandData::PreprocessArg(const wchar *Arg)
 #endif
 
 
-#if !defined(GUI) && !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ReadConfig()
 {
   StringList List;
@@ -265,7 +259,7 @@ void CommandData::ReadConfig()
 #endif
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ProcessSwitchesString(const wchar *Str)
 {
   wchar *Par;
@@ -279,7 +273,7 @@ void CommandData::ProcessSwitchesString(const wchar *Str)
 #endif
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::ProcessSwitch(const wchar *Switch)
 {
 
@@ -467,6 +461,11 @@ void CommandData::ProcessSwitch(const wchar *Switch)
         Shutdown=true;
         break;
       }
+      if (wcsicomp(Switch+1,L"VER")==0)
+      {
+        PrintVersion=true;
+        break;
+      }
       break;
     case 'K':
       switch(toupperw(Switch[1]))
@@ -578,7 +577,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
         {
           RAR_CHARSET Charset=FilelistCharset;
 
-#if defined(_WIN_ALL) && !defined(GUI)
+#if defined(_WIN_ALL)
           // for compatibility reasons we use OEM encoding
           // in Win32 console version by default
 
@@ -619,6 +618,12 @@ void CommandData::ProcessSwitch(const wchar *Switch)
           SaveSymLinks=true;
           if (toupperw(Switch[2])=='A')
             AbsoluteLinks=true;
+          break;
+#endif
+#ifdef _WIN_ALL
+        case 'N':
+          if (toupperw(Switch[2])=='I')
+            AllowIncompatNames=true;
           break;
 #endif
         case 'R':
@@ -749,6 +754,9 @@ void CommandData::ProcessSwitch(const wchar *Switch)
                 case 'U':
                   rch=RCH_UNICODE;
                   break;
+                case 'F':
+                  rch=RCH_UTF8;
+                  break;
                 default :
                   BadSwitch(Switch);
                   AlreadyBad=true;
@@ -756,7 +764,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
               };
               if (!AlreadyBad)
                 if (Switch[3]==0)
-                  CommentCharset=FilelistCharset=ErrlogCharset=rch;
+                  CommentCharset=FilelistCharset=ErrlogCharset=RedirectCharset=rch;
                 else
                   for (uint I=3;Switch[I]!=0 && !AlreadyBad;I++)
                     switch(toupperw(Switch[I]))
@@ -807,6 +815,8 @@ void CommandData::ProcessSwitch(const wchar *Switch)
             bool CommonMode=Switch[2]>='0' && Switch[2]<='4';
             if (CommonMode)
               Mode=(EXTTIME_MODE)(Switch[2]-'0');
+            if (Mode==EXTTIME_HIGH1 || Mode==EXTTIME_HIGH2) // '2' and '3' not supported anymore.
+              Mode=EXTTIME_HIGH3;
             if (Switch[2]=='-')
               Mode=EXTTIME_NONE;
             if (CommonMode || Switch[2]=='-' || Switch[2]=='+' || Switch[2]==0)
@@ -815,6 +825,8 @@ void CommandData::ProcessSwitch(const wchar *Switch)
             {
               if (Switch[3]>='0' && Switch[3]<='4')
                 Mode=(EXTTIME_MODE)(Switch[3]-'0');
+              if (Mode==EXTTIME_HIGH1 || Mode==EXTTIME_HIGH2) // '2' and '3' not supported anymore.
+                Mode=EXTTIME_HIGH3;
               if (Switch[3]=='-')
                 Mode=EXTTIME_NONE;
               switch(toupperw(Switch[2]))
@@ -877,19 +889,15 @@ void CommandData::ProcessSwitch(const wchar *Switch)
     case 'Z':
       if (Switch[1]==0)
       {
-#ifndef GUI // stdin is not supported by WinRAR.
         // If comment file is not specified, we read data from stdin.
         wcscpy(CommentFile,L"stdin");
-#endif
       }
       else
         wcsncpyz(CommentFile,Switch+1,ASIZE(CommentFile));
       break;
-#ifndef GUI
     case '?' :
       OutHelp(RARX_SUCCESS);
       break;
-#endif
     default :
       BadSwitch(Switch);
       break;
@@ -898,7 +906,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
 #endif
 
 
-#if !defined(SFX_MODULE) && !defined(_ANDROID)
+#if !defined(SFX_MODULE)
 void CommandData::BadSwitch(const wchar *Switch)
 {
   mprintf(St(MUnknownOption),Switch);
@@ -907,7 +915,6 @@ void CommandData::BadSwitch(const wchar *Switch)
 #endif
 
 
-#ifndef GUI
 void CommandData::OutTitle()
 {
   if (BareOutput || DisableCopyright)
@@ -920,20 +927,30 @@ void CommandData::OutTitle()
   if (TitleShown)
     return;
   TitleShown=true;
-  wchar Version[50];
-  int Beta=RARVER_BETA;
-  if (Beta!=0)
+
+  wchar Version[80];
+  if (RARVER_BETA!=0)
     swprintf(Version,ASIZE(Version),L"%d.%02d %ls %d",RARVER_MAJOR,RARVER_MINOR,St(MBeta),RARVER_BETA);
   else
     swprintf(Version,ASIZE(Version),L"%d.%02d",RARVER_MAJOR,RARVER_MINOR);
-#ifdef UNRAR
-  mprintf(St(MUCopyright),Version,RARVER_YEAR);
-#else
+#if defined(_WIN_32) || defined(_WIN_64)
+  wcsncatz(Version,L" ",ASIZE(Version));
 #endif
+#ifdef _WIN_32
+  wcsncatz(Version,St(Mx86),ASIZE(Version));
+#endif
+#ifdef _WIN_64
+  wcsncatz(Version,St(Mx64),ASIZE(Version));
+#endif
+  if (PrintVersion)
+  {
+    mprintf(L"%s",Version);
+    exit(0);
+  }
+  mprintf(St(MUCopyright),Version,RARVER_YEAR);
 #endif
 #endif
 }
-#endif
 
 
 inline bool CmpMSGID(MSGID i1,MSGID i2)
@@ -950,13 +967,13 @@ inline bool CmpMSGID(MSGID i1,MSGID i2)
 
 void CommandData::OutHelp(RAR_EXIT ExitCode)
 {
-#if !defined(GUI) && !defined(SILENT)
+#if !defined(SILENT)
   OutTitle();
   static MSGID Help[]={
 #ifdef SFX_MODULE
     // Console SFX switches definition.
     MCHelpCmd,MSHelpCmdE,MSHelpCmdT,MSHelpCmdV
-#elif defined(UNRAR)
+#else
     // UnRAR switches definition.
     MUNRARTitle1,MRARTitle2,MCHelpCmd,MCHelpCmdE,MCHelpCmdL,
     MCHelpCmdP,MCHelpCmdT,MCHelpCmdV,MCHelpCmdX,MCHelpSw,MCHelpSwm,
@@ -969,7 +986,6 @@ void CommandData::OutHelp(RAR_EXIT ExitCode)
     MCHelpSwTA,MCHelpSwTB,MCHelpSwTN,MCHelpSwTO,MCHelpSwTS,MCHelpSwU,
     MCHelpSwVUnr,MCHelpSwVER,MCHelpSwVP,MCHelpSwX,MCHelpSwXa,MCHelpSwXal,
     MCHelpSwY
-#else
 #endif
   };
 
@@ -981,7 +997,7 @@ void CommandData::OutHelp(RAR_EXIT ExitCode)
 #ifndef _WIN_ALL
     static MSGID Win32Only[]={
       MCHelpSwIEML,MCHelpSwVD,MCHelpSwAO,MCHelpSwOS,MCHelpSwIOFF,
-      MCHelpSwEP2,MCHelpSwOC,MCHelpSwDR,MCHelpSwRI
+      MCHelpSwEP2,MCHelpSwOC,MCHelpSwONI,MCHelpSwDR,MCHelpSwRI
     };
     bool Found=false;
     for (int J=0;J<sizeof(Win32Only)/sizeof(Win32Only[0]);J++)
@@ -1037,10 +1053,10 @@ bool CommandData::CheckArgs(StringList *Args,bool Dir,const wchar *CheckName,boo
 {
   wchar *Name=ConvertPath(CheckName,NULL);
   wchar FullName[NM];
-  wchar CurMask[NM+1]; // We reserve the space to append "*" to mask.
+  wchar CurMask[NM];
   *FullName=0;
   Args->Rewind();
-  while (Args->GetString(CurMask,ASIZE(CurMask)-1))
+  while (Args->GetString(CurMask,ASIZE(CurMask)))
   {
     wchar *LastMaskChar=PointToLastChar(CurMask);
     bool DirMask=IsPathDiv(*LastMaskChar); // Mask for directories only.
@@ -1057,11 +1073,12 @@ bool CommandData::CheckArgs(StringList *Args,bool Dir,const wchar *CheckName,boo
       }
       else
       {
+        // REMOVED, we want -npath\* to match empty folders too.
         // If mask has wildcards in name part and does not have the trailing
         // '\' character, we cannot use it for directories.
       
-        if (IsWildcard(PointToName(CurMask)))
-          continue;
+        // if (IsWildcard(PointToName(CurMask)))
+        //  continue;
       }
     }
     else
@@ -1073,7 +1090,7 @@ bool CommandData::CheckArgs(StringList *Args,bool Dir,const wchar *CheckName,boo
       // is excluded from further scanning.
 
       if (DirMask)
-        wcscat(CurMask,L"*");
+        wcsncatz(CurMask,L"*",ASIZE(CurMask));
     }
 
 #ifndef SFX_MODULE
@@ -1201,7 +1218,6 @@ int CommandData::IsProcessFile(FileHeader &FileHead,bool *ExactMatch,int MatchTy
 }
 
 
-#ifndef GUI
 void CommandData::ProcessCommand()
 {
 #ifndef SFX_MODULE
@@ -1210,13 +1226,24 @@ void CommandData::ProcessCommand()
   if (Command[0]!=0 && Command[1]!=0 && wcschr(SingleCharCommands,Command[0])!=NULL || *ArcName==0)
     OutHelp(*Command==0 ? RARX_SUCCESS:RARX_USERERROR); // Return 'success' for 'rar' without parameters.
 
+  const wchar *ArcExt=GetExt(ArcName);
 #ifdef _UNIX
-  if (GetExt(ArcName)==NULL && (!FileExist(ArcName) || IsDir(GetFileAttr(ArcName))))
+  if (ArcExt==NULL && (!FileExist(ArcName) || IsDir(GetFileAttr(ArcName))))
     wcsncatz(ArcName,L".rar",ASIZE(ArcName));
 #else
-  if (GetExt(ArcName)==NULL)
+  if (ArcExt==NULL)
     wcsncatz(ArcName,L".rar",ASIZE(ArcName));
 #endif
+  // Treat arcname.part1 as arcname.part1.rar.
+  if (ArcExt!=NULL && wcsnicomp(ArcExt,L".part",5)==0 && IsDigit(ArcExt[5]) &&
+      !FileExist(ArcName))
+  {
+    wchar Name[NM];
+    wcsncpyz(Name,ArcName,ASIZE(Name));
+    wcsncatz(Name,L".rar",ASIZE(Name));
+    if (FileExist(Name))
+      wcsncpyz(ArcName,Name,ASIZE(ArcName));
+  }
 
   if (wcschr(L"AFUMD",*Command)==NULL)
   {
@@ -1258,7 +1285,6 @@ void CommandData::ProcessCommand()
   if (!BareOutput)
     mprintf(L"\n");
 }
-#endif
 
 
 void CommandData::AddArcName(const wchar *Name)
@@ -1276,9 +1302,9 @@ bool CommandData::GetArcName(wchar *Name,int MaxSize)
 bool CommandData::IsSwitch(int Ch)
 {
 #if defined(_WIN_ALL) || defined(_EMX)
-  return(Ch=='-' || Ch=='/');
+  return Ch=='-' || Ch=='/';
 #else
-  return(Ch=='-');
+  return Ch=='-';
 #endif
 }
 
@@ -1287,7 +1313,7 @@ bool CommandData::IsSwitch(int Ch)
 uint CommandData::GetExclAttr(const wchar *Str)
 {
   if (IsDigit(*Str))
-    return(wcstol(Str,NULL,0));
+    return wcstol(Str,NULL,0);
 
   uint Attr=0;
   while (*Str!=0)
