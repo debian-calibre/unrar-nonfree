@@ -22,7 +22,16 @@
 
 #ifdef _WIN_ALL
 
-#define STRICT
+
+// We got a report that just "#define STRICT" is incompatible with
+// "#define STRICT 1" in Windows 10 SDK minwindef.h and depending on the order
+// in which these statements are reached this may cause a compiler warning
+// and build break for other projects incorporating this source.
+// So we changed it to "#define STRICT 1".
+#ifndef STRICT
+#define STRICT 1
+#endif
+
 #define UNICODE
 #undef WINVER
 #undef _WIN32_WINNT
@@ -39,6 +48,8 @@
 #include <prsht.h>
 #include <shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
+#include <PowrProf.h>
+#pragma comment(lib, "PowrProf.lib")
 #include <shellapi.h>
 #include <shlobj.h>
 #include <winioctl.h>
