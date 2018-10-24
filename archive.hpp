@@ -20,6 +20,9 @@ enum ADDSUBDATA_FLAGS
   ASDF_CRYPTIFHEADERS = 8  // Encrypt data after subheader only in -hp mode.
 };
 
+// RAR5 headers must not exceed 2 MB.
+#define MAX_HEADER_SIZE_RAR5 0x200000
+
 class Archive:public File
 {
   private:
@@ -45,8 +48,6 @@ class Archive:public File
     bool DummyCmd;
     RAROptions *Cmd;
 
-    int64 RecoverySize;
-    int RecoveryPercent;
 
     RarTime LatestTime;
     int LastReadBlock;
@@ -55,6 +56,7 @@ class Archive:public File
     bool SilentOpen;
 #ifdef USE_QOPEN
     QuickOpen QOpen;
+    bool ProhibitQOpen;
 #endif
   public:
     Archive(RAROptions *InitCmd=NULL);
@@ -95,6 +97,7 @@ class Archive:public File
     void Seek(int64 Offset,int Method);
     int64 Tell();
     void QOpenUnload() {QOpen.Unload();}
+    void SetProhibitQOpen(bool Mode) {ProhibitQOpen=Mode;}
 #endif
 
     BaseBlock ShortBlock;
@@ -107,10 +110,7 @@ class Archive:public File
     FileHeader SubHead;
     CommentHeader CommHead;
     ProtectHeader ProtectHead;
-    AVHeader AVHead;
-    SignHeader SignHead;
     UnixOwnersHeader UOHead;
-    MacFInfoHeader MACHead;
     EAHeader EAHead;
     StreamHeader StreamHead;
 
