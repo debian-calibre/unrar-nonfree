@@ -1,3 +1,9 @@
+unrar-nonfree (1:5.6.6-2) unstable; urgency=medium
+
+  * update VCS and my email
+
+ -- Norbert Preining <norbert@preining.info>  Sun, 03 Mar 2019 09:13:40 +0900
+
 unrar-nonfree (1:5.6.6-1) unstable; urgency=medium
 
   * add myself to uploaders with Martin's consent, 
