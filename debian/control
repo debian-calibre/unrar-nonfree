@@ -35,4 +35,3 @@ Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), ${shlibs:Depends}
 Description: Unarchiver for .rar files (non-free version) - development files
  This package contains the static library and header files for the
  libunrar library.
-

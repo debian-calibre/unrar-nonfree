@@ -1,3 +1,9 @@
+unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Tue, 24 Dec 2019 02:53:57 +0000
+
 unrar-nonfree (1:5.6.6-2) unstable; urgency=medium
 
   * update VCS and my email
@@ -6,7 +12,7 @@ unrar-nonfree (1:5.6.6-2) unstable; urgency=medium
 
 unrar-nonfree (1:5.6.6-1) unstable; urgency=medium
 
-  * add myself to uploaders with Martin's consent, 
+  * add myself to uploaders with Martin's consent,
     terminating the salvage process (Closes: #909795)
   * add libunrar5 and libunrar-dev packages
   * bump standards version, no changes necessary
