@@ -2,6 +2,7 @@ unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
 
   * Trim trailing whitespace.
   * Bump debhelper from old 9 to 12.
+  * Set debhelper-compat version in Build-Depends.
 
  -- Debian Janitor <janitor@jelmer.uk>  Tue, 24 Dec 2019 02:53:57 +0000
 
