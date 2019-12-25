@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Martin Meredith <mez@debian.org>
 Uploaders: Norbert Preining <norbert@preining.info>
 Homepage: http://www.rarlabs.com/
-Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~)
+Build-Depends: debhelper-compat (= 12), dpkg-dev (>= 1.16.1~)
 Standards-Version: 4.2.1
 XS-Autobuild: yes
 Vcs-Git: https://github.com/norbusan/debian-unrar-nonfree.git
@@ -35,4 +35,3 @@ Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), ${shlibs:Depends}
 Description: Unarchiver for .rar files (non-free version) - development files
  This package contains the static library and header files for the
  libunrar library.
-
