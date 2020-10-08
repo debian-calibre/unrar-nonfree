@@ -1,3 +1,5 @@
-version=3
+# -*- mode: conf -*-
 
-http://www.rarlab.com/rar_add.htm http://www.rarlab.com/rar/unrarsrc-(.*)\.tar\.gz	debian	uupdate
+version=4
+
+https://www.rarlab.com/rar_add.htm rar/unrarsrc-(.*)\.tar\.gz
