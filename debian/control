@@ -9,6 +9,7 @@ Standards-Version: 4.2.1
 XS-Autobuild: yes
 Vcs-Git: https://github.com/norbusan/debian-unrar-nonfree.git
 Vcs-Browser: https://github.com/norbusan/debian-unrar-nonfree
+Rules-Requires-Root: no
 
 Package: unrar
 Architecture: any
