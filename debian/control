@@ -12,6 +12,7 @@ Vcs-Browser: https://github.com/norbusan/debian-unrar-nonfree
 
 Package: unrar
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Conflicts: rar (<= 2.60-1)
 Description: Unarchiver for .rar files (non-free version)
@@ -31,7 +32,8 @@ Package: libunrar-dev
 Section: non-free/libdevel
 Architecture: any
 Multi-Arch: same
-Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, libunrar5 (= ${binary:Version})
 Description: Unarchiver for .rar files (non-free version) - development files
  This package contains the static library and header files for the
  libunrar library.
