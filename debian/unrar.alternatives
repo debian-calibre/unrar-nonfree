@@ -1,0 +1,6 @@
+Name: unrar
+Link: /usr/bin/unrar
+Alternative: /usr/bin/unrar-nonfree
+Dependents:
+  /usr/share/man/man1/unrar.1.gz unrar.1.gz /usr/share/man/man1/unrar-nonfree.1.gz
+Priority: 40
