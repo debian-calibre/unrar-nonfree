@@ -7,5 +7,5 @@ override_dh_auto_build:
 	$(MAKE) all
 	$(MAKE) lib
 
+# do nothing
 override_dh_auto_install:
-	dh_install
