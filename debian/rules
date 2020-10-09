@@ -6,6 +6,7 @@
 override_dh_auto_build:
 	$(MAKE) all
 	$(MAKE) lib
+	$(MAKE) static-lib
 
 # do nothing
 override_dh_auto_install:
