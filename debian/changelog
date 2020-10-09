@@ -1,3 +1,23 @@
+unrar-nonfree (1:5.9.4-1) UNRELEASED; urgency=medium
+
+  * Update to v4 format
+  * New upstream version 5.9.4
+  * Use debhelper to build package
+  * Override default action for build & install
+  * Disable patch
+  * Use dh_install to install files
+  * Don't mix normal objects and PIC objects
+  * Use newest compatibility level
+  * Update homepage
+  * Restore soname
+  * Show warnings
+  * Keep debug symbols
+  * Cosmetic fix
+  * Import variables from Debian package builder
+  * Keep output files from "clean" target
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 09 Oct 2020 19:41:46 +0900
+
 unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
 
   * Trim trailing whitespace.
