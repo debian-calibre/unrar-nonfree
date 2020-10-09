@@ -1,1 +1,3 @@
 *.hpp usr/include/${DEB_HOST_MULTIARCH}/unrar/
+libunrar.so usr/lib/${DEB_HOST_MULTIARCH}
+libunrar.a  usr/lib/${DEB_HOST_MULTIARCH}
