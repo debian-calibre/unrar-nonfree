@@ -10,7 +10,10 @@ size_t Archive::ReadHeader()
 
   CurBlockPos=Tell();
 
-  size_t ReadSize;
+  // Other developers asked us to initialize it to suppress "may be used
+  // uninitialized" warning in code below in some compilers.
+  size_t ReadSize=0;
+
   switch(Format)
   {
 #ifndef SFX_MODULE
@@ -113,9 +116,9 @@ void Archive::BrokenHeaderMsg()
 }
 
 
-void Archive::UnkEncVerMsg(const wchar *Name)
+void Archive::UnkEncVerMsg(const wchar *Name,const wchar *Info)
 {
-  uiMsg(UIERROR_UNKNOWNENCMETHOD,FileName,Name);
+  uiMsg(UIERROR_UNKNOWNENCMETHOD,FileName,Name,Info);
   ErrHandler.SetErrorCode(RARX_WARNING);
 }
 
@@ -201,7 +204,7 @@ size_t Archive::ReadHeader15()
     if (ShortBlock.HeaderType==HEAD_MAIN && (ShortBlock.Flags & MHD_COMMENT)!=0)
     {
       // Old style (up to RAR 2.9) main archive comment embedded into
-      // the main archive header found. While we can read the entire 
+      // the main archive header found. While we can read the entire
       // ShortBlock.HeadSize here and remove this part of "if", it would be
       // waste of memory, because we'll read and process this comment data
       // in other function anyway and we do not need them here now.
@@ -227,7 +230,7 @@ size_t Archive::ReadHeader15()
       Encrypted=(MainHead.Flags & MHD_PASSWORD)!=0;
       Signed=MainHead.PosAV!=0 || MainHead.HighPosAV!=0;
       MainHead.CommentInHeader=(MainHead.Flags & MHD_COMMENT)!=0;
-    
+
       // Only for encrypted 3.0+ archives. 2.x archives did not have this
       // flag, so for non-encrypted archives, we'll set it later based on
       // file attributes.
@@ -254,7 +257,7 @@ size_t Archive::ReadHeader15()
         hd->WinSize=hd->Dir ? 0:0x10000<<((hd->Flags & LHD_WINDOWMASK)>>5);
         hd->CommentInHeader=(hd->Flags & LHD_COMMENT)!=0;
         hd->Version=(hd->Flags & LHD_VERSION)!=0;
-        
+
         hd->DataSize=Raw.Get4();
         uint LowUnpSize=Raw.Get4();
         hd->HostOS=Raw.Get1();
@@ -265,13 +268,13 @@ size_t Archive::ReadHeader15()
         uint FileTime=Raw.Get4();
         hd->UnpVer=Raw.Get1();
 
-        // RAR15 did not use the special dictionary size to mark dirs.
-        if (hd->UnpVer<20 && (hd->FileAttr & 0x10)!=0)
-          hd->Dir=true;
-
         hd->Method=Raw.Get1()-0x30;
         size_t NameSize=Raw.Get2();
         hd->FileAttr=Raw.Get4();
+
+        // RAR15 did not use the special dictionary size to mark dirs.
+        if (hd->UnpVer<20 && (hd->FileAttr & 0x10)!=0)
+          hd->Dir=true;
 
         hd->CryptMethod=CRYPT_NONE;
         if (hd->Encrypted)
@@ -279,7 +282,7 @@ size_t Archive::ReadHeader15()
           {
             case 13: hd->CryptMethod=CRYPT_RAR13; break;
             case 15: hd->CryptMethod=CRYPT_RAR15; break;
-            case 20: 
+            case 20:
             case 26: hd->CryptMethod=CRYPT_RAR20; break;
             default: hd->CryptMethod=CRYPT_RAR30; break;
           }
@@ -301,7 +304,7 @@ size_t Archive::ReadHeader15()
         }
 
         hd->Inherited=!FileBlock && (hd->SubFlags & SUBHEAD_FLAGS_INHERITED)!=0;
-        
+
         hd->LargeFile=(hd->Flags & LHD_LARGE)!=0;
 
         uint HighPackSize,HighUnpSize;
@@ -311,7 +314,7 @@ size_t Archive::ReadHeader15()
           HighUnpSize=Raw.Get4();
           hd->UnknownUnpSize=(LowUnpSize==0xffffffff && HighUnpSize==0xffffffff);
         }
-        else 
+        else
         {
           HighPackSize=HighUnpSize=0;
           // UnpSize equal to 0xffffffff without LHD_LARGE flag indicates
@@ -399,8 +402,8 @@ size_t Archive::ReadHeader15()
             if (rmode & 4)
               rlt.Second++;
             rlt.Reminder=0;
-            int count=rmode&3;
-            for (int J=0;J<count;J++)
+            uint count=rmode&3;
+            for (uint J=0;J<count;J++)
             {
               byte CurByte=Raw.Get1();
               rlt.Reminder|=(((uint)CurByte)<<((J+3-count)*8));
@@ -506,7 +509,7 @@ size_t Archive::ReadHeader15()
         NextBlockPos+=Raw.Get4();
       break;
   }
-  
+
   ushort HeaderCRC=Raw.GetCRC15(false);
 
   // Old AV header does not have header CRC properly set.
@@ -518,7 +521,6 @@ size_t Archive::ReadHeader15()
     {
       // Last 7 bytes of recovered volume can contain zeroes, because
       // REV files store its own information (volume number, etc.) here.
-      SaveFilePos SavePos(*this);
       int64 Length=Tell();
       Seek(Length-7,SEEK_SET);
       Recovered=true;
@@ -566,7 +568,7 @@ size_t Archive::ReadHeader50()
     // We repeat the password request only for manually entered passwords
     // and not for -p<pwd>. Wrong password can be intentionally provided
     // in -p<pwd> to not stop batch processing for encrypted archives.
-    bool GlobalPassword=Cmd->Password.IsSet();
+    bool GlobalPassword=Cmd->Password.IsSet() || uiIsGlobalPasswordSet();
 
     while (true) // Repeat the password prompt for wrong passwords.
     {
@@ -581,7 +583,7 @@ size_t Archive::ReadHeader50()
         {
           // This message is used by Android GUI to reset cached passwords.
           // Update appropriate code if changed.
-          uiMsg(UIERROR_BADPSW,FileName);
+          uiMsg(UIERROR_BADPSW,FileName,FileName);
           FailedHeaderDecryption=true;
           ErrHandler.SetErrorCode(RARX_BADPWD);
           return 0;
@@ -590,7 +592,7 @@ size_t Archive::ReadHeader50()
         {
           // This message is used by Android GUI and Windows GUI and SFX to
           // reset cached passwords. Update appropriate code if changed.
-          uiMsg(UIWAIT_BADPSW,FileName);
+          uiMsg(UIWAIT_BADPSW,FileName,FileName);
           Cmd->Password.Clean();
         }
 
@@ -641,7 +643,7 @@ size_t Archive::ReadHeader50()
     BrokenHeaderMsg();
     return 0;
   }
-  
+
   Raw.Read(SizeToRead);
 
   if (Raw.Size()<HeaderSize)
@@ -674,7 +676,7 @@ size_t Archive::ReadHeader50()
       return 0;
     }
   }
-  
+
   uint64 ExtraSize=0;
   if ((ShortBlock.Flags & HFL_EXTRA)!=0)
   {
@@ -702,7 +704,9 @@ size_t Archive::ReadHeader50()
         uint CryptVersion=(uint)Raw.GetV();
         if (CryptVersion>CRYPT_VERSION)
         {
-          UnkEncVerMsg(FileName);
+          wchar Info[20];
+          swprintf(Info,ASIZE(Info),L"h%u",CryptVersion);
+          UnkEncVerMsg(FileName,Info);
           return 0;
         }
         uint EncFlags=(uint)Raw.GetV();
@@ -710,9 +714,12 @@ size_t Archive::ReadHeader50()
         CryptHead.Lg2Count=Raw.Get1();
         if (CryptHead.Lg2Count>CRYPT5_KDF_LG2_COUNT_MAX)
         {
-          UnkEncVerMsg(FileName);
+          wchar Info[20];
+          swprintf(Info,ASIZE(Info),L"hc%u",CryptHead.Lg2Count);
+          UnkEncVerMsg(FileName,Info);
           return 0;
         }
+
         Raw.GetB(CryptHead.Salt,SIZE_SALT50);
         if (CryptHead.UsePswCheck)
         {
@@ -763,7 +770,7 @@ size_t Archive::ReadHeader50()
           // to not break normal archive processing by calling function.
           int64 SaveCurBlockPos=CurBlockPos,SaveNextBlockPos=NextBlockPos;
           HEADER_TYPE SaveCurHeaderType=CurHeaderType;
-          
+
           QOpen.Init(this,false);
           QOpen.Load(MainHead.QOpenOffset);
 
@@ -788,7 +795,7 @@ size_t Archive::ReadHeader50()
         hd->PackSize=DataSize;
         hd->FileFlags=(uint)Raw.GetV();
         hd->UnpSize=Raw.GetV();
-        
+
         hd->UnknownUnpSize=(hd->FileFlags & FHFL_UNPUNKNOWN)!=0;
         if (hd->UnknownUnpSize)
           hd->UnpSize=INT64NDF;
@@ -815,6 +822,8 @@ size_t Archive::ReadHeader50()
         // but it was already used in RAR 1.5 and Unpack needs to distinguish
         // them.
         hd->UnpVer=(CompInfo & 0x3f) + 50;
+        if (hd->UnpVer!=50) // Only 5.0 compression is known now.
+          hd->UnpVer=VER_UNKNOWN;
 
         hd->HostOS=(byte)Raw.GetV();
         size_t NameSize=(size_t)Raw.GetV();
@@ -873,7 +882,7 @@ size_t Archive::ReadHeader50()
           RecoverySize=Header.RecSectionSize*Header.RecCount;
         }
 #endif
-          
+
         if (BadCRC) // Add the file name to broken header message displayed above.
           uiMsg(UIERROR_FHEADERBROKEN,Archive::FileName,hd->FileName);
       }
@@ -989,8 +998,12 @@ void Archive::ProcessExtra50(RawRead *Raw,size_t ExtraSize,BaseBlock *bb)
           {
             FileHeader *hd=(FileHeader *)bb;
             uint EncVersion=(uint)Raw->GetV();
-            if (EncVersion > CRYPT_VERSION)
-              UnkEncVerMsg(hd->FileName);
+            if (EncVersion>CRYPT_VERSION)
+            {
+              wchar Info[20];
+              swprintf(Info,ASIZE(Info),L"x%u",EncVersion);
+              UnkEncVerMsg(hd->FileName,Info);
+            }
             else
             {
               uint Flags=(uint)Raw->GetV();
@@ -998,7 +1011,11 @@ void Archive::ProcessExtra50(RawRead *Raw,size_t ExtraSize,BaseBlock *bb)
               hd->UseHashKey=(Flags & FHEXTRA_CRYPT_HASHMAC)!=0;
               hd->Lg2Count=Raw->Get1();
               if (hd->Lg2Count>CRYPT5_KDF_LG2_COUNT_MAX)
-                UnkEncVerMsg(hd->FileName);
+              {
+                wchar Info[20];
+                swprintf(Info,ASIZE(Info),L"xc%u",hd->Lg2Count);
+                UnkEncVerMsg(hd->FileName,Info);
+              }
               Raw->GetB(hd->Salt,SIZE_SALT50);
               Raw->GetB(hd->InitV,SIZE_INITV);
               if (hd->UsePswCheck)
@@ -1239,11 +1256,13 @@ size_t Archive::ReadHeader14()
     Raw.Read(NameSize);
 
     char FileName[NM];
-    Raw.GetB((byte *)FileName,Min(NameSize,ASIZE(FileName)));
-    FileName[NameSize]=0;
+    size_t ReadNameSize=Min(NameSize,ASIZE(FileName)-1);
+    Raw.GetB((byte *)FileName,ReadNameSize);
+    FileName[ReadNameSize]=0;
     IntToExt(FileName,FileName,ASIZE(FileName));
     CharToWide(FileName,FileHead.FileName,ASIZE(FileHead.FileName));
     ConvertNameCase(FileHead.FileName);
+    ConvertFileHeader(&FileHead);
 
     if (Raw.Size()!=0)
       NextBlockPos=CurBlockPos+FileHead.HeadSize+FileHead.PackSize;
@@ -1290,7 +1309,7 @@ void Archive::ConvertAttributes()
 
   if (mask == (mode_t) -1)
   {
-    // umask call returns the current umask value. Argument (022) is not 
+    // umask call returns the current umask value. Argument (022) is not
     // really important here.
     mask = umask(022);
 
@@ -1367,8 +1386,8 @@ void Archive::ConvertFileHeader(FileHeader *hd)
 
     // ':' in file names is allowed in Unix, but not in Windows.
     // Even worse, file data will be written to NTFS stream on NTFS,
-    // so automatic name correction on file create error in extraction 
-    // routine does not work. In Windows and DOS versions we better 
+    // so automatic name correction on file create error in extraction
+    // routine does not work. In Windows and DOS versions we better
     // replace ':' now.
     if (*s==':')
       *s='_';
@@ -1397,7 +1416,7 @@ int64 Archive::GetStartPos()
 }
 
 
-bool Archive::ReadSubData(Array<byte> *UnpData,File *DestFile)
+bool Archive::ReadSubData(Array<byte> *UnpData,File *DestFile,bool TestMode)
 {
   if (BrokenHeader)
   {
@@ -1445,6 +1464,7 @@ bool Archive::ReadSubData(Array<byte> *UnpData,File *DestFile)
   SubDataIO.SetPackedSizeToRead(SubHead.PackSize);
   SubDataIO.EnableShowProgress(false);
   SubDataIO.SetFiles(this,DestFile);
+  SubDataIO.SetTestMode(TestMode);
   SubDataIO.UnpVolume=SubHead.SplitAfter;
   SubDataIO.SetSubHeader(&SubHead,NULL);
   Unpack.SetDestSize(SubHead.UnpSize);

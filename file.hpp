@@ -62,6 +62,7 @@ class File
     bool NoSequentialRead;
     uint CreateMode;
 #endif
+    bool PreserveAtime;
   protected:
     bool OpenShared; // Set by 'Archive' class.
   public:
@@ -99,7 +100,7 @@ class File
     void SetCloseFileTime(RarTime *ftm,RarTime *fta=NULL);
     static void SetCloseFileTimeByName(const wchar *Name,RarTime *ftm,RarTime *fta);
     void GetOpenFileTime(RarTime *ft);
-    virtual bool IsOpened() {return hFile!=FILE_BAD_HANDLE;}; // 'virtual' for MultiFile class.
+    virtual bool IsOpened() {return hFile!=FILE_BAD_HANDLE;} // 'virtual' for MultiFile class.
     int64 FileLength();
     void SetHandleType(FILE_HANDLETYPE Type) {HandleType=Type;}
     FILE_HANDLETYPE GetHandleType() {return HandleType;}
@@ -114,6 +115,7 @@ class File
 #ifdef _WIN_ALL
     void RemoveSequentialFlag() {NoSequentialRead=true;}
 #endif
+    void SetPreserveAtime(bool Preserve) {PreserveAtime=Preserve;}
 #ifdef _UNIX
     int GetFD()
     {

@@ -4,8 +4,15 @@ bool Archive::GetComment(Array<wchar> *CmtData)
 {
   if (!MainComment)
     return false;
-  SaveFilePos SavePos(*this);
+  int64 SavePos=Tell();
+  bool Success=DoGetComment(CmtData);
+  Seek(SavePos,SEEK_SET);
+  return Success;
+}
 
+
+bool Archive::DoGetComment(Array<wchar> *CmtData)
+{
 #ifndef SFX_MODULE
   uint CmtLength;
   if (Format==RARFMT14)
@@ -34,7 +41,7 @@ bool Archive::GetComment(Array<wchar> *CmtData)
 #ifndef SFX_MODULE
     // Old style (RAR 2.9) comment header embedded into the main 
     // archive header.
-    if (BrokenHeader)
+    if (BrokenHeader || CommHead.HeadSize<SIZEOF_COMMHEAD)
     {
       uiMsg(UIERROR_CMTBROKEN,FileName);
       return false;
@@ -57,6 +64,8 @@ bool Archive::GetComment(Array<wchar> *CmtData)
 #else
       UnpCmtLength=GetByte();
       UnpCmtLength+=(GetByte()<<8);
+      if (CmtLength<2)
+        return false;
       CmtLength-=2;
       DataIO.SetCmt13Encryption();
       CommHead.UnpVer=15;
@@ -85,15 +94,18 @@ bool Archive::GetComment(Array<wchar> *CmtData)
       byte *UnpData;
       size_t UnpDataSize;
       DataIO.GetUnpackedData(&UnpData,&UnpDataSize);
+      if (UnpDataSize>0)
+      {
 #ifdef _WIN_ALL
-      // If we ever decide to extend it to Android, we'll need to alloc
-      // 4x memory for OEM to UTF-8 output here.
-      OemToCharBuffA((char *)UnpData,(char *)UnpData,(DWORD)UnpDataSize);
+        // If we ever decide to extend it to Android, we'll need to alloc
+        // 4x memory for OEM to UTF-8 output here.
+        OemToCharBuffA((char *)UnpData,(char *)UnpData,(DWORD)UnpDataSize);
 #endif
-      CmtData->Alloc(UnpDataSize+1);
-      memset(CmtData->Addr(0),0,CmtData->Size()*sizeof(wchar));
-      CharToWide((char *)UnpData,CmtData->Addr(0),CmtData->Size());
-      CmtData->Alloc(wcslen(CmtData->Addr(0)));
+        CmtData->Alloc(UnpDataSize+1);
+        memset(CmtData->Addr(0),0,CmtData->Size()*sizeof(wchar));
+        CharToWide((char *)UnpData,CmtData->Addr(0),CmtData->Size());
+        CmtData->Alloc(wcslen(CmtData->Addr(0)));
+      }
     }
   }
   else
@@ -131,7 +143,7 @@ bool Archive::GetComment(Array<wchar> *CmtData)
 bool Archive::ReadCommentData(Array<wchar> *CmtData)
 {
   Array<byte> CmtRaw;
-  if (!ReadSubData(&CmtRaw,NULL))
+  if (!ReadSubData(&CmtRaw,NULL,false))
     return false;
   size_t CmtSize=CmtRaw.Size();
   CmtRaw.Push(0);
