@@ -15,8 +15,24 @@ unrar-nonfree (1:5.9.4-1) UNRELEASED; urgency=medium
   * Cosmetic fix
   * Import variables from Debian package builder
   * Keep output files from "clean" target
+  * Add install files list
+  * Add files list
+  * Use proper library file name
+  * Use dh-exec to alter file name
+  * Install man pages
+  * Use dh_updatealternatives(1)
+  * Update copyright text
+  * Add mode line to help Emacs
+  * Add documents list
+  * No need to use dh_install(1) here
+  * Use all substvars variables
+  * Install static library
+  * Update watch file
+  * No need to use root when building objects
+  * No need PIC option to static lib
+  * Apply man page update patch (Closes: #897946)
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 09 Oct 2020 19:41:46 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 10 Oct 2020 12:05:27 +0900
 
 unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
 
