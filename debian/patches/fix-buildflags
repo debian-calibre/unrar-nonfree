@@ -1,9 +1,15 @@
+From: Martin Meredith <mez@debian.org>
+Date: Sat, 10 Oct 2020 19:50:19 +0900
+Subject: fix-buildflags
+
 ---
- makefile |    6 +++---
+ makefile | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
---- unrar.orig/makefile
-+++ unrar/makefile
+diff --git a/makefile b/makefile
+index 214f87e..8eda2e4 100644
+--- a/makefile
++++ b/makefile
 @@ -3,12 +3,12 @@
  
  # Linux using GCC
@@ -19,10 +25,10 @@
  DESTDIR=/usr
  
  # Linux using LCC
-@@ -156,7 +156,7 @@ lib:	CXXFLAGS+=$(LIBFLAGS)
+@@ -157,7 +157,7 @@ lib:	WHAT=RARDLL
+ lib:	CXXFLAGS+=$(LIBFLAGS)
  lib:	clean $(OBJECTS) $(LIB_OBJ)
- 	@rm -f libunrar.so
- 	@rm -f libunrar.a
+ 	@rm -f libunrar.*
 -	$(LINK) -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
 +	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
  	$(AR) rcs libunrar.a $(OBJECTS) $(LIB_OBJ)
