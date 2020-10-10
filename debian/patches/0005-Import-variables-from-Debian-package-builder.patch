@@ -1,0 +1,25 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 9 Oct 2020 19:32:19 +0900
+Subject: Import variables from Debian package builder
+
+---
+ makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/makefile b/makefile
+index 1e29fec..bd5c0a7 100644
+--- a/makefile
++++ b/makefile
+@@ -3,9 +3,9 @@
+ 
+ # Linux using GCC
+ CXX = c++
+-CXXFLAGS =
+-LIBFLAGS = -fPIC
+-DEFINES = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
++CXXFLAGS +=
++LIBFLAGS += -fPIC
++DEFINES += -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+ STRIP = true
+ AR = ar
+ LDFLAGS += -pthread

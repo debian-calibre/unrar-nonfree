@@ -1,1 +1,9 @@
 fix-buildflags
+0002-Show-warnings.patch
+0003-Don-t-strip-debug-symbols-Closes-866142.patch
+0004-Cosmetic-fix.patch
+0005-Import-variables-from-Debian-package-builder.patch
+0006-Keep-output-files-from-clean-target.patch
+0007-Use-proper-library-file-name.patch
+0008-No-need-PIC-option-to-static-lib.patch
+0009-Fix-link-target.patch

@@ -1,0 +1,35 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 9 Oct 2020 19:29:22 +0900
+Subject: Cosmetic fix
+
+---
+ makefile | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/makefile b/makefile
+index 92866d6..1e29fec 100644
+--- a/makefile
++++ b/makefile
+@@ -2,14 +2,14 @@
+ # Makefile for UNIX - unrar
+ 
+ # Linux using GCC
+-CXX=c++
+-CXXFLAGS=
+-LIBFLAGS=-fPIC
+-DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+-STRIP=true
+-AR=ar
+-LDFLAGS+=-pthread
+-DESTDIR=/usr
++CXX = c++
++CXXFLAGS =
++LIBFLAGS = -fPIC
++DEFINES = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
++STRIP = true
++AR = ar
++LDFLAGS += -pthread
++DESTDIR = /usr
+ 
+ # Linux using LCC
+ #CXX=lcc

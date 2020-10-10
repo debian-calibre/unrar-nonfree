@@ -1,0 +1,21 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 10 Oct 2020 20:22:25 +0900
+Subject: Show warnings
+
+---
+ makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index 8eda2e4..360c39a 100644
+--- a/makefile
++++ b/makefile
+@@ -3,7 +3,7 @@
+ 
+ # Linux using GCC
+ CXX=c++
+-CXXFLAGS=-Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
++CXXFLAGS=
+ LIBFLAGS=-fPIC
+ DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+ STRIP=strip

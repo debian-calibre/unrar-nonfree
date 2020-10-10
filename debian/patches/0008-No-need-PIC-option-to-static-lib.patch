@@ -1,0 +1,28 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 10 Oct 2020 05:29:49 +0900
+Subject: No need PIC option to static lib
+
+---
+ makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index 9a54f4a..ccc0c0c 100644
+--- a/makefile
++++ b/makefile
+@@ -158,10 +158,14 @@ sfx:	clean $(OBJECTS)
+ lib:	WHAT=RARDLL
+ lib:	CXXFLAGS+=$(LIBFLAGS)
+ lib:	clean $(OBJECTS) $(LIB_OBJ)
+-	@rm -f libunrar.*
++	@rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
+ 	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so.5.0 $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
+ 	ln -s libunrar.so.5.0 libunrar.so.5
+ 	ln -s libunrar.so.5.0 libunrar.so
++
++static-lib: WHAT=RARDLL
++static-lib: clean $(OBJECTS) $(LIB_OBJ)
++	@rm -f libunrar.a
+ 	$(AR) rcs libunrar.a $(OBJECTS) $(LIB_OBJ)
+ 
+ install-unrar:

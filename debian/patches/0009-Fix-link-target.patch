@@ -1,0 +1,21 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 10 Oct 2020 12:13:37 +0900
+Subject: Fix link target
+
+---
+ makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index ccc0c0c..9b1f3ad 100644
+--- a/makefile
++++ b/makefile
+@@ -161,7 +161,7 @@ lib:	clean $(OBJECTS) $(LIB_OBJ)
+ 	@rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
+ 	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so.5.0 $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
+ 	ln -s libunrar.so.5.0 libunrar.so.5
+-	ln -s libunrar.so.5.0 libunrar.so
++	ln -s libunrar.so.5   libunrar.so
+ 
+ static-lib: WHAT=RARDLL
+ static-lib: clean $(OBJECTS) $(LIB_OBJ)

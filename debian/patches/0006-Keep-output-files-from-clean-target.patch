@@ -1,0 +1,21 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 9 Oct 2020 19:34:33 +0900
+Subject: Keep output files from "clean" target
+
+---
+ makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/makefile b/makefile
+index bd5c0a7..2900c8f 100644
+--- a/makefile
++++ b/makefile
+@@ -140,6 +140,8 @@ uninstall:	uninstall-unrar
+ clean:
+ 	@rm -f *.bak *~
+ 	@rm -f $(OBJECTS) $(UNRAR_OBJ) $(LIB_OBJ)
++
++distclean: clean
+ 	@rm -f unrar libunrar.*
+ 
+ unrar:	clean $(OBJECTS) $(UNRAR_OBJ)

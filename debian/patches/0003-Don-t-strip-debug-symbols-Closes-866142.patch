@@ -1,0 +1,21 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 9 Oct 2020 19:26:50 +0900
+Subject: Don't strip debug symbols (Closes: #866142)
+
+---
+ makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index 360c39a..92866d6 100644
+--- a/makefile
++++ b/makefile
+@@ -6,7 +6,7 @@ CXX=c++
+ CXXFLAGS=
+ LIBFLAGS=-fPIC
+ DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+-STRIP=strip
++STRIP=true
+ AR=ar
+ LDFLAGS+=-pthread
+ DESTDIR=/usr
