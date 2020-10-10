@@ -3,22 +3,23 @@
 unrar \- extract files from rar archives
 .SH SYNOPSIS
 .B unrar
-.I "<command> [-<switch 1> -<switch N>] archive [files...] [path\...]"
+.IR command " [" \-switch " \&...\&] " archive \
+" [" file " \&...\&] [" path " \&...\&]"
 .SH "DESCRIPTION"
 This manual page documents briefly the
-.BR unrar
+.B unrar
 command.
 .br
 This manual page was written for the Debian GNU/Linux distribution
 because the original program does not have a manual page.
 .br
 Commands and options described here are as of unrar 2.02.
-.SH OPTIONS
+.SH COMMANDS
 After the program name comes a command and then optional switches with
 dashes before them.
 A summary of commands is included below.
 For a complete description, run
-.BR unrar
+.B unrar
 without options.
 .TP
 .B e
@@ -39,59 +40,59 @@ Verbosely list archive.
 .B x
 Extract files with full path.
 .SH SWITCHES
-.BR NOTE:
-Every switch must be separated by a whitespace. You cannot put them
-together.
+.B NOTE:
+Every switch must be separated by a whitespace.
+You cannot put them together.
 .TP
-.B -av-
+.B \-av\-
 Disable Authenticity Verification check.
 .TP
-.B -c-
+.B \-c\-
 Disable comments show.
 .TP
-.B -f
+.B \-f
 Freshen files.
 .TP
-.B -kb
+.B \-kb
 Keep broken extracted files.
 .TP
-.B -ierr
+.B \-ierr
 Send all messages to stderr.
 .TP
-.B -inul
+.B \-inul
 Disable all messages.
 .TP
-.B -o+
+.B \-o+
 Overwrite existing files.
 .TP
-.B -o-
+.B \-o\-
 Do not overwrite existing files.
 .TP
-.B -p<password>
+.BI \-p password
 Set password.
 .TP
-.B -p-
+.B \-p\-
 Do not query password.
 .TP
-.B -r
+.B \-r
 Recurse subdirectories.
 .TP
-.B -u
+.B \-u
 Update files.
 .TP
-.B -v
+.B \-v
 List all volumes.
 .TP
-.B -x<file>
+.BI \-x file
 Exclude specified file.
 .TP
-.B -x@<list>
+.BI \-x@ list
 Exclude files in specified list file.
 .TP
-.B -x@
+.B \-x@
 Read file names to exclude from stdin.
 .TP
-.B -y
+.B \-y
 Assume Yes on all queries.
 .SH AUTHOR
 This manual page was written by Petr Cech <cech@debian.org> according
