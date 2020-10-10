@@ -42,6 +42,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
     Data->Cmd.DllError=0;
     Data->OpenMode=r->OpenMode;
     Data->Cmd.FileArgs.AddString(L"*");
+    Data->Cmd.KeepBroken=(r->OpFlags&ROADOF_KEEPBROKEN)!=0;
 
     char AnsiArcName[NM];
     *AnsiArcName=0;
@@ -94,36 +95,50 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
     r->Flags=0;
     
     if (Data->Arc.Volume)
-      r->Flags|=0x01;
+      r->Flags|=ROADF_VOLUME;
+    if (Data->Arc.MainComment)
+      r->Flags|=ROADF_COMMENT;
     if (Data->Arc.Locked)
-      r->Flags|=0x04;
+      r->Flags|=ROADF_LOCK;
     if (Data->Arc.Solid)
-      r->Flags|=0x08;
+      r->Flags|=ROADF_SOLID;
     if (Data->Arc.NewNumbering)
-      r->Flags|=0x10;
+      r->Flags|=ROADF_NEWNUMBERING;
     if (Data->Arc.Signed)
-      r->Flags|=0x20;
+      r->Flags|=ROADF_SIGNED;
     if (Data->Arc.Protected)
-      r->Flags|=0x40;
+      r->Flags|=ROADF_RECOVERY;
     if (Data->Arc.Encrypted)
-      r->Flags|=0x80;
+      r->Flags|=ROADF_ENCHEADERS;
     if (Data->Arc.FirstVolume)
-      r->Flags|=0x100;
+      r->Flags|=ROADF_FIRSTVOLUME;
 
     Array<wchar> CmtDataW;
     if (r->CmtBufSize!=0 && Data->Arc.GetComment(&CmtDataW))
     {
-      Array<char> CmtData(CmtDataW.Size()*4+1);
-      memset(&CmtData[0],0,CmtData.Size());
-      WideToChar(&CmtDataW[0],&CmtData[0],CmtData.Size()-1);
-      size_t Size=strlen(&CmtData[0])+1;
+      if (r->CmtBufW!=NULL)
+      {
+        CmtDataW.Push(0);
+        size_t Size=wcslen(&CmtDataW[0])+1;
 
-      r->Flags|=2;
-      r->CmtState=Size>r->CmtBufSize ? ERAR_SMALL_BUF:1;
-      r->CmtSize=(uint)Min(Size,r->CmtBufSize);
-      memcpy(r->CmtBuf,&CmtData[0],r->CmtSize-1);
-      if (Size<=r->CmtBufSize)
-        r->CmtBuf[r->CmtSize-1]=0;
+        r->CmtState=Size>r->CmtBufSize ? ERAR_SMALL_BUF:1;
+        r->CmtSize=(uint)Min(Size,r->CmtBufSize);
+        memcpy(r->CmtBufW,&CmtDataW[0],(r->CmtSize-1)*sizeof(*r->CmtBufW));
+        r->CmtBufW[r->CmtSize-1]=0;
+      }
+      else
+        if (r->CmtBuf!=NULL)
+        {
+          Array<char> CmtData(CmtDataW.Size()*4+1);
+          memset(&CmtData[0],0,CmtData.Size());
+          WideToChar(&CmtDataW[0],&CmtData[0],CmtData.Size()-1);
+          size_t Size=strlen(&CmtData[0])+1;
+
+          r->CmtState=Size>r->CmtBufSize ? ERAR_SMALL_BUF:1;
+          r->CmtSize=(uint)Min(Size,r->CmtBufSize);
+          memcpy(r->CmtBuf,&CmtData[0],r->CmtSize-1);
+          r->CmtBuf[r->CmtSize-1]=0;
+        }
     }
     else
       r->CmtState=r->CmtSize=0;
@@ -253,10 +268,7 @@ int PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *D)
     D->UnpSize=uint(hd->UnpSize & 0xffffffff);
     D->UnpSizeHigh=uint(hd->UnpSize>>32);
     D->HostOS=hd->HSType==HSYS_WINDOWS ? HOST_WIN32:HOST_UNIX;
-    if (Data->Arc.Format==RARFMT50)
-      D->UnpVer=Data->Arc.FileHead.UnpVer==0 ? 50 : 200; // If it is not 0, just set it to something big.
-    else
-      D->UnpVer=Data->Arc.FileHead.UnpVer;
+    D->UnpVer=Data->Arc.FileHead.UnpVer;
     D->FileCRC=hd->FileHash.CRC32;
     D->FileTime=hd->mtime.GetDos();
     
@@ -372,7 +384,7 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
       if (DestNameW!=NULL)
         wcsncpyz(Data->Cmd.DllDestName,DestNameW,ASIZE(Data->Cmd.DllDestName));
 
-      wcscpy(Data->Cmd.Command,Operation==RAR_EXTRACT ? L"X":L"T");
+      wcsncpyz(Data->Cmd.Command,Operation==RAR_EXTRACT ? L"X":L"T",ASIZE(Data->Cmd.Command));
       Data->Cmd.Test=Operation!=RAR_EXTRACT;
       bool Repeat=false;
       Data->Extract.ExtractCurrentFile(Data->Arc,Data->HeaderSize,Repeat);
@@ -439,16 +451,16 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
 }
 
 
-#ifndef RAR_NOCRYPT
 void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
 {
+#ifndef RAR_NOCRYPT
   DataSet *Data=(DataSet *)hArcData;
   wchar PasswordW[MAXPASSWORD];
   GetWideName(Password,NULL,PasswordW,ASIZE(PasswordW));
   Data->Cmd.Password.Set(PasswordW);
   cleandata(PasswordW,sizeof(PasswordW));
-}
 #endif
+}
 
 
 int PASCAL RARGetDllVersion()

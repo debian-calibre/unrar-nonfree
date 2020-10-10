@@ -21,7 +21,7 @@ enum {SOLID_NONE=0,SOLID_NORMAL=1,SOLID_COUNT=2,SOLID_FILEEXT=4,
 enum {ARCTIME_NONE=0,ARCTIME_KEEP,ARCTIME_LATEST};
 
 enum EXTTIME_MODE {
-  EXTTIME_NONE=0,EXTTIME_1S,EXTTIME_HIGH1,EXTTIME_HIGH2,EXTTIME_HIGH3
+  EXTTIME_NONE=0,EXTTIME_1S,EXTTIME_MAX
 };
 
 enum {NAMES_ORIGINALCASE=0,NAMES_UPPERCASE,NAMES_LOWERCASE};
@@ -59,10 +59,19 @@ enum SAVECOPY_MODE {
   SAVECOPY_DUPLISTEXIT
 };
 
+enum APPENDARCNAME_MODE
+{
+  APPENDARCNAME_NONE=0,APPENDARCNAME_DESTPATH,APPENDARCNAME_OWNDIR
+};
+
 enum POWER_MODE {
   POWERMODE_KEEP=0,POWERMODE_OFF,POWERMODE_HIBERNATE,POWERMODE_SLEEP,
   POWERMODE_RESTART
 };
+
+
+// Need "forced off" state to turn off sound in GUI command line.
+enum SOUND_NOTIFY_MODE {SOUND_NOTIFY_DEFAULT=0,SOUND_NOTIFY_ON,SOUND_NOTIFY_OFF};
 
 struct FilterMode
 {
@@ -83,6 +92,12 @@ class RAROptions
 
     uint ExclFileAttr;
     uint InclFileAttr;
+
+    // We handle -ed and -e+d with special flags instead of attribute mask,
+    // so it works with both Windows and Unix archives.
+    bool ExclDir;
+    bool InclDir;
+
     bool InclAttrSet;
     size_t WinSize;
     wchar TempPath[NM];
@@ -108,7 +123,7 @@ class RAROptions
 
     wchar LogName[NM];
     MESSAGE_TYPE MsgStream;
-    bool Sound;
+    SOUND_NOTIFY_MODE Sound;
     OVERWRITE_MODE Overwrite;
     int Method;
     HASH_TYPE HashType;
@@ -153,14 +168,17 @@ class RAROptions
 #ifndef SFX_MODULE
     bool GenerateArcName;
     wchar GenerateMask[MAX_GENERATE_MASK];
+    wchar DefGenerateMask[MAX_GENERATE_MASK];
 #endif
     bool SyncFiles;
     bool ProcessEA;
     bool SaveStreams;
     bool SetCompressedAttr;
     bool IgnoreGeneralAttr;
-    RarTime FileTimeBefore;
-    RarTime FileTimeAfter;
+    RarTime FileMtimeBefore,FileCtimeBefore,FileAtimeBefore;
+    bool FileMtimeBeforeOR,FileCtimeBeforeOR,FileAtimeBeforeOR;
+    RarTime FileMtimeAfter,FileCtimeAfter,FileAtimeAfter;
+    bool FileMtimeAfterOR,FileCtimeAfterOR,FileAtimeAfterOR;
     int64 FileSizeLess;
     int64 FileSizeMore;
     bool Lock;
@@ -169,11 +187,12 @@ class RAROptions
     FilterMode FilterModes[MAX_FILTER_TYPES];
     wchar EmailTo[NM];
     uint VersionControl;
-    bool AppendArcNameToPath;
+    APPENDARCNAME_MODE AppendArcNameToPath;
     POWER_MODE Shutdown;
-    EXTTIME_MODE xmtime;
+    EXTTIME_MODE xmtime; // Extended time modes (time precision to store).
     EXTTIME_MODE xctime;
     EXTTIME_MODE xatime;
+    bool PreserveAtime;
     wchar CompressStdin[NM];
 
     uint Threads; // We use it to init hash even if RAR_SMP is not defined.
