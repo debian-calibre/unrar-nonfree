@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 9 Oct 2020 20:31:41 +0900
 Subject: Use proper library file name
 
+Forwarded: not-needed
 ---
  makefile | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

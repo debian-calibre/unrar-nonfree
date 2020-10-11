@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 9 Oct 2020 19:29:22 +0900
 Subject: Cosmetic fix
 
+Forwarded: not-needed
 ---
  makefile | 16 ++++++++--------
  1 file changed, 8 insertions(+), 8 deletions(-)

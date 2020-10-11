@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 9 Oct 2020 19:34:33 +0900
 Subject: Keep output files from "clean" target
 
+Forwarded: not-needed
 ---
  makefile | 2 ++
  1 file changed, 2 insertions(+)

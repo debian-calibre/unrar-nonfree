@@ -2,6 +2,8 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 9 Oct 2020 19:26:50 +0900
 Subject: Don't strip debug symbols (Closes: #866142)
 
+Forwarded: not-needed
+Closes: #866142
 ---
  makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

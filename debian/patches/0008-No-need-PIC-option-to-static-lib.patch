@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Sat, 10 Oct 2020 05:29:49 +0900
 Subject: No need PIC option to static lib
 
+Forwarded: not-needed
 ---
  makefile | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)

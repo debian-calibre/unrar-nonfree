@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 9 Oct 2020 19:32:19 +0900
 Subject: Import variables from Debian package builder
 
+Forwarded: not-needed
 ---
  makefile | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
