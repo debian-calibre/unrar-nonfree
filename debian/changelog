@@ -32,8 +32,11 @@ unrar-nonfree (1:5.9.4-1) UNRELEASED; urgency=medium
   * No need PIC option to static lib
   * Apply man page update patch (Closes: #897946)
   * Refresh quilt patch (Closes: #866142)
+  * Renumber quilt patch
+  * Refresh quilt patch set
+  * Update patch metadata (Closes: #694611)
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 10 Oct 2020 20:50:31 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 11 Oct 2020 16:54:25 +0900
 
 unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
 
