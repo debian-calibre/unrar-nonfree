@@ -4,6 +4,7 @@ Subject: Don't strip debug symbols (Closes: #866142)
 
 Forwarded: not-needed
 Closes: #866142
+Thanks: Jakub Wilk <jwilk@jwilk.net>
 ---
  makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
