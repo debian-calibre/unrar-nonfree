@@ -35,8 +35,9 @@ unrar-nonfree (1:5.9.4-1) UNRELEASED; urgency=medium
   * Renumber quilt patch
   * Refresh quilt patch set
   * Update patch metadata (Closes: #694611)
+  * Upgrade Debian standards
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 11 Oct 2020 16:54:25 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 14 Oct 2020 00:41:24 +0900
 
 unrar-nonfree (1:5.6.6-3) UNRELEASED; urgency=medium
 
