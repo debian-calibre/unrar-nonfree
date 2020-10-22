@@ -1,8 +1,10 @@
 unrar-nonfree (1:6.0.1-1) UNRELEASED; urgency=medium
 
   * New upstream version 6.0.1
+  * Add library symbols file
+  * Update symbols
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 22 Oct 2020 20:07:11 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 22 Oct 2020 21:07:19 +0900
 
 unrar-nonfree (1:5.9.4-1) unstable; urgency=medium
 
