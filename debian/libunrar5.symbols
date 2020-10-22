@@ -73,6 +73,7 @@ libunrar.so.5 libunrar5 #MINVER#
  _Z13WideToUtfSizePKw@Base 1:5.9.4-1
  _Z13WildFileExistPKw@Base 1:5.9.4-1
  _Z13blake2sp_initP14blake2sp_state@Base 1:5.9.4-1
+ _Z13uiEolAfterMsgv@Base 1:6.0.1-1
  _Z13uiGetPassword15UIPASSWORD_TYPEPKwP11SecPassword@Base 1:5.9.4-1
  _Z14DosSlashToUnixPKcPcm@Base 1:5.9.4-1
  _Z14DosSlashToUnixPKwPwm@Base 1:5.9.4-1
@@ -197,9 +198,11 @@ libunrar.so.5 libunrar5 #MINVER#
  _ZN10CmdExtract14ExtractArchiveEv@Base 1:5.9.4-1
  _ZN10CmdExtract15ExtrPrepareNameER7ArchivePKwPwm@Base 1:5.9.4-1
  _ZN10CmdExtract15ExtractFileCopyER4FilePwS2_S2_m@Base 1:5.9.4-1
+ _ZN10CmdExtract17DetectStartVolumeEPKwb@Base 1:6.0.1-1
  _ZN10CmdExtract18ExtrDllGetPasswordEv@Base 1:5.9.4-1
  _ZN10CmdExtract18ExtractArchiveInitER7Archive@Base 1:5.9.4-1
  _ZN10CmdExtract18ExtractCurrentFileER7ArchivemRb@Base 1:5.9.4-1
+ _ZN10CmdExtract20GetFirstVolIfFullSetEPKwbPwm@Base 1:6.0.1-1
  _ZN10CmdExtract9DoExtractEv@Base 1:5.9.4-1
  _ZN10CmdExtractC1EP11CommandData@Base 1:5.9.4-1
  _ZN10CmdExtractC2EP11CommandData@Base 1:5.9.4-1
@@ -305,7 +308,7 @@ libunrar.so.5 libunrar5 #MINVER#
  _ZN12ErrorHandler12ReadErrorMsgEPKw@Base 1:5.9.4-1
  _ZN12ErrorHandler12ReadErrorMsgEPKwS1_@Base 1:5.9.4-1
  _ZN12ErrorHandler12SetErrorCodeE8RAR_EXIT@Base 1:5.9.4-1
- _ZN12ErrorHandler13AskRepeatReadEPKw@Base 1:5.9.4-1
+ _ZN12ErrorHandler13AskRepeatReadEPKwRbS2_S2_@Base 1:6.0.1-1
  _ZN12ErrorHandler13GeneralErrMsgEPKwz@Base 1:5.9.4-1
  _ZN12ErrorHandler13WriteErrorMsgEPKwS1_@Base 1:5.9.4-1
  _ZN12ErrorHandler14AskRepeatWriteEPKwb@Base 1:5.9.4-1
