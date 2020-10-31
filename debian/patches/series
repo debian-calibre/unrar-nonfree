@@ -7,3 +7,4 @@
 0007-Use-proper-library-file-name.patch
 0008-No-need-PIC-option-to-static-lib.patch
 0009-Fix-link-target.patch
+0010-Display-build-commands.patch
