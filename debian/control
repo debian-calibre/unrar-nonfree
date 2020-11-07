@@ -34,7 +34,15 @@ Section: non-free/libdevel
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, libunrar5 (= ${binary:Version})
+Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), libunrar-headers (= ${binary:Version})
 Description: Unarchiver for .rar files (non-free version) - development files
- This package contains the static library and header files for the
- libunrar library.
+ This package contains the static library for the libunrar library.
+
+Package: libunrar-headers
+Section: non-free/libdevel
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}
+Breaks: libunrar-dev (<= 1:5.9.4-1)
+Description: Unarchiver for .rar files (non-free version) - development header files
+ This package contains the header files for the libunrar library.
