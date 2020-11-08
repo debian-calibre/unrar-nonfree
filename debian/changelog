@@ -6,7 +6,8 @@ unrar-nonfree (1:6.0.1-1) UNRELEASED; urgency=medium
   * Lintian fix
   * Lintian fix
   * Display build commands
-  * Move architecture independent development files to "libunrar-headers" package
+  * Move architecture independent development files to "libunrar-headers"
+    package
 
  -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 08 Nov 2020 04:35:34 +0900
 
