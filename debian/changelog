@@ -1,15 +1,20 @@
 unrar-nonfree (1:6.0.1-1) UNRELEASED; urgency=medium
 
   * New upstream version 6.0.1
+  * New upstream beta release 6.0.1
   * Add library symbols file
   * Update symbols
+  * Update changelog
   * Lintian fix
   * Lintian fix
   * Display build commands
   * Move architecture independent development files to "libunrar-headers"
     package
+  * Update changelog
+  * Lintian fix
+  * Lintian fix
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 08 Nov 2020 04:35:34 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 08 Nov 2020 20:15:49 +0900
 
 unrar-nonfree (1:5.9.4-1) unstable; urgency=medium
 
