@@ -1,0 +1,156 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Tue, 10 Nov 2020 22:37:21 +0900
+Subject: Add visibility attribute to reduce export table
+
+---
+ dll.cpp  | 12 ++++++++++++
+ dll.hpp  | 24 ++++++++++++------------
+ makefile |  2 +-
+ 3 files changed, 25 insertions(+), 13 deletions(-)
+
+diff --git a/dll.cpp b/dll.cpp
+index 31818e4..e54a3e0 100644
+--- a/dll.cpp
++++ b/dll.cpp
+@@ -14,6 +14,7 @@ struct DataSet
+ };
+ 
+ 
++__attribute__ ((visibility ("default")))
+ HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *r)
+ {
+   RAROpenArchiveDataEx rx;
+@@ -30,6 +31,7 @@ HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *r)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
+ {
+   DataSet *Data=NULL;
+@@ -165,6 +167,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARCloseArchive(HANDLE hArcData)
+ {
+   DataSet *Data=(DataSet *)hArcData;
+@@ -181,6 +184,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
+ {
+   struct RARHeaderDataEx X;
+@@ -206,6 +210,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *D)
+ {
+   DataSet *Data=(DataSet *)hArcData;
+@@ -417,18 +422,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestName)
+ {
+   return ProcessFile(hArcData,Operation,DestPath,DestName,NULL,NULL);
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARProcessFileW(HANDLE hArcData,int Operation,wchar *DestPath,wchar *DestName)
+ {
+   return ProcessFile(hArcData,Operation,NULL,NULL,DestPath,DestName);
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
+ {
+   DataSet *Data=(DataSet *)hArcData;
+@@ -436,6 +444,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData)
+ {
+   DataSet *Data=(DataSet *)hArcData;
+@@ -444,6 +453,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc)
+ {
+   DataSet *Data=(DataSet *)hArcData;
+@@ -451,6 +461,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
+ {
+ #ifndef RAR_NOCRYPT
+@@ -463,6 +474,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
+ }
+ 
+ 
++__attribute__ ((visibility ("default")))
+ int PASCAL RARGetDllVersion()
+ {
+   return RAR_DLL_VERSION;
+diff --git a/dll.hpp b/dll.hpp
+index c785ff1..268c2ce 100644
+--- a/dll.hpp
++++ b/dll.hpp
+@@ -167,18 +167,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
+ extern "C" {
+ #endif
+ 
+-HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *ArchiveData);
+-HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *ArchiveData);
+-int    PASCAL RARCloseArchive(HANDLE hArcData);
+-int    PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *HeaderData);
+-int    PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *HeaderData);
+-int    PASCAL RARProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestName);
+-int    PASCAL RARProcessFileW(HANDLE hArcData,int Operation,wchar_t *DestPath,wchar_t *DestName);
+-void   PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData);
+-void   PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc);
+-void   PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc);
+-void   PASCAL RARSetPassword(HANDLE hArcData,char *Password);
+-int    PASCAL RARGetDllVersion();
++__attribute__ ((visibility ("default"))) HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *ArchiveData);
++__attribute__ ((visibility ("default"))) HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *ArchiveData);
++__attribute__ ((visibility ("default"))) int    PASCAL RARCloseArchive(HANDLE hArcData);
++__attribute__ ((visibility ("default"))) int    PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *HeaderData);
++__attribute__ ((visibility ("default"))) int    PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *HeaderData);
++__attribute__ ((visibility ("default"))) int    PASCAL RARProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestName);
++__attribute__ ((visibility ("default"))) int    PASCAL RARProcessFileW(HANDLE hArcData,int Operation,wchar_t *DestPath,wchar_t *DestName);
++__attribute__ ((visibility ("default"))) void   PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData);
++__attribute__ ((visibility ("default"))) void   PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc);
++__attribute__ ((visibility ("default"))) void   PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc);
++__attribute__ ((visibility ("default"))) void   PASCAL RARSetPassword(HANDLE hArcData,char *Password);
++__attribute__ ((visibility ("default"))) int    PASCAL RARGetDllVersion();
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/makefile b/makefile
+index f057518..d2c927f 100644
+--- a/makefile
++++ b/makefile
+@@ -4,7 +4,7 @@
+ # Linux using GCC
+ CXX = c++
+ CXXFLAGS +=
+-LIBFLAGS += -fPIC
++LIBFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+ DEFINES += -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
+ STRIP = true
+ AR = ar
