@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Tue, 10 Nov 2020 22:37:21 +0900
 Subject: Add visibility attribute to reduce export table
 
+Forwarded: not-needed
 ---
  dll.cpp  | 12 ++++++++++++
  dll.hpp  | 24 ++++++++++++------------
