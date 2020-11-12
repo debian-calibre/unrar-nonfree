@@ -1,4 +1,4 @@
-unrar-nonfree (1:6.0.1-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.0.2-1) UNRELEASED; urgency=medium
 
   * New upstream version 6.0.1
   * New upstream beta release 6.0.1
@@ -13,8 +13,12 @@ unrar-nonfree (1:6.0.1-1) UNRELEASED; urgency=medium
   * Update changelog
   * Lintian fix
   * Lintian fix
+  * Export required symbols only for dynamic library
+  * Update symbols file
+  * Update patch attribure
+  * New upstream version 6.0.2
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 08 Nov 2020 20:15:49 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 13 Nov 2020 08:38:25 +0900
 
 unrar-nonfree (1:5.9.4-1) unstable; urgency=medium
 
