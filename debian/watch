@@ -2,4 +2,4 @@
 
 version=4
 
-https://www.rarlab.com/rar_add.htm rar/unrarsrc-(.*)\.tar\.gz debian uupdate
+https://www.rarlab.com/rar_add.htm rar/unrarsrc-(.*)\.tar\.gz
