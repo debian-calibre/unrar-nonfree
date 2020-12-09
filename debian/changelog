@@ -1,4 +1,4 @@
-unrar-nonfree (1:6.0.2-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.0.3-1) unstable; urgency=medium
 
   * New upstream version 6.0.1
   * New upstream beta release 6.0.1
@@ -13,12 +13,18 @@ unrar-nonfree (1:6.0.2-1) UNRELEASED; urgency=medium
   * Update changelog
   * Lintian fix
   * Lintian fix
+  * Update changelog
   * Export required symbols only for dynamic library
   * Update symbols file
   * Update patch attribure
   * New upstream version 6.0.2
+  * Update changelog
+  * No need to use "uupdate"
+  * Upgrade Debian standard
+  * Add hardening/reproducible option
+  * New upstream version 6.0.3
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 13 Nov 2020 08:38:25 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 09 Dec 2020 22:09:14 +0900
 
 unrar-nonfree (1:5.9.4-1) unstable; urgency=medium
 
