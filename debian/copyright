@@ -8,6 +8,8 @@ Disclaimer: This software is non-free.
  for recreating the rar compression algorithm.
 License: freeware
 
+Files: *
+Copyright: 1993-2020 Alexander L. Roshal
 License: freeware
    ******    *****   ******   UnRAR - free utility for RAR archives
    **   **  **   **  **   **  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,3 +53,18 @@ License: freeware
  .
  .
                                               Alexander L. Roshal
+
+
+Files: debian/*
+Copyright:
+ 2000-2004 Petr Cech <cech@debian.org>
+ 2004 Robert Millan <rmh@debian.org>
+ 2004 Chris Anderson <chris@nullcode.org>
+ 2005 Jeroen van Wolffelaar <jeroen@wolffelaar.nl>
+ 2006 Christoph Berg <myon@debian.org>
+ 2006-2017 Martin Meredith <mez@ubuntu.com>
+ 2018-2020 Norbert Preining <norbert@preining.info>
+ 2020 YOKOTA Hiroshi <yokota.hgml@gmail.com>
+License: Public Domain
+ Free for all purposes.
+
