@@ -1,28 +1,23 @@
 unrar-nonfree (1:6.0.3-1) unstable; urgency=medium
 
-  * New upstream version 6.0.1
-  * New upstream beta release 6.0.1
+  [ YOKOTA Hiroshi ]
+  * New upstream version 6.0.1, 6.0.2, 6.0.3
   * Add library symbols file
-  * Update symbols
-  * Update changelog
-  * Lintian fix
-  * Lintian fix
+  * Lintian fixes
   * Display build commands
   * Move architecture independent development files to "libunrar-headers"
     package
   * Update changelog
-  * Lintian fix
-  * Lintian fix
-  * Update changelog
   * Export required symbols only for dynamic library
-  * Update symbols file
   * Update patch attribure
-  * New upstream version 6.0.2
-  * Update changelog
   * No need to use "uupdate"
   * Upgrade Debian standard
   * Add hardening/reproducible option
-  * New upstream version 6.0.3
+
+  [ Norbert Preining ]
+  * Adjust dependency to support binNMUs
+  * Adjust copyright file for debian and tag all other files
+  * Update maintainer to tracker ml and put us in uploaders
 
  -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 09 Dec 2020 22:09:14 +0900
 
