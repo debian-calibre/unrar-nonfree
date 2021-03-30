@@ -9,8 +9,8 @@ Homepage: https://www.rarlab.com/
 Build-Depends: debhelper-compat (= 13), dpkg-dev (>= 1.16.1~), dh-exec
 Standards-Version: 4.5.1
 XS-Autobuild: yes
-Vcs-Git: https://github.com/norbusan/debian-unrar-nonfree.git
-Vcs-Browser: https://github.com/norbusan/debian-unrar-nonfree
+Vcs-Git: https://github.com/debian-calibre/unrar-nonfree.git
+Vcs-Browser: https://github.com/debian-calibre/unrar-nonfree
 Rules-Requires-Root: no
 
 Package: unrar
