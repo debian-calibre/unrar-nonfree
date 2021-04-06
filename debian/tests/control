@@ -4,3 +4,11 @@
 Features: test-name=smoke
 Test-Command: unrar-nonfree
 Restrictions: superficial
+
+# show file list
+Features: test-name=list-files
+Test-Command: unrar-nonfree v debian/tests/data/data.rar
+
+# check data integrity
+Features: test-name=integrity-test
+Test-Command: unrar-nonfree t debian/tests/data/data.rar
