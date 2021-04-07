@@ -5,6 +5,12 @@ Features: test-name=smoke
 Test-Command: unrar-nonfree
 Restrictions: superficial
 
+# install unrar command only
+Features: test-name=smoke-simple
+Test-Command: unrar-nonfree
+Depends: unrar
+Restrictions: superficial
+
 # show file list
 Features: test-name=list-files
 Test-Command: unrar-nonfree v debian/tests/data/data.rar
