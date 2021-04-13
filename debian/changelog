@@ -1,3 +1,9 @@
+unrar-nonfree (1:6.0.5-1) unstable; urgency=medium
+
+  * New upstream version 6.0.5
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 13 Apr 2021 20:53:10 +0900
+
 unrar-nonfree (1:6.0.4-2) unstable; urgency=medium
 
   [ Norbert Preining ]
