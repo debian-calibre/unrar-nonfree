@@ -94,6 +94,27 @@ Read file names to exclude from stdin.
 .TP
 .B \-y
 Assume Yes on all queries.
+.SH FILES
+.IP "$HOME/.rarrc"
+.IP "/etc/.rarrc"
+.IP "/etc/rar/.rarrc"
+.IP "/usr/lib/.rarrc"
+.IP "/usr/local/lib/.rarrc"
+.IP "/usr/local/etc/.rarrc"
+UnRAR (and RAR) configuration file.
+
+.IP "Syntax: (switches for all commands)"
+switches=<any RAR switches separated by spaces>
+.IP "Syntax: (switches for specific command)"
+switches_<command>=<any RAR switches separated by spaces>
+
+.IP Example:
+switches=-m5 -s
+.br
+switches_a=-m5 -s
+.br
+switches_x=-o+
+
 .SH AUTHOR
 This manual page was written by Petr Cech <cech@debian.org> according
 to "unrar" for the Debian GNU/Linux system (but may be used by others).
