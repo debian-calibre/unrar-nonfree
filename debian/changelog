@@ -3,7 +3,7 @@ unrar-nonfree (1:6.0.6-1) experimental; urgency=medium
   * Update manual page
   * Add information about configuration file
   * New upstream version 6.0.6
-  * Use experimental branch while freeze plicy is active
+  * Use experimental branch while freeze policy is active
 
  -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 17 May 2021 23:11:52 +0900
 
