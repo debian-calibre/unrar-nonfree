@@ -1,3 +1,10 @@
+unrar-nonfree (1:6.0.7-1) experimental; urgency=medium
+
+  * Fix typo
+  * New upstream version 6.0.7
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 15 Jun 2021 08:15:30 +0900
+
 unrar-nonfree (1:6.0.6-1) experimental; urgency=medium
 
   * Update manual page
