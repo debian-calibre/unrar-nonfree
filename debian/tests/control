@@ -18,3 +18,7 @@ Test-Command: unrar-nonfree v debian/tests/data/data.rar
 # check data integrity
 Features: test-name=integrity-test
 Test-Command: unrar-nonfree t debian/tests/data/data.rar
+
+# CVE-2018-25018 (Debian bug 990541)
+Tests: CVE-2018-25018.sh
+Restrictions: allow-stderr
