@@ -1,3 +1,10 @@
+unrar-nonfree (1:6.0.7-2) unstable; urgency=medium
+
+  * Add CVE-2018-25018 check
+  * Revert "Use experimental branch while freeze plicy is active"
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 16 Aug 2021 22:01:13 +0900
+
 unrar-nonfree (1:6.0.7-1) experimental; urgency=medium
 
   * Fix typo
