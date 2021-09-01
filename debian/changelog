@@ -1,3 +1,13 @@
+unrar-nonfree (1:6.0.7-3) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster
+
+  [ YOKOTA Hiroshi ]
+  * Update standards
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 02 Sep 2021 02:52:04 +0900
+
 unrar-nonfree (1:6.0.7-2) unstable; urgency=medium
 
   * Add CVE-2018-25018 check
