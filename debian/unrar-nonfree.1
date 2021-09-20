@@ -1,10 +1,10 @@
-.TH UNRAR 1 02.11.1999 "" "RAR archiver"
+.TH UNRAR 1 2021-09-20 "" "RAR archiver"
 .SH NAME
 unrar \- extract files from rar archives
 .SH SYNOPSIS
 .B unrar
 .IR command " [" \-switch " \&...\&] " archive \
-" [" file " \&...\&] [" path " \&...\&]"
+" [" file " \&...\&] [" @listfiles " \&...\&] [" path " \&...\&]"
 .SH "DESCRIPTION"
 This manual page documents briefly the
 .B unrar
@@ -13,7 +13,7 @@ command.
 This manual page was written for the Debian GNU/Linux distribution
 because the original program does not have a manual page.
 .br
-Commands and options described here are as of unrar 2.02.
+Commands and options described here are as of unrar 6.0.
 .SH COMMANDS
 After the program name comes a command and then optional switches with
 dashes before them.
@@ -25,8 +25,8 @@ without options.
 .B e
 Extract files to current directory.
 .TP
-.B l
-List archive content.
+.B l[t[a],b]
+List archive content [technical[all], bare].
 .TP
 .B p
 Print file to stdout.
@@ -34,24 +34,60 @@ Print file to stdout.
 .B t
 Test archive files.
 .TP
-.B v
-Verbosely list archive.
+.B v[t[a],b]
+Verbosely list archive [technical[all], bare].
 .TP
 .B x
 Extract files with full path.
-.SH SWITCHES
+.SH OPTIONS
 .B NOTE:
 Every switch must be separated by a whitespace.
 You cannot put them together.
 .TP
-.B \-av\-
-Disable Authenticity Verification check.
+.B \-
+Stop switches scanning.
+.TP
+.B @[+]
+Disable [enable] file lists.
+.TP
+.B \-ad[1,2]
+Alternate destination path
+.TP
+.B \-ag[format]
+Generate archive name using the current date.
+.TP
+.B \-ai
+Ignore file attributes.
+.TP
+.B \-ap<path>
+Set path inside archive.
 .TP
 .B \-c\-
 Disable comments show.
 .TP
+.B \-cfg-
+Disable read configuration.
+.TP
+.B \-cl
+Convert names to lower case.
+.TP
+.B \-cu
+Convert names to upper case.
+.TP
+.B \-dh
+Open shared files.
+.TP
+.B \-ep
+Exclude paths from names.
+.TP
+.B \-ep3
+Expand paths to full name.
+.TP
 .B \-f
 Freshen files.
+.TP
+.B \-id[c,d,n,p,q]
+Display or disable messages.
 .TP
 .B \-kb
 Keep broken extracted files.
@@ -62,11 +98,29 @@ Send all messages to stderr.
 .B \-inul
 Disable all messages.
 .TP
+.B \-n<file>
+Additionally filter included files.
+.TP
+.B \-n@
+Read additional filter masks from stdin.
+.TP
+.B \-n@<list>
+Read additional filter masks from list file.
+.TP
 .B \-o+
 Overwrite existing files.
 .TP
 .B \-o\-
 Do not overwrite existing files.
+.TP
+.B \-ol[a]
+Process symbolic links as the link [absolute paths].
+.TP
+.B \-or
+Rename files automatically.
+.TP
+.B \-ow
+Save or restore file owner and group.
 .TP
 .BI \-p password
 Set password.
@@ -77,16 +131,46 @@ Do not query password.
 .B \-r
 Recurse subdirectories.
 .TP
+.B \-sc<chr>[obj]
+Specify the character set.
+.TP
+.B \-sl<size>
+Process files with size less than specified.
+.TP
+.B \-sm<size>
+Process files with size more than specified.
+.TP
+.B \-ta[mcao]<d>
+Process files modified after <d> YYYYMMDDHHMMSS date.
+.TP
+.B \-tb[mcao]<d>
+Process files modified before <d> YYYYMMDDHHMMSS date.
+.TP
+.B \-tn[mcao]<t>
+Process files newer than <t> time.
+.TP
+.B \-to[mcao]<t>
+Process files older than <t> time.
+.TP
+.B \-ts[m,c,a,p]
+Save or restore time (modification, creation, access, preserve).
+.TP
 .B \-u
 Update files.
 .TP
 .B \-v
 List all volumes.
 .TP
-.BI \-x file
+.B \-ver[n]
+File version control.
+.TP
+.B \-vp
+Pause before each volume.
+.TP
+.BI \-x<file>
 Exclude specified file.
 .TP
-.BI \-x@ list
+.BI \-x@<list>
 Exclude files in specified list file.
 .TP
 .B \-x@
@@ -102,19 +186,16 @@ Assume Yes on all queries.
 .IP "/usr/local/lib/.rarrc"
 .IP "/usr/local/etc/.rarrc"
 UnRAR (and RAR) configuration file.
-
 .IP "Syntax: (switches for all commands)"
 switches=<any RAR switches separated by spaces>
 .IP "Syntax: (switches for specific command)"
 switches_<command>=<any RAR switches separated by spaces>
-
 .IP Example:
 switches=-m5 -s
 .br
 switches_a=-m5 -s
 .br
 switches_x=-o+
-
-.SH AUTHOR
+.SH AUTHORS
 This manual page was written by Petr Cech <cech@debian.org> according
 to "unrar" for the Debian GNU/Linux system (but may be used by others).
