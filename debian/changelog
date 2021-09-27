@@ -1,4 +1,4 @@
-unrar-nonfree (1:6.0.7-4) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.0.7-4) unstable; urgency=medium
 
   [ Bastian Germann ]
   * Update manpage to v6.0 (Closes: #994755)
@@ -7,7 +7,7 @@ unrar-nonfree (1:6.0.7-4) UNRELEASED; urgency=medium
   * Add license info for specific files (Closes: #994759)
   * Use machine readable license name
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 28 Sep 2021 02:02:02 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 28 Sep 2021 02:06:16 +0900
 
 unrar-nonfree (1:6.0.7-3) unstable; urgency=medium
 
