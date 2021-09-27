@@ -54,6 +54,17 @@ License: freeware
  .
                                               Alexander L. Roshal
 
+Files: blake2sp.cpp
+Copyright: Written in 2012 by Samuel Neves <sneves@dei.uc.pt>
+License: CC0
+
+Files: crc.cpp
+Copyright: Copyright (c) 2004-2006 Intel Corporation - All Rights Reserved
+License: BSD-2-clause
+
+Files: sha1.cpp
+Copyright: By Steve Reid <steve@edmweb.com>
+License: public-domain
 
 Files: debian/*
 Copyright:
