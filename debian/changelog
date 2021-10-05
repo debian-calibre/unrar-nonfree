@@ -1,3 +1,9 @@
+unrar-nonfree (1:6.0.7-5) unstable; urgency=medium
+
+  * Update debian/copyright to comply with Debian Policy (Closes: #994759)
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 06 Oct 2021 00:07:34 +0900
+
 unrar-nonfree (1:6.0.7-4) unstable; urgency=medium
 
   [ Bastian Germann ]
