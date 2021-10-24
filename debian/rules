@@ -1,14 +1,19 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/architecture.mk
+
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
+
+CXX = $(DEB_HOST_GNU_TYPE)-g++
+AR  = $(DEB_HOST_GNU_TYPE)-ar
 
 %:
 	dh $@
 
 override_dh_auto_build:
-	$(MAKE) all
-	$(MAKE) lib
-	$(MAKE) static-lib
+	$(MAKE) CXX=$(CXX) AR=$(AR) all
+	$(MAKE) CXX=$(CXX) AR=$(AR) lib
+	$(MAKE) CXX=$(CXX) AR=$(AR) static-lib
 
 # do nothing
 override_dh_auto_install:
