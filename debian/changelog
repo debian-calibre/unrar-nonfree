@@ -1,9 +1,9 @@
-unrar-nonfree (1:6.1.2-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.1.2-1) unstable; urgency=medium
 
   * New upstream version 6.1.2
   * Update copyright text
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 16 Nov 2021 19:48:18 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 17 Nov 2021 20:28:54 +0900
 
 unrar-nonfree (1:6.0.7-6) unstable; urgency=medium
 
