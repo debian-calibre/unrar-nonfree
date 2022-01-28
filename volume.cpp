@@ -46,15 +46,18 @@ bool MergeArchive(Archive &Arc,ComprDataIO *DataIO,bool ShowFileName,wchar Comma
 
   bool FailedOpen=false; // No more next volume open attempts if true.
 #if !defined(SILENT)
-  if (Cmd->VolumePause)
-  {
-    // If next volume can't be opened exclusively, it might be still
-    // downloading, so in -vp mode user may prefer to pause until completion
-    // even if volume is exist. FMF_OPENEXCLUSIVE works in Windows only.
-    File TestOpen;
-    if (!TestOpen.Open(NextName,FMF_OPENEXCLUSIVE) && !uiAskNextVolume(NextName,ASIZE(NextName)))
-      FailedOpen=true;
-  }
+  // In -vp mode we force the pause before next volume even if it is present
+  // and even if we are on the hard disk. It is important when user does not
+  // want to process partially downloaded volumes preliminary.
+  // 2022.01.11: In WinRAR 6.10 beta versions we tried to ignore VolumePause
+  // if we could open the next volume with FMF_OPENEXCLUSIVE. But another
+  // developer asked us to return the previous behavior and always prompt
+  // for confirmation. They want to control when unrar continues, because
+  // the next file might not be fully decoded yet. They write chunks of data
+  // and then close the file again until the next chunk comes in.
+
+  if (Cmd->VolumePause && !uiAskNextVolume(NextName,ASIZE(NextName)))
+    FailedOpen=true;
 #endif
 
   uint OpenMode = Cmd->OpenShared ? FMF_OPENSHARED : 0;
