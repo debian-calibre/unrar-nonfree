@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 2 insertions(+)
 
 diff --git a/makefile b/makefile
-index bd5c0a7..2900c8f 100644
+index f982fad..4d8299c 100644
 --- a/makefile
 +++ b/makefile
 @@ -140,6 +140,8 @@ uninstall:	uninstall-unrar

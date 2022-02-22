@@ -14,7 +14,7 @@ Added hardening support (Closes: #694611)
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index 214f87e..8eda2e4 100644
+index ace156c..ae76a60 100644
 --- a/makefile
 +++ b/makefile
 @@ -3,12 +3,12 @@

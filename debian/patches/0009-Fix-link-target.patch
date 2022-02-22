@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index ccc0c0c..9b1f3ad 100644
+index 3e9599c..466621c 100644
 --- a/makefile
 +++ b/makefile
 @@ -161,7 +161,7 @@ lib:	clean $(OBJECTS) $(LIB_OBJ)
