@@ -1,3 +1,10 @@
+unrar-nonfree (1:6.1.5-1) UNRELEASED; urgency=medium
+
+  * New upstream version 6.1.5
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 22 Feb 2022 23:19:56 +0900
+
 unrar-nonfree (1:6.1.4-1) unstable; urgency=medium
 
   * New upstream version 6.1.4
