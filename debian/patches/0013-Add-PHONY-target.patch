@@ -1,0 +1,23 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Wed, 16 Mar 2022 23:04:06 +0900
+Subject: Add PHONY target
+
+Forwarded: not-needed
+---
+ makefile | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/makefile b/makefile
+index dfe9626..061927b 100644
+--- a/makefile
++++ b/makefile
+@@ -131,6 +131,9 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o smallfn.o global.o file.o filefn.o filc
+ .cpp.o:
+ 	$(COMPILE) -D$(WHAT) -c $<
+ 
++.PHONY: all install uninstall clean distclean sfx lib static-lib \
++	install-unrar uninstall-unrar install-lib uninstall-lib
++
+ all:	unrar-nonfree
+ 
+ install:	install-unrar
