@@ -1,0 +1,23 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Mon, 28 Mar 2022 01:00:58 +0900
+Subject: Add newline after error message (Closes: #774166)
+
+Bug-Debian: https://bugs.debian.org/774166
+
+Add newline after messages about bad option switch error.
+---
+ cmddata.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmddata.cpp b/cmddata.cpp
+index 82d24f4..3a71f7b 100644
+--- a/cmddata.cpp
++++ b/cmddata.cpp
+@@ -927,6 +927,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
+ void CommandData::BadSwitch(const wchar *Switch)
+ {
+   mprintf(St(MUnknownOption),Switch);
++  mprintf(L"\n");
+   ErrHandler.Exit(RARX_USERERROR);
+ }
+ #endif

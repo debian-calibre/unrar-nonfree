@@ -11,3 +11,4 @@
 0011-Add-visibility-attribute-to-reduce-export-table.patch
 0012-Drop-dh-exec-usage.patch
 0013-Add-PHONY-target.patch
+0014-Add-newline-after-error-message-Closes-774166.patch
