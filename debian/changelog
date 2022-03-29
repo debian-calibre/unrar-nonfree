@@ -1,8 +1,8 @@
-unrar-nonfree (1:6.1.6-3) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.1.6-3) unstable; urgency=medium
 
   * Add newline after error message (Closes: #774166)
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 29 Mar 2022 21:56:21 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 29 Mar 2022 21:56:44 +0900
 
 unrar-nonfree (1:6.1.6-2) unstable; urgency=medium
 
