@@ -1,3 +1,9 @@
+unrar-nonfree (1:5.6.6-1+deb10u1) buster; urgency=high
+
+  * Fix CVE-2022-30333 (Closes: #1010837)
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 10 May 2022 21:00:00 +0900
+
 unrar-nonfree (1:5.6.6-1) unstable; urgency=medium
 
   * add myself to uploaders with Martin's consent, 
