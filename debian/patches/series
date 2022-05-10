@@ -9,3 +9,4 @@
 0009-Fix-link-target.patch
 0010-Display-build-commands.patch
 0011-Add-visibility-attribute-to-reduce-export-table.patch
+0012-Fix-CVE-2022-30333.patch
