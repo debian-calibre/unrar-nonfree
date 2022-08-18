@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Thu, 18 Aug 2022 20:21:27 +0900
+Subject: Compiler warning fix
+
+Unsigned int value takes 10 bytes buffer when prints large numbers.
+---
+ pathfn.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pathfn.cpp b/pathfn.cpp
+index 983bd74..03de2c7 100644
+--- a/pathfn.cpp
++++ b/pathfn.cpp
+@@ -768,7 +768,7 @@ static void GenArcName(wchar *ArcName,size_t MaxSize,const wchar *GenerateMask,u
+   if (StartWeekDay%7>=4)
+     CurWeek++;
+ 
+-  char Field[10][6];
++  char Field[10][11];
+ 
+   sprintf(Field[0],"%04u",rlt.Year);
+   sprintf(Field[1],"%02u",rlt.Month);
