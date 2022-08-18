@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+)
 
 diff --git a/makefile b/makefile
-index dfe9626..061927b 100644
+index 18829e3..e1c612c 100644
 --- a/makefile
 +++ b/makefile
 @@ -131,6 +131,9 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o smallfn.o global.o file.o filefn.o filc
@@ -18,6 +18,6 @@ index dfe9626..061927b 100644
 +.PHONY: all install uninstall clean distclean sfx lib static-lib \
 +	install-unrar uninstall-unrar install-lib uninstall-lib
 +
- all:	unrar-nonfree
+ all:	unrar
  
  install:	install-unrar

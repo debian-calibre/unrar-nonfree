@@ -6,7 +6,7 @@ Uploaders: Martin Meredith <mez@debian.org>,
            Norbert Preining <norbert@preining.info>,
            YOKOTA Hiroshi <yokota.hgml@gmail.com>,
 Homepage: https://www.rarlab.com/
-Build-Depends: debhelper-compat (= 13)
+Build-Depends: debhelper-compat (= 13), dh-exec
 Standards-Version: 4.6.1
 XS-Autobuild: yes
 Vcs-Git: https://github.com/debian-calibre/unrar-nonfree.git
