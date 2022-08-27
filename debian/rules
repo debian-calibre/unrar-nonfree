@@ -2,7 +2,7 @@
 
 include /usr/share/dpkg/architecture.mk
 
-export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all optimize=+lto
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 
 CXX = $(DEB_HOST_GNU_TYPE)-g++
 AR  = $(DEB_HOST_GNU_TYPE)-ar
