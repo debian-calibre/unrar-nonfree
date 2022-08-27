@@ -1,8 +1,9 @@
-unrar-nonfree (1:6.1.7-4) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.1.7-4) unstable; urgency=medium
 
   * Revert "Enable link time optimization (LTO)"
+    LTO breaks reproducible build.
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 27 Aug 2022 18:37:13 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 27 Aug 2022 18:37:29 +0900
 
 unrar-nonfree (1:6.1.7-3) unstable; urgency=medium
 
