@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index 4d8299c..ffe78c7 100644
+index 7e9fcad..cf1c4d3 100644
 --- a/makefile
 +++ b/makefile
 @@ -159,7 +159,9 @@ lib:	WHAT=RARDLL

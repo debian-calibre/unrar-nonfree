@@ -10,10 +10,10 @@ Add newline after messages about bad option switch error.
  1 file changed, 1 insertion(+)
 
 diff --git a/cmddata.cpp b/cmddata.cpp
-index 82d24f4..3a71f7b 100644
+index 3a4ab99..ffc5ff9 100644
 --- a/cmddata.cpp
 +++ b/cmddata.cpp
-@@ -927,6 +927,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
+@@ -943,6 +943,7 @@ void CommandData::ProcessSwitch(const wchar *Switch)
  void CommandData::BadSwitch(const wchar *Switch)
  {
    mprintf(St(MUnknownOption),Switch);

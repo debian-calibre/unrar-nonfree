@@ -10,7 +10,7 @@ Thanks: Jakub Wilk <jwilk@jwilk.net>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index 6a230f1..491bec0 100644
+index 627dd6e..f2a337e 100644
 --- a/makefile
 +++ b/makefile
 @@ -6,7 +6,7 @@ CXX=c++

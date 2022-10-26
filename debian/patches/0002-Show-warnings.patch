@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index ae76a60..6a230f1 100644
+index 6d88607..627dd6e 100644
 --- a/makefile
 +++ b/makefile
 @@ -3,7 +3,7 @@

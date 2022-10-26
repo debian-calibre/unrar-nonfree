@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+)
 
 diff --git a/makefile b/makefile
-index 18829e3..e1c612c 100644
+index 6774f6d..5d73b20 100644
 --- a/makefile
 +++ b/makefile
 @@ -131,6 +131,9 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o smallfn.o global.o file.o filefn.o filc
