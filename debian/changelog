@@ -1,3 +1,9 @@
+unrar-nonfree (1:6.2.1-2) UNRELEASED; urgency=medium
+
+  * Lintian fix: symbols-file-contains-current-version-with-debian-revision
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 27 Oct 2022 13:07:00 +0900
+
 unrar-nonfree (1:6.2.1-1) unstable; urgency=medium
 
   * New upstream version 6.2.1
