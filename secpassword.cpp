@@ -124,12 +124,11 @@ void SecPassword::Get(wchar *Psw,size_t MaxSize)
 
 void SecPassword::Set(const wchar *Psw)
 {
-  if (*Psw==0)
-  {
-    PasswordSet=false;
-    std::fill(Password.begin(), Password.end(), 0);
-  }
-  else
+  // Eliminate any traces of previously stored password for security reason
+  // in case it was longer than new one.
+  Clean();
+
+  if (*Psw!=0)
   {
     PasswordSet=true;
     Process(Psw,wcslen(Psw)+1,&Password[0],Password.size(),true);
