@@ -765,7 +765,7 @@ bool CmdExtract::ExtractCurrentFile(Archive &Arc,size_t HeaderSize,bool &Repeat)
           }
           else
           {
-            uiMsg(UIERROR_UNKNOWNEXTRA,Arc.FileName,DestFileName);
+            uiMsg(UIERROR_UNKNOWNEXTRA,Arc.FileName,ArcFileName);
             LinkSuccess=false;
           }
           
@@ -1028,6 +1028,16 @@ bool CmdExtract::ExtractFileCopy(File &New,wchar *ArcName,const wchar *RedirName
 
 void CmdExtract::ExtrPrepareName(Archive &Arc,const wchar *ArcFileName,wchar *DestName,size_t DestSize)
 {
+  if (Cmd->Test)
+  {
+    // Destination name conversion isn't needed for simple archive test.
+    // This check also allows to avoid issuing "Attempting to correct...
+    // Renaming..." messages in MakeNameCompatible() below for problematic
+    // names like aux.txt when testing an archive.
+    wcsncpyz(DestName,ArcFileName,DestSize);
+    return;
+  }
+  
   wcsncpyz(DestName,Cmd->ExtrPath,DestSize);
 
   if (*Cmd->ExtrPath!=0)

@@ -234,7 +234,7 @@ struct FileHeader:BlockHeader
   bool LargeFile;
   
   // 'true' for HEAD_SERVICE block, which is a child of preceding file block.
-  // RAR 4.x uses 'solid' flag to indicate child subheader blocks in archives.
+  // RAR 4.x uses 'solid' flag to indicate children subheader blocks in archives.
   bool SubBlock;
 
   HOST_SYSTEM_TYPE HSType;
