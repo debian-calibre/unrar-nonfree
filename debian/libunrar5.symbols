@@ -11,6 +11,6 @@ libunrar.so.5 libunrar5 #MINVER#
  RARSetChangeVolProc@Base 1:5.9.4
  RARSetPassword@Base 1:5.9.4
  RARSetProcessDataProc@Base 1:5.9.4
- _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_@Base 1:6.2.1-1~
+ (optional=lto)_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_@Base 1:6.2.1-1~
  _ZTI8RAR_EXIT@Base 1:5.9.4
  _ZTS8RAR_EXIT@Base 1:5.9.4
