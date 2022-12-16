@@ -8,10 +8,10 @@ Unsigned int value takes 10 bytes buffer when prints large numbers.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pathfn.cpp b/pathfn.cpp
-index 983bd74..03de2c7 100644
+index 162eda2..b8487c7 100644
 --- a/pathfn.cpp
 +++ b/pathfn.cpp
-@@ -768,7 +768,7 @@ static void GenArcName(wchar *ArcName,size_t MaxSize,const wchar *GenerateMask,u
+@@ -774,7 +774,7 @@ static void GenArcName(wchar *ArcName,size_t MaxSize,const wchar *GenerateMask,u
    if (StartWeekDay%7>=4)
      CurWeek++;
  
