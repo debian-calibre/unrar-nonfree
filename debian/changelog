@@ -1,3 +1,11 @@
+unrar-nonfree (1:6.2.5-1) UNRELEASED; urgency=medium
+
+  * New upstream version 6.2.4
+  * New upstream version 6.2.5
+  * Update explanation comment in test code
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 25 Jan 2023 11:57:39 +0900
+
 unrar-nonfree (1:6.2.3-2) unstable; urgency=medium
 
   * Upgrade Debian standards
