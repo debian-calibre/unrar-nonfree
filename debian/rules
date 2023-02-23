@@ -12,7 +12,9 @@ AR  = $(DEB_HOST_GNU_TYPE)-ar
 
 override_dh_auto_build:
 	$(MAKE) CXX=$(CXX) AR=$(AR) all
+	$(MAKE) CXX=$(CXX) AR=$(AR) clean
 	$(MAKE) CXX=$(CXX) AR=$(AR) lib
+	$(MAKE) CXX=$(CXX) AR=$(AR) clean
 	$(MAKE) CXX=$(CXX) AR=$(AR) static-lib
 
 # do nothing
