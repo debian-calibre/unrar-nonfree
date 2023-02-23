@@ -142,20 +142,23 @@ clean:
 	@rm -f $(OBJECTS) $(UNRAR_OBJ) $(LIB_OBJ)
 	@rm -f unrar libunrar.*
 
-unrar:	clean $(OBJECTS) $(UNRAR_OBJ)
+# We removed 'clean' from dependencies, because it prevented parallel
+# 'make -Jn' builds.
+
+unrar:	$(OBJECTS) $(UNRAR_OBJ)
 	@rm -f unrar
 	$(LINK) -o unrar $(LDFLAGS) $(OBJECTS) $(UNRAR_OBJ) $(LIBS)	
 	$(STRIP) unrar
 
 sfx:	WHAT=SFX_MODULE
-sfx:	clean $(OBJECTS)
+sfx:	$(OBJECTS)
 	@rm -f default.sfx
 	$(LINK) -o default.sfx $(LDFLAGS) $(OBJECTS)
 	$(STRIP) default.sfx
 
 lib:	WHAT=RARDLL
 lib:	CXXFLAGS+=$(LIBFLAGS)
-lib:	clean $(OBJECTS) $(LIB_OBJ)
+lib:	$(OBJECTS) $(LIB_OBJ)
 	@rm -f libunrar.*
 	$(LINK) -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
 	$(AR) rcs libunrar.a $(OBJECTS) $(LIB_OBJ)
