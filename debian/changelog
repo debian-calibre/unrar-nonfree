@@ -1,3 +1,11 @@
+unrar-nonfree (1:6.2.6-1) UNRELEASED; urgency=medium
+
+  * New upstream version 6.2.6
+  * Rediff patches
+  * Manually clean previous object files for next build target
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 23 Feb 2023 12:28:58 +0900
+
 unrar-nonfree (1:6.2.5-1) unstable; urgency=medium
 
   * New upstream version 6.2.4
