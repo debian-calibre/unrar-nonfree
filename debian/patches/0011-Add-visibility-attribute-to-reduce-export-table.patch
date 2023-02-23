@@ -143,7 +143,7 @@ index c785ff1..268c2ce 100644
  #ifdef __cplusplus
  }
 diff --git a/makefile b/makefile
-index 4c22cc2..6774f6d 100644
+index df3ca68..98eba57 100644
 --- a/makefile
 +++ b/makefile
 @@ -4,7 +4,7 @@

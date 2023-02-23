@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/makefile b/makefile
-index aca1030..4c22cc2 100644
+index a0d780e..df3ca68 100644
 --- a/makefile
 +++ b/makefile
-@@ -138,34 +138,34 @@ install:	install-unrar
+@@ -138,37 +138,37 @@ install:	install-unrar
  uninstall:	uninstall-unrar
  
  clean:
@@ -24,14 +24,17 @@ index aca1030..4c22cc2 100644
 -	@rm -f unrar libunrar.*
 +	rm -f unrar libunrar.*
  
- unrar:	clean $(OBJECTS) $(UNRAR_OBJ)
+ # We removed 'clean' from dependencies, because it prevented parallel
+ # 'make -Jn' builds.
+ 
+ unrar:	$(OBJECTS) $(UNRAR_OBJ)
 -	@rm -f unrar
 +	rm -f unrar
  	$(LINK) -o unrar $(LDFLAGS) $(OBJECTS) $(UNRAR_OBJ) $(LIBS)	
  	$(STRIP) unrar
  
  sfx:	WHAT=SFX_MODULE
- sfx:	clean $(OBJECTS)
+ sfx:	$(OBJECTS)
 -	@rm -f default.sfx
 +	rm -f default.sfx
  	$(LINK) -o default.sfx $(LDFLAGS) $(OBJECTS)
@@ -39,7 +42,7 @@ index aca1030..4c22cc2 100644
  
  lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
- lib:	clean $(OBJECTS) $(LIB_OBJ)
+ lib:	$(OBJECTS) $(LIB_OBJ)
 -	@rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
 +	rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
  	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so.5.0 $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
@@ -47,7 +50,7 @@ index aca1030..4c22cc2 100644
  	ln -s libunrar.so.5   libunrar.so
  
  static-lib: WHAT=RARDLL
- static-lib: clean $(OBJECTS) $(LIB_OBJ)
+ static-lib: $(OBJECTS) $(LIB_OBJ)
 -	@rm -f libunrar.a
 +	rm -f libunrar.a
  	$(AR) rcs libunrar.a $(OBJECTS) $(LIB_OBJ)

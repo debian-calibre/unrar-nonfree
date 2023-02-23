@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index fe851dc..aca1030 100644
+index 2400d8f..a0d780e 100644
 --- a/makefile
 +++ b/makefile
-@@ -161,7 +161,7 @@ lib:	clean $(OBJECTS) $(LIB_OBJ)
+@@ -164,7 +164,7 @@ lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
  	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so.5.0 $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
  	ln -s libunrar.so.5.0 libunrar.so.5
@@ -19,4 +19,4 @@ index fe851dc..aca1030 100644
 +	ln -s libunrar.so.5   libunrar.so
  
  static-lib: WHAT=RARDLL
- static-lib: clean $(OBJECTS) $(LIB_OBJ)
+ static-lib: $(OBJECTS) $(LIB_OBJ)

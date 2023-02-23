@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 2 insertions(+)
 
 diff --git a/makefile b/makefile
-index 6f4f0e7..7e9fcad 100644
+index 926e265..b8a6ece 100644
 --- a/makefile
 +++ b/makefile
 @@ -140,6 +140,8 @@ uninstall:	uninstall-unrar
@@ -19,4 +19,4 @@ index 6f4f0e7..7e9fcad 100644
 +distclean: clean
  	@rm -f unrar libunrar.*
  
- unrar:	clean $(OBJECTS) $(UNRAR_OBJ)
+ # We removed 'clean' from dependencies, because it prevented parallel

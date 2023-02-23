@@ -14,7 +14,7 @@ Added hardening support (Closes: #694611)
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index 8e98a2c..6d88607 100644
+index 55af49b..c5ceb31 100644
 --- a/makefile
 +++ b/makefile
 @@ -3,12 +3,12 @@
@@ -32,9 +32,9 @@ index 8e98a2c..6d88607 100644
  DESTDIR=/usr
  
  # Linux using LCC
-@@ -157,7 +157,7 @@ lib:	WHAT=RARDLL
+@@ -160,7 +160,7 @@ lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
- lib:	clean $(OBJECTS) $(LIB_OBJ)
+ lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.*
 -	$(LINK) -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
 +	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
