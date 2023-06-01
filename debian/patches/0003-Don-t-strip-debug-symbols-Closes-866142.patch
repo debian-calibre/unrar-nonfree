@@ -5,6 +5,7 @@ Subject: Don't strip debug symbols (Closes: #866142)
 Forwarded: not-needed
 Closes: #866142
 Thanks: Jakub Wilk <jwilk@jwilk.net>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=866142
 ---
  makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
