@@ -476,19 +476,6 @@ size_t Archive::ReadHeader15()
       SubBlockHead.Level=Raw.Get1();
       switch(SubBlockHead.SubType)
       {
-        case UO_HEAD:
-          *(SubBlockHeader *)&UOHead=SubBlockHead;
-          UOHead.OwnerNameSize=Raw.Get2();
-          UOHead.GroupNameSize=Raw.Get2();
-          if (UOHead.OwnerNameSize>=ASIZE(UOHead.OwnerName))
-            UOHead.OwnerNameSize=ASIZE(UOHead.OwnerName)-1;
-          if (UOHead.GroupNameSize>=ASIZE(UOHead.GroupName))
-            UOHead.GroupNameSize=ASIZE(UOHead.GroupName)-1;
-          Raw.GetB(UOHead.OwnerName,UOHead.OwnerNameSize);
-          Raw.GetB(UOHead.GroupName,UOHead.GroupNameSize);
-          UOHead.OwnerName[UOHead.OwnerNameSize]=0;
-          UOHead.GroupName[UOHead.GroupNameSize]=0;
-          break;
         case NTACL_HEAD:
           *(SubBlockHeader *)&EAHead=SubBlockHead;
           EAHead.UnpSize=Raw.Get4();
@@ -520,8 +507,12 @@ size_t Archive::ReadHeader15()
   ushort HeaderCRC=Raw.GetCRC15(false);
 
   // Old AV header does not have header CRC properly set.
+  // Old Unix owners header didn't include string fields into header size,
+  // but included them into CRC, so it couldn't be verified with generic
+  // approach here.
   if (ShortBlock.HeadCRC!=HeaderCRC && ShortBlock.HeaderType!=HEAD3_SIGN &&
-      ShortBlock.HeaderType!=HEAD3_AV)
+      ShortBlock.HeaderType!=HEAD3_AV && 
+      (ShortBlock.HeaderType!=HEAD3_OLDSERVICE || SubBlockHead.SubType!=UO_HEAD))
   {
     bool Recovered=false;
     if (ShortBlock.HeaderType==HEAD_ENDARC && EndArcHead.RevSpace)

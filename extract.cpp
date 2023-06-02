@@ -806,6 +806,11 @@ bool CmdExtract::ExtractCurrentFile(Archive &Arc,size_t HeaderSize,bool &Repeat)
             {
               bool UpLink;
               LinkSuccess=ExtractSymlink(Cmd,DataIO,Arc,DestFileName,UpLink);
+
+              // Unix symlink can have its own owner data.
+              if (LinkSuccess)
+                SetFileHeaderExtra(Cmd,Arc,DestFileName);
+              
               ConvertSymlinkPaths|=LinkSuccess && UpLink;
 
               // We do not actually need to reset the cache here if we cache
