@@ -8,7 +8,7 @@ Unsigned int value takes 10 bytes buffer when prints large numbers.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pathfn.cpp b/pathfn.cpp
-index 50b6b29..49d16a8 100644
+index 6d3f56c..7a54354 100644
 --- a/pathfn.cpp
 +++ b/pathfn.cpp
 @@ -783,7 +783,7 @@ static void GenArcName(wchar *ArcName,size_t MaxSize,const wchar *GenerateMask,u
