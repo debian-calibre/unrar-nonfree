@@ -746,7 +746,7 @@ static void GenArcName(wchar *ArcName,size_t MaxSize,const wchar *GenerateMask,u
       // Here we ensure that we have enough 'N' characters to fit all digits
       // of archive number. We'll replace them by actual number later
       // in this function.
-      if (NCount<Digits)
+      if (NCount<Digits && wcslen(Mask)+Digits-NCount<ASIZE(Mask))
       {
         wmemmove(Mask+I+Digits,Mask+I+NCount,wcslen(Mask+I+NCount)+1);
         wmemset(Mask+I,'N',Digits);
