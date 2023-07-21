@@ -1,5 +1,8 @@
 unrar-nonfree (1:6.2.9-1) unstable; urgency=medium
 
+  This version fixes security issue: ZDI-CAN-21233 .
+  See also: https://www.zerodayinitiative.com/advisories/upcoming/
+
   * New upstream version 6.2.9
   * Rediff patches
 
