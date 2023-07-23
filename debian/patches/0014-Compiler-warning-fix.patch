@@ -2,6 +2,8 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Thu, 18 Aug 2022 20:21:27 +0900
 Subject: Compiler warning fix
 
+Forwarded: yes
+
 Unsigned int value takes 10 bytes buffer when prints large numbers.
 ---
  pathfn.cpp | 2 +-

@@ -3,6 +3,7 @@ Date: Mon, 28 Mar 2022 01:00:58 +0900
 Subject: Add newline after error message (Closes: #774166)
 
 Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774166
+Forwarded: yes
 
 Add newline after messages about bad option switch error.
 ---
