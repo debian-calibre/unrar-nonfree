@@ -1,3 +1,12 @@
+unrar-nonfree (1:6.2.10-1) UNRELEASED; urgency=medium
+
+  * Add note for security fix: ZDI-CAN-21233
+  * Forward patches to upstream
+  * New upstream version 6.2.10
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 03 Aug 2023 21:14:41 +0900
+
 unrar-nonfree (1:6.2.9-1) unstable; urgency=medium
 
   This version fixes security issue: ZDI-CAN-21233 .
