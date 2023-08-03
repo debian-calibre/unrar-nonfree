@@ -10,5 +10,3 @@
 0010-Display-build-commands.patch
 0011-Add-visibility-attribute-to-reduce-export-table.patch
 0012-Add-PHONY-target.patch
-0013-Add-newline-after-error-message-Closes-774166.patch
-0014-Compiler-warning-fix.patch
