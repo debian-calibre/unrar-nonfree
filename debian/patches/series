@@ -1,2 +1,3 @@
 fix-buildflags
 CVE-2022-30333.diff
+CVE-2022-48579.patch

@@ -1,3 +1,12 @@
+unrar-nonfree (1:5.6.6-1+deb10u2) buster-security; urgency=high
+
+  * Non-maintainer upload by the LTS team.
+  * Fix CVE-2022-48579:
+    It was discovered that UnRAR, an unarchiver for rar files, allows
+    extraction of files outside of the destination folder via symlink chains.
+
+ -- Markus Koschany <apo@debian.org>  Tue, 15 Aug 2023 23:56:19 +0200
+
 unrar-nonfree (1:5.6.6-1+deb10u1) buster; urgency=high
 
   * Fix CVE-2022-30333 (Closes: #1010837)
