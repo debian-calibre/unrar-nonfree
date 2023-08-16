@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
@@ -11,18 +9,13 @@ build-indep: build-stamp
 build-stamp:
 	dh_testdir
 	make -f makefile
-	make -f makefile lib
-	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
 
 	make -f makefile clean
-	rm -f unrar
-	rm -f libunrar.so
-	rm -f libunrar.a
-	rm -f build-stamp
+	rm -rf unrar
 	dh_clean
 
 binary-indep:
@@ -37,19 +30,9 @@ binary-arch: build
 
 	install -o root -g root -s -m 0755 unrar debian/unrar/usr/bin/unrar-nonfree
 
-	mkdir -p debian/libunrar5/usr/lib/$(DEB_HOST_MULTIARCH)
-	mkdir -p debian/libunrar-dev/usr/lib/$(DEB_HOST_MULTIARCH)
-	mkdir -p debian/libunrar-dev/usr/include/$(DEB_HOST_MULTIARCH)/unrar
-
-	install -o root -g root -s -m 0755 libunrar.so debian/libunrar5/usr/lib/$(DEB_HOST_MULTIARCH)/libunrar.so.5
-	install -o root -g root    -m 0644 libunrar.a  debian/libunrar-dev/usr/lib/$(DEB_HOST_MULTIARCH)/libunrar.a
-	install -o root -g root    -m 0644 *.hpp       debian/libunrar-dev/usr/include/$(DEB_HOST_MULTIARCH)/unrar
-	ln -s libunrar.so.5 debian/libunrar-dev/usr/lib/$(DEB_HOST_MULTIARCH)/libunrar.so
-
 	dh_installdocs
 	dh_installman debian/unrar-nonfree.1
 	dh_installchangelogs
-	dh_makeshlibs -plibunrar5
 	dh_strip
 	dh_compress
 	dh_fixperms

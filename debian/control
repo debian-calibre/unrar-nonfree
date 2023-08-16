@@ -2,13 +2,10 @@ Source: unrar-nonfree
 Section: non-free/utils
 Priority: optional
 Maintainer: Martin Meredith <mez@debian.org>
-Uploaders: Norbert Preining <preining@debian.org>
 Homepage: http://www.rarlabs.com/
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~)
-Standards-Version: 4.2.1
+Standards-Version: 3.9.6.1
 XS-Autobuild: yes
-Vcs-Browser: https://salsa.debian.org/preining/unrar-nonfree
-Vcs-Git: https://salsa.debian.org/preining/unrar-nonfree.git
 
 Package: unrar
 Architecture: any
@@ -17,22 +14,3 @@ Conflicts: rar (<= 2.60-1)
 Description: Unarchiver for .rar files (non-free version)
  Unrar can extract files from .rar archives. If you want to create .rar
  archives, install package rar.
-
-Package: libunrar5
-Section: non-free/libs
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Description: Unarchiver for .rar files (non-free version) - shared library
- library for unarchiving .rar files
-
-Package: libunrar-dev
-Section: non-free/libdevel
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), ${shlibs:Depends}
-Description: Unarchiver for .rar files (non-free version) - development files
- This package contains the static library and header files for the
- libunrar library.
-

@@ -1,56 +1,24 @@
-unrar-nonfree (1:5.6.6-1+deb10u3) buster-security; urgency=high
+unrar-nonfree (1:5.6.6-1+deb9u1) stretch-security; urgency=high
 
-  * Non-maintainer upload by the LTS team.
-  * Rebuild for buster-security. Include amd64 binaries this time.
-
- -- Markus Koschany <apo@debian.org>  Wed, 16 Aug 2023 09:36:01 +0200
-
-unrar-nonfree (1:5.6.6-1+deb10u2) buster-security; urgency=high
-
-  * Non-maintainer upload by the LTS team.
-  * Fix CVE-2022-48579:
+  * Non-maintainer upload by the ELTS team.
+  * Fix CVE-2017-12938, CVE-2017-12940, CVE-2017-12941, CVE-2017-12942,
+    CVE-2017-20006, CVE-2018-25018, CVE-2022-30333 and CVE-2022-48579.
     It was discovered that UnRAR, an unarchiver for rar files, allows
     extraction of files outside of the destination folder via symlink chains.
+    Programming flaws like heap-based buffer overflows or out-of-bounds reads
+    may also cause a denial of service (application crash) if a malformed rar
+    archive is extracted.
 
- -- Markus Koschany <apo@debian.org>  Tue, 15 Aug 2023 23:56:19 +0200
+ -- Markus Koschany <apo@debian.org>  Wed, 16 Aug 2023 10:23:06 +0200
 
-unrar-nonfree (1:5.6.6-1+deb10u1) buster; urgency=high
+unrar-nonfree (1:5.3.2-1+deb9u1) stretch; urgency=medium
 
-  * Fix CVE-2022-30333 (Closes: #1010837)
+  * Add bound checks for VMSF_DELTA, VMSF_RGB and VMSF_AUDIO paramters.
+    - Backported from 5.5.5
+    - CVE-2012-6706
+    - Closes: #865461
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 10 May 2022 21:00:00 +0900
-
-unrar-nonfree (1:5.6.6-1) unstable; urgency=medium
-
-  * add myself to uploaders with Martin's consent, 
-    terminating the salvage process (Closes: #909795)
-  * add libunrar5 and libunrar-dev packages
-  * bump standards version, no changes necessary
-
- -- Norbert Preining <preining@debian.org>  Wed, 24 Oct 2018 11:00:16 +0900
-
-unrar-nonfree (1:5.5.8-1) unstable; urgency=high
-
-  * New upstream release
-    (Fixes: CVE-2017-12942, CVE-2017-12941,CVE-2017-12940, CVE-2017-12938)
-  * Update Standards Version
-
- -- Martin Meredith <mez@debian.org>  Mon, 21 Aug 2017 13:29:11 +0100
-
-unrar-nonfree (1:5.5.5-1) unstable; urgency=high
-
-  * New upstream release
-  * Security update for CVE-2012-6706 (Closes: #865461)
-
- -- Martin Meredith <mez@debian.org>  Thu, 22 Jun 2017 18:07:52 +0100
-
-unrar-nonfree (1:5.4.5-1) unstable; urgency=medium
-
-  * New upstream release
-  * Fix buildflags patch
-  * Update standards Version
-
- -- Martin Meredith <mez@debian.org>  Mon, 13 Feb 2017 16:48:59 +0000
+ -- Felix Geyer <fgeyer@debian.org>  Wed, 28 Jun 2017 00:10:20 +0200
 
 unrar-nonfree (1:5.3.2-1) unstable; urgency=medium
 
