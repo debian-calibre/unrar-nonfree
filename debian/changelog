@@ -1,3 +1,10 @@
+unrar-nonfree (1:5.6.6-1+deb10u3) buster-security; urgency=high
+
+  * Non-maintainer upload by the LTS team.
+  * Rebuild for buster-security. Include amd64 binaries this time.
+
+ -- Markus Koschany <apo@debian.org>  Wed, 16 Aug 2023 09:36:01 +0200
+
 unrar-nonfree (1:5.6.6-1+deb10u2) buster-security; urgency=high
 
   * Non-maintainer upload by the LTS team.
