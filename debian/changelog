@@ -1,6 +1,6 @@
 unrar-nonfree (1:6.2.10-1) unstable; urgency=medium
 
-  * Add note for security fix: ZDI-CAN-21233
+  * Add note for security fix: CVE-2023-40477 / ZDI-23-1152 (ZDI-CAN-21233)
   * Forward patches to upstream
   * New upstream version 6.2.10
   * Rediff patches
@@ -9,8 +9,11 @@ unrar-nonfree (1:6.2.10-1) unstable; urgency=medium
 
 unrar-nonfree (1:6.2.9-1) unstable; urgency=medium
 
-  This version fixes security issue: ZDI-CAN-21233 .
-  See also: https://www.zerodayinitiative.com/advisories/upcoming/
+  This version fixes security issue: ZDI-23-1152 (ZDI-CAN-21233).
+  See also: https://www.zerodayinitiative.com/advisories/ZDI-23-1152/
+
+  ZDI-23-1152 is also filed as CVE-2023-40477 .
+  https://www.cve.org/CVERecord?id=CVE-2023-40477
 
   * New upstream version 6.2.9
   * Rediff patches
