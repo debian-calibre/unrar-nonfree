@@ -12,3 +12,4 @@
 0012-Add-PHONY-target.patch
 0013-Add-newline-after-error-message-Closes-774166.patch
 0014-Compiler-warning-fix.patch
+0015-CVE-2023-40477.patch
