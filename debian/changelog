@@ -1,3 +1,9 @@
+unrar-nonfree (1:6.2.10-2) UNRELEASED; urgency=medium
+
+  * Security advisory ZDI-CAN-21233 is published as CVE-2023-40477 / ZDI-23-1152
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 27 Aug 2023 09:38:34 +0900
+
 unrar-nonfree (1:6.2.10-1) unstable; urgency=medium
 
   * Add note for security fix: CVE-2023-40477 / ZDI-23-1152 (ZDI-CAN-21233)
