@@ -80,10 +80,13 @@ static int CalcAllowedDepth(const wchar *Name)
       bool Dot2=Name[1]=='.' && Name[2]=='.' && (IsPathDiv(Name[3]) || Name[3]==0);
       if (!Dot && !Dot2)
         AllowedDepth++;
+      else
+        if (Dot2)
+          AllowedDepth--;
     }
     Name++;
   }
-  return AllowedDepth;
+  return AllowedDepth < 0 ? 0 : AllowedDepth;
 }
 
 
