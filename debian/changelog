@@ -1,9 +1,9 @@
-unrar-nonfree (1:6.2.12-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:6.2.12-1) unstable; urgency=medium
 
   * New upstream version 6.2.12
   * Rediff patches
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 05 Oct 2023 20:31:48 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 05 Oct 2023 20:49:53 +0900
 
 unrar-nonfree (1:6.2.11-1) unstable; urgency=medium
 
