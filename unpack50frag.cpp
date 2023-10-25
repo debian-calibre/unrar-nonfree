@@ -74,16 +74,22 @@ byte& FragmentedWindow::operator [](size_t Item)
 }
 
 
-void FragmentedWindow::CopyString(uint Length,uint Distance,size_t &UnpPtr,size_t MaxWinMask)
+void FragmentedWindow::CopyString(uint Length,size_t Distance,size_t &UnpPtr,size_t MaxWinSize)
 {
   size_t SrcPtr=UnpPtr-Distance;
-  while (Length-- > 0)
-  {
-    (*this)[UnpPtr]=(*this)[SrcPtr++ & MaxWinMask];
-    // We need to have masked UnpPtr after quit from loop, so it must not
-    // be replaced with '(*this)[UnpPtr++ & MaxWinMask]'
-    UnpPtr=(UnpPtr+1) & MaxWinMask;
-  }
+  if (SrcPtr>=MaxWinSize)
+    SrcPtr+=MaxWinSize;
+  // SrcPtr can be >=MaxWinSize if distance exceeds MaxWinSize
+  // in a malformed archive.
+  if (SrcPtr<MaxWinSize)
+    while (Length-- > 0)
+    {
+      (*this)[UnpPtr]=(*this)[SrcPtr];
+      if (++SrcPtr>=MaxWinSize)
+        SrcPtr-=MaxWinSize;
+      if (++UnpPtr>=MaxWinSize)
+        UnpPtr-=MaxWinSize;
+    }
 }
 
 
