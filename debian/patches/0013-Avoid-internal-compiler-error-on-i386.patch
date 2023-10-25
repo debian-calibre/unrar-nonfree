@@ -1,0 +1,42 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Thu, 26 Oct 2023 00:49:14 +0900
+Subject: Avoid internal compiler error on i386
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Forwarded: not-needed
+
+----
+i686-linux-gnu-g++ -Wdate-time -D_FORTIFY_SOURCE=2 -g -O2 -ffile-prefix-map=/<<PKGBUILDDIR>>=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP -DUNRAR -c blake2s.cpp
+during RTL pass: expand
+In file included from blake2s.cpp:20:
+blake2s_sse.cpp: In function ‘blake2s_compress_sse(blake2s_state*, unsigned char const*) [clone .isra.0]’:
+blake2s_sse.cpp:88:12: internal compiler error: in expand_debug_locations, at cfgexpand.cc:5668
+   88 | static int blake2s_compress_sse( blake2s_state *S, const byte block[BLAKE2S_BLOCKBYTES] )
+      |            ^~~~~~~~~~~~~~~~~~~~
+0x8f9216b internal_error(char const*, ...)
+	???:0
+0x8f92235 fancy_abort(char const*, int, char const*)
+	???:0
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+Please include the complete backtrace with any bug report.
+See <file:///usr/share/doc/gcc-13/README.Bugs> for instructions.
+The bug is not reproducible, so it is likely a hardware or OS problem.
+---
+ os.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/os.hpp b/os.hpp
+index 8bfc05c..74964da 100644
+--- a/os.hpp
++++ b/os.hpp
+@@ -150,7 +150,7 @@
+ #include <locale.h>
+ 
+ #ifdef __GNUC__
+-  #if defined(__i386__) || defined(__x86_64__)
++  #if defined(__x86_64__)
+     #include <x86intrin.h>
+     
+     #define USE_SSE
