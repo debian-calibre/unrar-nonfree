@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index 178d559..5919250 100644
+index cc5c567..ab14755 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
@@ -29,7 +29,7 @@ index 178d559..5919250 100644
  HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  {
    DataSet *Data=NULL;
-@@ -165,6 +167,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
+@@ -164,6 +166,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  }
  
  
@@ -37,15 +37,15 @@ index 178d559..5919250 100644
  int PASCAL RARCloseArchive(HANDLE hArcData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -181,6 +184,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
+@@ -180,6 +183,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
  }
  
  
 +__attribute__ ((visibility ("default")))
  int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  {
-   struct RARHeaderDataEx X;
-@@ -206,6 +210,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
+   struct RARHeaderDataEx X{};
+@@ -204,6 +208,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  }
  
  
@@ -108,10 +108,10 @@ index 178d559..5919250 100644
  {
    return RAR_DLL_VERSION;
 diff --git a/dll.hpp b/dll.hpp
-index c785ff1..268c2ce 100644
+index 06ef702..945ebb2 100644
 --- a/dll.hpp
 +++ b/dll.hpp
-@@ -167,18 +167,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
+@@ -172,18 +172,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
  extern "C" {
  #endif
  
@@ -143,7 +143,7 @@ index c785ff1..268c2ce 100644
  #ifdef __cplusplus
  }
 diff --git a/makefile b/makefile
-index df3ca68..98eba57 100644
+index 9c1e5a2..47f3914 100644
 --- a/makefile
 +++ b/makefile
 @@ -4,7 +4,7 @@

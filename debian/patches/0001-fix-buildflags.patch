@@ -14,14 +14,14 @@ Added hardening support (Closes: #694611)
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index 55af49b..c5ceb31 100644
+index 6561bf0..86cc1e8 100644
 --- a/makefile
 +++ b/makefile
 @@ -3,12 +3,12 @@
  
  # Linux using GCC
  CXX=c++
--CXXFLAGS=-O2 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
+-CXXFLAGS=-march=native -O2 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
 +CXXFLAGS=-Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
  LIBFLAGS=-fPIC
  DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
@@ -31,8 +31,8 @@ index 55af49b..c5ceb31 100644
 +LDFLAGS+=-pthread
  DESTDIR=/usr
  
- # Linux using LCC
-@@ -160,7 +160,7 @@ lib:	WHAT=RARDLL
+ ##########################
+@@ -59,7 +59,7 @@ lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
  lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.*

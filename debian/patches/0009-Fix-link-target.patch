@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index 2400d8f..a0d780e 100644
+index 8a7949f..69b67e7 100644
 --- a/makefile
 +++ b/makefile
-@@ -164,7 +164,7 @@ lib:	$(OBJECTS) $(LIB_OBJ)
+@@ -63,7 +63,7 @@ lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.so.5.0 libunrar.so.5 libunrar.so
  	$(LINK) -Wl,-soname,libunrar.so.5 -shared -o libunrar.so.5.0 $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
  	ln -s libunrar.so.5.0 libunrar.so.5

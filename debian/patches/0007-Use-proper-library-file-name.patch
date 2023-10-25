@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index b8a6ece..0b8fc7b 100644
+index 2ec09e0..c1e29a2 100644
 --- a/makefile
 +++ b/makefile
-@@ -162,7 +162,9 @@ lib:	WHAT=RARDLL
+@@ -61,7 +61,9 @@ lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
  lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.*

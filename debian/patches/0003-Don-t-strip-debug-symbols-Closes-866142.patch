@@ -11,7 +11,7 @@ Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=866142
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index 3f62b94..0cbb7ce 100644
+index eaa0016..e09f3f8 100644
 --- a/makefile
 +++ b/makefile
 @@ -6,7 +6,7 @@ CXX=c++
