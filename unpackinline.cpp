@@ -1,4 +1,4 @@
-_forceinline void Unpack::InsertOldDist(uint Distance)
+_forceinline void Unpack::InsertOldDist(size_t Distance)
 {
   OldDist[3]=OldDist[2];
   OldDist[2]=OldDist[1];
@@ -6,23 +6,23 @@ _forceinline void Unpack::InsertOldDist(uint Distance)
   OldDist[0]=Distance;
 }
 
-#ifdef _MSC_VER
-#define FAST_MEMCPY
+#if defined(LITTLE_ENDIAN) && defined(ALLOW_MISALIGNED)
+#define UNPACK_COPY8 // We can copy 8 bytes at any position as uint64.
 #endif
 
-_forceinline void Unpack::CopyString(uint Length,uint Distance)
+_forceinline void Unpack::CopyString(uint Length,size_t Distance)
 {
   size_t SrcPtr=UnpPtr-Distance;
   if (SrcPtr<MaxWinSize-MAX_INC_LZ_MATCH && UnpPtr<MaxWinSize-MAX_INC_LZ_MATCH)
   {
     // If we are not close to end of window, we do not need to waste time
-    // to "& MaxWinMask" pointer protection.
+    // to WrapUp and WrapDown position protection.
 
     byte *Src=Window+SrcPtr;
     byte *Dest=Window+UnpPtr;
     UnpPtr+=Length;
 
-#ifdef FAST_MEMCPY
+#ifdef UNPACK_COPY8
     if (Distance<Length) // Overlapping strings
 #endif
       while (Length>=8)
@@ -40,7 +40,7 @@ _forceinline void Unpack::CopyString(uint Length,uint Distance)
         Dest+=8;
         Length-=8;
       }
-#ifdef FAST_MEMCPY
+#ifdef UNPACK_COPY8
     else
       while (Length>=8)
       {
@@ -49,9 +49,7 @@ _forceinline void Unpack::CopyString(uint Length,uint Distance)
         // But for real RAR archives Distance <= MaxWinSize - MAX_INC_LZ_MATCH
         // always, so overlap here is impossible.
 
-        // This memcpy expanded inline by MSVC. We could also use uint64
-        // assignment, which seems to provide about the same speed.
-        memcpy(Dest,Src,8); 
+        RawPut8(RawGet8(Src),Dest);
 
         Src+=8;
         Dest+=8;
@@ -69,13 +67,21 @@ _forceinline void Unpack::CopyString(uint Length,uint Distance)
     if (Length>6) { Dest[6]=Src[6]; } } } } } } } // Close all nested "if"s.
   }
   else
-    while (Length-- > 0) // Slow copying with all possible precautions.
-    {
-      Window[UnpPtr]=Window[SrcPtr++ & MaxWinMask];
-      // We need to have masked UnpPtr after quit from loop, so it must not
-      // be replaced with 'Window[UnpPtr++ & MaxWinMask]'
-      UnpPtr=(UnpPtr+1) & MaxWinMask;
-    }
+  {
+    SrcPtr=WrapDown(SrcPtr); // Because we called UnpPtr-Distance above.
+    // SrcPtr can be >=MaxWinSize if distance exceeds MaxWinSize
+    // in a malformed archive. Depedning on WrapDown implementation,
+    // it might not correct it, so to prevent out of bound Window read
+    // we check SrcPtr<MaxWinSize here.
+    if (SrcPtr<MaxWinSize)
+      while (Length-- > 0) // Slow copying with all possible precautions.
+      {
+        Window[UnpPtr]=Window[WrapUp(SrcPtr++)];
+        // We need to have masked UnpPtr after quit from loop, so it must not
+        // be replaced with 'Window[WrapUp(UnpPtr++)]'
+        UnpPtr=WrapUp(UnpPtr+1);
+      }
+  }
 }
 
 

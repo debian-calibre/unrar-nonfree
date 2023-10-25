@@ -1,3 +1,5 @@
+// 2023.09.09: 0x400000 and 2 are optimal for i9-12900K.
+// Further increasing the buffer size reduced the extraction speed.
 #define UNP_READ_SIZE_MT        0x400000
 #define UNP_BLOCKS_PER_THREAD          2
 
@@ -277,7 +279,7 @@ void Unpack::Unpack5MT(bool Solid)
       }
     }
   }
-  UnpPtr&=MaxWinMask; // ProcessDecoded and maybe others can leave UnpPtr > MaxWinMask here.
+  UnpPtr=WrapUp(UnpPtr); // ProcessDecoded and maybe others can leave UnpPtr >= MaxWinSize here.
   UnpWriteBuf();
 
   BlockHeader=UnpThreadData[LastBlockNum].BlockHeader;
@@ -362,7 +364,8 @@ void Unpack::UnpackDecode(UnpackThreadData &D)
     {
       uint Length=SlotToLength(D.Inp,MainSlot-262);
 
-      uint DBits,Distance=1,DistSlot=DecodeNumber(D.Inp,&D.BlockTables.DD);
+      size_t Distance=1;
+      uint DBits,DistSlot=DecodeNumber(D.Inp,&D.BlockTables.DD);
       if (DistSlot<4)
       {
         DBits=0;
@@ -371,7 +374,7 @@ void Unpack::UnpackDecode(UnpackThreadData &D)
       else
       {
         DBits=DistSlot/2 - 1;
-        Distance+=(2 | (DistSlot & 1)) << DBits;
+        Distance+=size_t(2 | (DistSlot & 1)) << DBits;
       }
 
       if (DBits>0)
@@ -380,7 +383,11 @@ void Unpack::UnpackDecode(UnpackThreadData &D)
         {
           if (DBits>4)
           {
-            Distance+=((D.Inp.getbits32()>>(36-DBits))<<4);
+            // It is also possible to always use getbits64() here.
+            if (DBits>36)
+              Distance+=( ( size_t(D.Inp.getbits64() ) >> (68-DBits) ) << 4 );
+            else
+              Distance+=( ( size_t(D.Inp.getbits32() ) >> (36-DBits) ) << 4 );
             D.Inp.addbits(DBits-4);
           }
           uint LowDist=DecodeNumber(D.Inp,&D.BlockTables.LDD);
@@ -450,8 +457,8 @@ bool Unpack::ProcessDecoded(UnpackThreadData &D)
   UnpackDecodedItem *Item=D.Decoded,*Border=D.Decoded+D.DecodedSize;
   while (Item<Border)
   {
-    UnpPtr&=MaxWinMask;
-    if (((WriteBorder-UnpPtr) & MaxWinMask)<=MAX_INC_LZ_MATCH && WriteBorder!=UnpPtr)
+    UnpPtr=WrapUp(UnpPtr);
+    if (WrapDown(WriteBorder-UnpPtr)<=MAX_INC_LZ_MATCH && WriteBorder!=UnpPtr)
     {
       UnpWriteBuf();
       if (WrittenFileSize>DestUnpSize)
@@ -469,7 +476,7 @@ bool Unpack::ProcessDecoded(UnpackThreadData &D)
       else
 #endif
         for (uint I=0;I<=Item->Length;I++)
-          Window[UnpPtr++ & MaxWinMask]=Item->Literal[I];
+          Window[WrapUp(UnpPtr++)]=Item->Literal[I];
     }
     else
       if (Item->Type==UNPDT_MATCH)
@@ -481,8 +488,8 @@ bool Unpack::ProcessDecoded(UnpackThreadData &D)
       else
         if (Item->Type==UNPDT_REP)
         {
-          uint Distance=OldDist[Item->Distance];
-          for (uint I=Item->Distance;I>0;I--)
+          size_t Distance=OldDist[Item->Distance];
+          for (size_t I=Item->Distance;I>0;I--)
             OldDist[I]=OldDist[I-1];
           OldDist[0]=Distance;
           LastLength=Item->Length;
@@ -505,7 +512,7 @@ bool Unpack::ProcessDecoded(UnpackThreadData &D)
               Item++;
 
               Filter.Channels=(byte)Item->Length;
-              Filter.BlockLength=Item->Distance;
+              Filter.BlockLength=(uint)Item->Distance;
 
               AddFilter(Filter);
             }
@@ -543,7 +550,7 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
 
   while (true)
   {
-    UnpPtr&=MaxWinMask;
+    UnpPtr=WrapUp(UnpPtr);
     if (D.Inp.InAddr>=ReadBorder)
     {
       if (D.Inp.InAddr>BlockBorder || D.Inp.InAddr==BlockBorder && 
@@ -559,7 +566,7 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
         break;
       }
     }
-    if (((WriteBorder-UnpPtr) & MaxWinMask)<=MAX_INC_LZ_MATCH && WriteBorder!=UnpPtr)
+    if (WrapDown(WriteBorder-UnpPtr)<=MAX_INC_LZ_MATCH && WriteBorder!=UnpPtr)
     {
       UnpWriteBuf();
       if (WrittenFileSize>DestUnpSize)
@@ -576,7 +583,8 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
     {
       uint Length=SlotToLength(D.Inp,MainSlot-262);
 
-      uint DBits,Distance=1,DistSlot=DecodeNumber(D.Inp,&D.BlockTables.DD);
+      size_t Distance=1;
+      uint DBits,DistSlot=DecodeNumber(D.Inp,&D.BlockTables.DD);
       if (DistSlot<4)
       {
         DBits=0;
@@ -585,7 +593,7 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
       else
       {
         DBits=DistSlot/2 - 1;
-        Distance+=(2 | (DistSlot & 1)) << DBits;
+        Distance+=size_t(2 | (DistSlot & 1)) << DBits;
       }
 
       if (DBits>0)
@@ -594,7 +602,11 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
         {
           if (DBits>4)
           {
-            Distance+=((D.Inp.getbits32()>>(36-DBits))<<4);
+            // It is also possible to always use getbits64() here.
+            if (DBits>36)
+              Distance+=( ( size_t(D.Inp.getbits64() ) >> (68-DBits) ) << 4 );
+            else
+              Distance+=( ( size_t(D.Inp.getbits32() ) >> (36-DBits) ) << 4 );
             D.Inp.addbits(DBits-4);
           }
           uint LowDist=DecodeNumber(D.Inp,&D.BlockTables.LDD);
@@ -639,7 +651,7 @@ bool Unpack::UnpackLargeBlock(UnpackThreadData &D)
     if (MainSlot<262)
     {
       uint DistNum=MainSlot-258;
-      uint Distance=OldDist[DistNum];
+      size_t Distance=OldDist[DistNum];
       for (uint I=DistNum;I>0;I--)
         OldDist[I]=OldDist[I-1];
       OldDist[0]=Distance;

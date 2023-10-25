@@ -185,7 +185,7 @@ void Unpack::ShortLZ()
 
     LCount=0;
     SaveLength=Length;
-    Distance=OldDist[(OldDistPtr-(Length-9)) & 3];
+    Distance=(uint)OldDist[(OldDistPtr-(Length-9)) & 3];
     Length=DecodeNum(Inp.fgetbits(),STARTL1,DecL1,PosL1)+2;
     if (Length==0x101 && SaveLength==10)
     {
@@ -424,7 +424,7 @@ void Unpack::GetFlagsBuf()
 }
 
 
-void Unpack::UnpInitData15(int Solid)
+void Unpack::UnpInitData15(bool Solid)
 {
   if (!Solid)
   {
