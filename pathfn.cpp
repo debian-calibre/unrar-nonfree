@@ -1076,7 +1076,14 @@ void MakeNameCompatible(std::wstring &Name)
     if (I+1==Name.size() || IsPathDiv(Name[I+1]))
       while (I>=0 && (Name[I]=='.' || Name[I]==' '))
       {
-        // Permit path1/./path2 and ../path1 paths.
+        if (I==0)
+        {
+          if (Name[I]==' ')
+            Name[I]='_'; // Convert " /path" to "_/path".
+          break; // Allow ./path1 paths.
+        }
+        // Permit path1/./path2 and ../path1 paths. Leading dots are possible
+        // if specified by user in the destination path.
         if (Name[I]=='.' && I>0 && (IsPathDiv(Name[I-1]) || Name[I-1]=='.' && I==1))
           break;
         Name.erase(I,1);
