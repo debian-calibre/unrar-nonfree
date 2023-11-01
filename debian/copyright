@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: unrar
 Source: https://www.rarlab.com/rar_add.htm
-Copyright: 1993-2021 Alexander L. Roshal
+Copyright: 1993-2023 Alexander L. Roshal
 Disclaimer: This software is non-free.
  This software is non-free, therefore carefully read this license before
  doing anything with it. In particular, this source code may not be used
@@ -9,7 +9,7 @@ Disclaimer: This software is non-free.
 License: freeware
 
 Files: *
-Copyright: 1993-2021 Alexander L. Roshal
+Copyright: 1993-2023 Alexander L. Roshal
 License: freeware
    ******    *****   ******   UnRAR - free utility for RAR archives
    **   **  **   **  **   **  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
