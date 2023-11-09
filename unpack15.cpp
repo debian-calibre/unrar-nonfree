@@ -60,6 +60,9 @@ void Unpack::Unpack15(bool Solid)
   {
     UnpPtr&=MaxWinMask;
 
+    FirstWinDone|=(PrevPtr>UnpPtr);
+    PrevPtr=UnpPtr;
+
     if (Inp.InAddr>ReadTop-30 && !UnpReadBuf())
       break;
     if (((WrPtr-UnpPtr) & MaxWinMask)<270 && WrPtr!=UnpPtr)
@@ -471,11 +474,18 @@ void Unpack::CorrHuff(ushort *CharSet,byte *NumToPlace)
 void Unpack::CopyString15(uint Distance,uint Length)
 {
   DestUnpSize-=Length;
-  while (Length--)
-  {
-    Window[UnpPtr]=Window[(UnpPtr-Distance) & MaxWinMask];
-    UnpPtr=(UnpPtr+1) & MaxWinMask;
-  }
+  if (!FirstWinDone && Distance>UnpPtr || Distance>MaxWinSize)
+    while (Length-- > 0)
+    {
+      Window[UnpPtr]=0;
+      UnpPtr=(UnpPtr+1) & MaxWinMask;
+    }
+  else
+    while (Length-- > 0)
+    {
+      Window[UnpPtr]=Window[(UnpPtr-Distance) & MaxWinMask];
+      UnpPtr=(UnpPtr+1) & MaxWinMask;
+    }
 }
 
 

@@ -610,12 +610,12 @@ void CommandData::ProcessSwitch(const wchar *Switch)
           break;
         case 'D':
           {
-            bool SetMaxDict=toupperw(Switch[2])=='X';
+            bool SetDictLimit=toupperw(Switch[2])=='X';
 
-            uint64 Size=atoiw(Switch+(SetMaxDict ? 3 : 2));
+            uint64 Size=atoiw(Switch+(SetDictLimit ? 3 : 2));
             wchar LastChar=toupperw(Switch[wcslen(Switch)-1]);
             if (IsDigit(LastChar))
-              LastChar=SetMaxDict ? 'G':'M'; // Treat -md128 as -md128m and -mdx32 as -mdx32g.
+              LastChar=SetDictLimit ? 'G':'M'; // Treat -md128 as -md128m and -mdx32 as -mdx32g.
             switch(LastChar)
             {
               case 'K':
@@ -640,8 +640,8 @@ void CommandData::ProcessSwitch(const wchar *Switch)
                 Size<=0x100000000ULL && !IsPow2(Size))
               BadSwitch(Switch);
             else
-              if (SetMaxDict)
-                MaxWinSize=Size;
+              if (SetDictLimit)
+                WinSizeLimit=Size;
               else
               {
                 WinSize=Size;

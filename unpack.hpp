@@ -188,14 +188,16 @@ class FragmentedWindow
     void Reset();
     byte *Mem[MAX_MEM_BLOCKS];
     size_t MemSize[MAX_MEM_BLOCKS];
+    size_t LastAllocated;
   public:
     FragmentedWindow();
     ~FragmentedWindow();
     void Init(size_t WinSize);
     byte& operator [](size_t Item);
-    void CopyString(uint Length,size_t Distance,size_t &UnpPtr,size_t MaxWinSize);
+    void CopyString(uint Length,size_t Distance,size_t &UnpPtr,bool FirstWinDone,size_t MaxWinSize);
     void CopyData(byte *Dest,size_t WinPos,size_t Size);
     size_t GetBlockSize(size_t StartPos,size_t RequiredSize);
+    size_t GetWinSize() {return LastAllocated;}
 };
 
 
@@ -253,6 +255,9 @@ class Unpack:PackDef
     uint LastDist;
 
     size_t UnpPtr; // Current position in window.
+
+    size_t PrevPtr; // UnpPtr value for previous loop iteration.
+    bool FirstWinDone; // At least one dictionary was processed.
 
     size_t WrPtr; // Last written unpacked data position.
     
@@ -387,6 +392,7 @@ class Unpack:PackDef
     void UnpackDecode(UnpackThreadData &D);
 #endif
 
+    uint64 AllocWinSize;
     size_t MaxWinSize;
     size_t MaxWinMask;
 

@@ -71,6 +71,9 @@ static void cvt_wprintf(FILE *dest,const wchar *fmt,va_list arglist)
 {
   // No need for PrintfPrepareFmt here, vwstrprintf calls it.
   std::wstring s=vwstrprintf(fmt,arglist);
+
+  ReplaceEsc(s);
+
 #ifdef _WIN_ALL
   if (dest==stdout && StdoutRedirected || dest==stderr && StderrRedirected)
   {

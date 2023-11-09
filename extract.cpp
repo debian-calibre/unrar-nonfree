@@ -862,8 +862,8 @@ bool CmdExtract::ExtractCurrentFile(Archive &Arc,size_t HeaderSize,bool &Repeat)
             }
             catch (std::bad_alloc)
             {
-              if (Arc.FileHead.WinSize>0x1000000)
-                uiMsg(UIERROR_EXTRDICTOUTMEM,Arc.FileName,uint(Arc.FileHead.WinSize/0x100000));
+              if (Arc.FileHead.WinSize>=0x40000000)
+                uiMsg(UIERROR_EXTRDICTOUTMEM,Arc.FileName,uint(Arc.FileHead.WinSize/0x40000000+(Arc.FileHead.WinSize%0x40000000!=0 ? 1 : 0)));
               throw;
             }
 
@@ -1696,13 +1696,13 @@ void CmdExtract::GetFirstVolIfFullSet(const std::wstring &SrcName,bool NewNumber
 
 bool CmdExtract::CheckWinLimit(Archive &Arc,std::wstring &ArcFileName)
 {
-  if (Arc.FileHead.WinSize<=Cmd->MaxWinSize || Arc.FileHead.WinSize<=Cmd->WinSize)
+  if (Arc.FileHead.WinSize<=Cmd->WinSizeLimit || Arc.FileHead.WinSize<=Cmd->WinSize)
     return true;
-  if (uiDictLimit(Cmd,ArcFileName,Arc.FileHead.WinSize,Max(Cmd->MaxWinSize,Cmd->WinSize)))
+  if (uiDictLimit(Cmd,ArcFileName,Arc.FileHead.WinSize,Max(Cmd->WinSizeLimit,Cmd->WinSize)))
   {
     // No more prompts when extracting other files. Important for GUI versions,
     // where we might not have [Max]WinSize set permanently when extracting.
-    Cmd->MaxWinSize=Arc.FileHead.WinSize;
+    Cmd->WinSizeLimit=Arc.FileHead.WinSize;
   }
   else
   {

@@ -115,7 +115,7 @@ class RAROptions
 
     bool InclAttrSet;
     uint64 WinSize;
-    uint64 MaxWinSize; // Switch -mdx<size>.
+    uint64 WinSizeLimit; // Switch -mdx<size>.
 
 #ifdef USE_QOPEN
     QOPEN_MODE QOpenMode;
