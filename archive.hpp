@@ -140,7 +140,11 @@ class Archive:public File
 
     uint VolNumber;
     int64 VolWrite;
+
+    // Total size of files adding to archive. Might also include the size of
+    // files repacked in solid archive.
     uint64 AddingFilesSize;
+
     uint64 AddingHeadersSize;
 
     bool NewArchive;

@@ -20,6 +20,11 @@ void Unpack::Unpack5(bool Solid)
   {
     UnpPtr=WrapUp(UnpPtr);
 
+    // To combine this code with WrapUp above, we also need to set FirstWinDone
+    // in CopyString. Performance gain is questionable in this case.
+    FirstWinDone|=(PrevPtr>UnpPtr);
+    PrevPtr=UnpPtr;
+
     if (Inp.InAddr>=ReadBorder)
     {
       bool FileDone=false;
@@ -42,6 +47,7 @@ void Unpack::Unpack5(bool Solid)
         break;
     }
 
+    // WriteBorder==UnpPtr means that we have MaxWinSize data ahead.
     if (WrapDown(WriteBorder-UnpPtr)<=MAX_INC_LZ_MATCH && WriteBorder!=UnpPtr)
     {
       UnpWriteBuf();
@@ -95,6 +101,14 @@ void Unpack::Unpack5(bool Solid)
           }
           uint LowDist=DecodeNumber(Inp,&BlockTables.LDD);
           Distance+=LowDist;
+ 
+          // Distance can be 0 for multiples of 4 GB as result of size_t
+          // overflow in 32-bit build. Its lower 32-bit can also erroneously
+          // fit into dictionary after truncating upper 32-bits. Replace such
+          // invalid distances with -1, so CopyString sets 0 data for them.
+          // DBits>=30 also as DistSlot>=62 indicate distances >=0x80000001.
+          if (sizeof(Distance)==4 && DBits>=30)
+            Distance=(size_t)-1;
         }
         else
         {
@@ -117,7 +131,7 @@ void Unpack::Unpack5(bool Solid)
       InsertOldDist(Distance);
       LastLength=Length;
       if (Fragmented)
-        FragWindow.CopyString(Length,Distance,UnpPtr,MaxWinSize);
+        FragWindow.CopyString(Length,Distance,UnpPtr,FirstWinDone,MaxWinSize);
       else
         CopyString(Length,Distance);
       continue;
@@ -133,7 +147,7 @@ void Unpack::Unpack5(bool Solid)
     {
       if (LastLength!=0)
         if (Fragmented)
-          FragWindow.CopyString(LastLength,OldDist[0],UnpPtr,MaxWinSize);
+          FragWindow.CopyString(LastLength,OldDist[0],UnpPtr,FirstWinDone,MaxWinSize);
         else
           CopyString(LastLength,OldDist[0]);
       continue;
@@ -150,7 +164,7 @@ void Unpack::Unpack5(bool Solid)
       uint Length=SlotToLength(Inp,LengthSlot);
       LastLength=Length;
       if (Fragmented)
-        FragWindow.CopyString(Length,Distance,UnpPtr,MaxWinSize);
+        FragWindow.CopyString(Length,Distance,UnpPtr,FirstWinDone,MaxWinSize);
       else
         CopyString(Length,Distance);
       continue;

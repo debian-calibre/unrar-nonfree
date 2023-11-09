@@ -384,7 +384,7 @@
 #define   MNeedAdmin         L"\nYou may need to run RAR as administrator"
 #define   MDictOutMem        L"\nNot enough memory for %d MB compression dictionary, changed to %d MB."
 #define   MUseSmalllerDict   L"\nPlease use a smaller compression dictionary."
-#define   MExtrDictOutMem    L"\nNot enough memory to unpack the archive with %u MB compression dictionary."
+#define   MExtrDictOutMem    L"\nNot enough memory to unpack the archive with %u GB compression dictionary."
 #define   MSuggest64bit      L"\n64 bit RAR version is necessary."
 #define   MOpenErrAtime      L"\nYou may need to remove -tsp switch to open this file."
 #define   MErrReadInfo       L"\nChoose 'Ignore' to continue with the already read file part only, 'Ignore all' to do it for all read errors, 'Retry' to repeat read and 'Quit' to abort."

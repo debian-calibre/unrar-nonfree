@@ -224,12 +224,6 @@ void uiMsgStore::Msg()
       Log(Str[0],St(MNewerRAR));
       break;
 #endif
-    case UIERROR_EXTRDICTOUTMEM:
-      Log(Str[0],St(MExtrDictOutMem),Num[0]);
-#ifdef _WIN_32
-      Log(Str[0],St(MSuggest64bit));
-#endif
-      break;
     case UIERROR_RECVOLDIFFSETS:
       Log(NULL,St(MRecVolDiffSets),Str[0],Str[1]);
       break;
@@ -241,6 +235,12 @@ void uiMsgStore::Msg()
       break;
     case UIERROR_RECVOLCANNOTFIX:
       mprintf(St(MRecVolCannotFix));
+      break;
+    case UIERROR_EXTRDICTOUTMEM:
+      Log(Str[0],St(MExtrDictOutMem),Num[0]);
+#ifdef _WIN_32
+      Log(Str[0],St(MSuggest64bit));
+#endif
       break;
     case UIERROR_UNEXPEOF:
       Log(Str[0],St(MLogUnexpEOF));

@@ -53,7 +53,7 @@
 #define FCI_METHOD_BIT1     0x00000100 // 0 .. 5 (6 and 7 are not used).
 #define FCI_METHOD_BIT2     0x00000200
 #define FCI_DICT_BIT0       0x00000400 // Dictionary size.
-#define FCI_DICT_BIT1       0x00000800 // 128 KB .. 4 GB.
+#define FCI_DICT_BIT1       0x00000800 // 128 KB .. 1 TB.
 #define FCI_DICT_BIT2       0x00001000
 #define FCI_DICT_BIT3       0x00002000
 #define FCI_DICT_BIT4       0x00004000
@@ -62,6 +62,7 @@
 #define FCI_DICT_FRACT2     0x00020000
 #define FCI_DICT_FRACT3     0x00040000
 #define FCI_DICT_FRACT4     0x00080000
+#define FCI_RAR5_COMPAT     0x00100000 // RAR7 compression flags and RAR5 compression algorithm.
 
 // Main header extra field values.
 #define MHEXTRA_LOCATOR       0x01 // Position of quick list and other blocks.

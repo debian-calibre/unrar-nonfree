@@ -336,8 +336,8 @@ int64 Archive::Tell()
 #endif
 
 
-// Return true if dictionary size is valid. If size is RAR7 only, return
-// the adjusted nearest bottom value in Size7. Return header flags in Flags.
+// Return 0 if dictionary size is invalid. If size is RAR7 only, return
+// the adjusted nearest bottom value. Return header flags in Flags.
 uint64 Archive::GetWinSize(uint64 Size,uint &Flags)
 {
   Flags=0;

@@ -25,6 +25,8 @@ void Log(const wchar *ArcName,const wchar *fmt,...)
 
   std::wstring s=vwstrprintf(fmt,arglist);
 
+  ReplaceEsc(s);
+  
   va_end(arglist);
   eprintf(L"%ls",s.c_str());
   ErrHandler.SetSystemErrorCode(Code);

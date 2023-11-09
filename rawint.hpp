@@ -173,7 +173,7 @@ inline uint64 GetGreaterOrEqualPow2(uint64 n)
 
 inline uint64 GetLessOrEqualPow2(uint64 n)
 {
-  size_t p=1;
+  uint64 p=1;
   while (p*2<=n)
     p*=2;
   return p;

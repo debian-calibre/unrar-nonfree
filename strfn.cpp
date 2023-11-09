@@ -553,3 +553,18 @@ void TruncateAtZero(std::wstring &Str)
   if (Pos!=std::wstring::npos)
     Str.erase(Pos);
 }
+
+
+void ReplaceEsc(std::wstring &Str)
+{
+  std::wstring::size_type Pos=0;
+  while (true)
+  {
+    Pos=Str.find(L'\033',Pos);
+    if (Pos==std::wstring::npos)
+      break;
+    Str[Pos]=L'\'';
+    Str.insert(Pos+1,L"\\033'");
+    Pos+=6;
+  }
+}

@@ -831,10 +831,10 @@ size_t Archive::ReadHeader50()
         // them.
         uint UnpVer=(CompInfo & 0x3f);
         if (UnpVer==0)
-          hd->UnpVer=50;
+          hd->UnpVer=VER_PACK5;
         else
           if (UnpVer==1)
-            hd->UnpVer=70;
+            hd->UnpVer=VER_PACK7;
           else
             hd->UnpVer=VER_UNKNOWN;
 
@@ -858,9 +858,18 @@ size_t Archive::ReadHeader50()
           hd->WinSize=0;
         else
         {
-          hd->WinSize=0x20000ULL<<((CompInfo>>10)&0x1f);
+          hd->WinSize=0x20000ULL<<((CompInfo>>10)&(UnpVer==0 ? 0x0f:0x1f));
           if (UnpVer==1)
+          {
             hd->WinSize+=hd->WinSize/32*((CompInfo>>15)&0x1f);
+
+            // RAR7 header with RAR5 compression. Needed to append RAR7 files
+            // to RAR5 solid stream if new dictionary is larger than existing.
+            if ((CompInfo & FCI_RAR5_COMPAT)!=0)
+              hd->UnpVer=VER_PACK5;
+            if (hd->WinSize>UNPACK_MAX_DICT)
+              hd->UnpVer=VER_UNKNOWN;
+          }
         }
 
         size_t ReadNameSize=Min(NameSize,MAXPATHSIZE);

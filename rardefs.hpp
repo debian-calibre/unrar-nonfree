@@ -32,6 +32,9 @@
 // maximum dictionary supported by decompression.
 #define PACK_MAX_DICT      0x1000000000ULL // 64 GB.
 
+// Maximum dictionary allowed by decompression.
+#define UNPACK_MAX_DICT    0x1000000000ULL // 64 GB.
+
 
 #ifndef SFX_MODULE
 #define USE_QOPEN

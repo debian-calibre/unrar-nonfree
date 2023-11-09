@@ -2,6 +2,7 @@ FragmentedWindow::FragmentedWindow()
 {
   memset(Mem,0,sizeof(Mem));
   memset(MemSize,0,sizeof(MemSize));
+  LastAllocated=0;
 }
 
 
@@ -13,6 +14,7 @@ FragmentedWindow::~FragmentedWindow()
 
 void FragmentedWindow::Reset()
 {
+  LastAllocated=0;
   for (uint I=0;I<ASIZE(Mem);I++)
     if (Mem[I]!=NULL)
     {
@@ -60,6 +62,7 @@ void FragmentedWindow::Init(size_t WinSize)
   }
   if (TotalSize<WinSize) // Not found enough free blocks.
     throw std::bad_alloc();
+  LastAllocated=WinSize;
 }
 
 
@@ -74,22 +77,33 @@ byte& FragmentedWindow::operator [](size_t Item)
 }
 
 
-void FragmentedWindow::CopyString(uint Length,size_t Distance,size_t &UnpPtr,size_t MaxWinSize)
+void FragmentedWindow::CopyString(uint Length,size_t Distance,size_t &UnpPtr,bool FirstWinDone,size_t MaxWinSize)
 {
   size_t SrcPtr=UnpPtr-Distance;
-  if (SrcPtr>=MaxWinSize)
+  if (Distance>UnpPtr)
+  {
     SrcPtr+=MaxWinSize;
-  // SrcPtr can be >=MaxWinSize if distance exceeds MaxWinSize
-  // in a malformed archive.
-  if (SrcPtr<MaxWinSize)
-    while (Length-- > 0)
+
+    if (Distance>MaxWinSize || !FirstWinDone)
     {
-      (*this)[UnpPtr]=(*this)[SrcPtr];
-      if (++SrcPtr>=MaxWinSize)
-        SrcPtr-=MaxWinSize;
-      if (++UnpPtr>=MaxWinSize)
-        UnpPtr-=MaxWinSize;
+      while (Length-- > 0)
+      {
+        (*this)[UnpPtr]=0;
+        if (++UnpPtr>=MaxWinSize)
+          UnpPtr-=MaxWinSize;
+      }
+      return;
     }
+  }
+
+  while (Length-- > 0)
+  {
+    (*this)[UnpPtr]=(*this)[SrcPtr];
+    if (++SrcPtr>=MaxWinSize)
+      SrcPtr-=MaxWinSize;
+    if (++UnpPtr>=MaxWinSize)
+      UnpPtr-=MaxWinSize;
+  }
 }
 
 

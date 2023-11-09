@@ -363,15 +363,15 @@ void ListFileHeader(Archive &Arc,FileHeader &hd,bool &TitleShown,bool Verbose,bo
     std::wstring WinSize;
     if (!hd.Dir)
       if (hd.WinSize%1073741824==0)
-        WinSize=L" -md=" + std::to_wstring(hd.WinSize/1073741824) + L"G";
+        WinSize=L" -md=" + std::to_wstring(hd.WinSize/1073741824) + L"g";
       else
         if (hd.WinSize%1048576==0)
-          WinSize=L" -md=" + std::to_wstring(hd.WinSize/1048576) + L"M";
+          WinSize=L" -md=" + std::to_wstring(hd.WinSize/1048576) + L"m";
         else
           if (hd.WinSize>=1024)
-            WinSize=L" -md=" + std::to_wstring(hd.WinSize/1024) + L"K";
+            WinSize=L" -md=" + std::to_wstring(hd.WinSize/1024) + L"k";
           else
-            WinSize=L" -md=?(>2G)";
+            WinSize=L" -md=?";
 
     mprintf(L"\n%12ls: RAR %ls(v%d) -m%d%s",St(MListCompInfo),
             Format==RARFMT15 ? L"1.5":L"5.0",

@@ -37,6 +37,9 @@ void Unpack::Unpack20(bool Solid)
   {
     UnpPtr&=MaxWinMask;
 
+    FirstWinDone|=(PrevPtr>UnpPtr);
+    PrevPtr=UnpPtr;
+
     if (Inp.InAddr>ReadTop-30)
       if (!UnpReadBuf())
         break;

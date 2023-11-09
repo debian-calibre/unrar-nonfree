@@ -1078,6 +1078,7 @@ void MakeNameCompatible(std::wstring &Name)
       {
         if (I==0)
         {
+          // Windows 10 Explorer can't rename or delete " " files and folders.
           if (Name[I]==' ')
             Name[I]='_'; // Convert " /path" to "_/path".
           break; // Allow ./path1 paths.

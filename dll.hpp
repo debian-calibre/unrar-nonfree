@@ -32,7 +32,7 @@
 #define RAR_VOL_ASK           0
 #define RAR_VOL_NOTIFY        1
 
-#define RAR_DLL_VERSION       8
+#define RAR_DLL_VERSION       9
 
 #define RAR_HASH_NONE         0
 #define RAR_HASH_CRC32        1
