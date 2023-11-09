@@ -108,7 +108,7 @@ index cc5c567..ab14755 100644
  {
    return RAR_DLL_VERSION;
 diff --git a/dll.hpp b/dll.hpp
-index 06ef702..945ebb2 100644
+index ac8d53f..62aee4f 100644
 --- a/dll.hpp
 +++ b/dll.hpp
 @@ -172,18 +172,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
