@@ -385,7 +385,7 @@
 #define   MDictOutMem        L"\nNot enough memory for %d MB compression dictionary, changed to %d MB."
 #define   MUseSmalllerDict   L"\nPlease use a smaller compression dictionary."
 #define   MExtrDictOutMem    L"\nNot enough memory to unpack the archive with %u GB compression dictionary."
-#define   MSuggest64bit      L"\n64 bit RAR version is necessary."
+#define   MSuggest64bit      L"\n64-bit RAR version is necessary."
 #define   MOpenErrAtime      L"\nYou may need to remove -tsp switch to open this file."
 #define   MErrReadInfo       L"\nChoose 'Ignore' to continue with the already read file part only, 'Ignore all' to do it for all read errors, 'Retry' to repeat read and 'Quit' to abort."
 #define   MErrReadTrunc      L"\n%s is archived incompletely because of read error.\n"
@@ -402,3 +402,4 @@
 #define   MDictNotAllowed    L"\n%u GB dictionary exceeds %u GB limit and needs more than %u GB memory to unpack."
 #define   MDictExtrAnyway    L"\nUse -md%ug or -mdx%ug switches to extract anyway."
 #define   MDictComprLimit    L"\n%u GB dictionary exceeds %u GB limit and not allowed when compressing data."
+#define   MNeedSFX64         L"\n64-bit self-extracting module is necessary for %u GB compression dictionary."
