@@ -1,3 +1,10 @@
+unrar-nonfree (1:7.0.4-1) UNRELEASED; urgency=medium
+
+  * New upstream version 7.0.4
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 24 Nov 2023 18:44:53 +0900
+
 unrar-nonfree (1:7.0.3-1) unstable; urgency=medium
 
   * Extend copyright years
