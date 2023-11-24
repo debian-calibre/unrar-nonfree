@@ -8,17 +8,17 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index 30c2449..4dcf7ff 100644
+index 535585c..49a79d3 100644
 --- a/makefile
 +++ b/makefile
 @@ -3,9 +3,9 @@
  
  # Linux using GCC
  CXX = c++
--CXXFLAGS =
+-CXXFLAGS = -std=c++11
 -LIBFLAGS = -fPIC
 -DEFINES = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
-+CXXFLAGS +=
++CXXFLAGS += -std=c++11
 +LIBFLAGS += -fPIC
 +DEFINES += -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
  STRIP = true

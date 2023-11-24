@@ -8,7 +8,7 @@ Forwarded: not-needed
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index c1e29a2..8a7949f 100644
+index 6305d5f..541b935 100644
 --- a/makefile
 +++ b/makefile
 @@ -60,10 +60,14 @@ sfx:	$(OBJECTS)
