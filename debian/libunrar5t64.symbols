@@ -1,4 +1,4 @@
-libunrar.so.5 libunrar5 #MINVER#
+libunrar.so.5 libunrar5t64 #MINVER#
  RARCloseArchive@Base 1:5.9.4
  RARGetDllVersion@Base 1:5.9.4
  RAROpenArchive@Base 1:5.9.4

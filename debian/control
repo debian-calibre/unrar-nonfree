@@ -21,7 +21,10 @@ Description: Unarchiver for .rar files (non-free version)
  Unrar can extract files from .rar archives. If you want to create .rar
  archives, install package rar.
 
-Package: libunrar5
+Package: libunrar5t64
+Provides: ${t64:Provides}
+Replaces: libunrar5
+Breaks: libunrar5 (<< ${source:Version})
 Section: non-free/libs
 Architecture: any
 Multi-Arch: same
@@ -35,7 +38,7 @@ Section: non-free/libdevel
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, libunrar5 (= ${binary:Version}), libunrar-headers (= ${source:Version})
+Depends: ${misc:Depends}, libunrar5t64 (= ${binary:Version}), libunrar-headers (= ${source:Version})
 Description: Unarchiver for .rar files (non-free version) - development files
  This package contains the static library for the libunrar library.
 

@@ -1,3 +1,10 @@
+unrar-nonfree (1:7.0.6-1.1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 04 Feb 2024 12:07:36 +0000
+
 unrar-nonfree (1:7.0.6-1) unstable; urgency=medium
 
   * New upstream version 7.0.6
