@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index cc5c567..ab14755 100644
+index de8796d..49c3cdc 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
@@ -53,7 +53,7 @@ index cc5c567..ab14755 100644
  int PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *D)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -417,18 +422,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
+@@ -421,18 +426,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
  }
  
  
@@ -75,7 +75,7 @@ index cc5c567..ab14755 100644
  void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -436,6 +444,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
+@@ -440,6 +448,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  }
  
  
@@ -83,7 +83,7 @@ index cc5c567..ab14755 100644
  void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -444,6 +453,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
+@@ -448,6 +457,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
  }
  
  
@@ -91,7 +91,7 @@ index cc5c567..ab14755 100644
  void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -451,6 +461,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
+@@ -455,6 +465,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
  }
  
  
@@ -99,7 +99,7 @@ index cc5c567..ab14755 100644
  void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  {
  #ifndef RAR_NOCRYPT
-@@ -463,6 +474,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
+@@ -467,6 +478,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  }
  
  
