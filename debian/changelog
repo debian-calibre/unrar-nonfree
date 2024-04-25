@@ -2,6 +2,7 @@ unrar-nonfree (1:7.0.8-1) UNRELEASED; urgency=medium
 
   * New upstream version 7.0.8
   * Rediff patches
+  * Standards-Version: 4.7.0 (routine-update)
 
  -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 25 Apr 2024 21:18:59 +0900
 
