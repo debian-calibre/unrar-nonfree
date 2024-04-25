@@ -1,4 +1,5 @@
 libunrar.so.5 libunrar5t64 #MINVER#
+* Build-Depends-Package: libunrar-dev
  RARCloseArchive@Base 1:5.9.4
  RARGetDllVersion@Base 1:5.9.4
  RAROpenArchive@Base 1:5.9.4
