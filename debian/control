@@ -1,53 +1,58 @@
 Source: unrar-nonfree
-Section: non-free/utils
-Priority: optional
 Maintainer: UnRar maintainer team <team+unrar-nonfree@tracker.debian.org>
 Uploaders: Martin Meredith <mez@debian.org>,
            Norbert Preining <norbert@preining.info>,
-           YOKOTA Hiroshi <yokota.hgml@gmail.com>,
-Homepage: https://www.rarlab.com/
-Build-Depends: dpkg-dev (>= 1.22.5), debhelper-compat (= 13), dh-exec
-Standards-Version: 4.7.0
+           YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Section: non-free/utils
 XS-Autobuild: yes
-Vcs-Git: https://github.com/debian-calibre/unrar-nonfree.git
+Priority: optional
+Build-Depends: dpkg-dev (>= 1.22.5),
+               debhelper-compat (= 13),
+               dh-exec
+Standards-Version: 4.7.0
 Vcs-Browser: https://github.com/debian-calibre/unrar-nonfree
+Vcs-Git: https://github.com/debian-calibre/unrar-nonfree.git
+Homepage: https://www.rarlab.com/
 Rules-Requires-Root: no
 
 Package: unrar
 Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Unarchiver for .rar files (non-free version)
  Unrar can extract files from .rar archives. If you want to create .rar
  archives, install package rar.
 
 Package: libunrar5t64
-Provides: ${t64:Provides}
-Replaces: libunrar5
-Breaks: libunrar5 (<< ${source:Version})
-Section: non-free/libs
 Architecture: any
 Multi-Arch: same
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Section: non-free/libs
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Breaks: libunrar5 (<< ${source:Version})
+Provides: ${t64:Provides}
+Replaces: libunrar5
 Description: Unarchiver for .rar files (non-free version) - shared library
  library for unarchiving .rar files
 
 Package: libunrar-dev
-Section: non-free/libdevel
 Architecture: any
 Multi-Arch: same
+Section: non-free/libdevel
+Depends: ${misc:Depends},
+         libunrar5t64 (= ${binary:Version}),
+         libunrar-headers (= ${source:Version})
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, libunrar5t64 (= ${binary:Version}), libunrar-headers (= ${source:Version})
 Description: Unarchiver for .rar files (non-free version) - development files
  This package contains the static library for the libunrar library.
 
 Package: libunrar-headers
-Section: non-free/libdevel
 Architecture: all
 Multi-Arch: foreign
-Pre-Depends: ${misc:Pre-Depends}
+Section: non-free/libdevel
 Depends: ${misc:Depends}
-Breaks: libunrar-dev (<= 1:5.9.4-1)
+Pre-Depends: ${misc:Pre-Depends}
 Description: Unarchiver for .rar files (non-free version) - development header files
  This package contains the header files for the libunrar library.

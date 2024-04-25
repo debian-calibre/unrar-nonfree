@@ -37,8 +37,8 @@ License: freeware
         to distribute UnRAR inside of other software packages.
  .
      4. THE RAR ARCHIVER AND THE UnRAR UTILITY ARE DISTRIBUTED "AS IS".
-        NO WARRANTY OF ANY KIND IS EXPRESSED OR IMPLIED.  YOU USE AT 
-        YOUR OWN RISK. THE AUTHOR WILL NOT BE LIABLE FOR DATA LOSS, 
+        NO WARRANTY OF ANY KIND IS EXPRESSED OR IMPLIED.  YOU USE AT
+        YOUR OWN RISK. THE AUTHOR WILL NOT BE LIABLE FOR DATA LOSS,
         DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING
         OR MISUSING THIS SOFTWARE.
  .
@@ -81,7 +81,7 @@ License: BSD-2-clause
     Original Intel Slicing-by-8 code is licensed under BSD License
     available at http://www.opensource.org/licenses/bsd-license.html
  .
-      Copyright (c) 2004-2006 Intel Corporation. 
+      Copyright (c) 2004-2006 Intel Corporation.
       All Rights Reserved
  .
       Redistribution and use in source and binary forms, with or without
@@ -90,7 +90,7 @@ License: BSD-2-clause
  .
       Redistributions of source code must retain the above copyright notice,
       this list of conditions and the following disclaimer.
- .    
+ .
       Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer
       in the documentation and/or other materials provided with
