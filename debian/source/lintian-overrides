@@ -1,0 +1,4 @@
+# -*- mode: conf -*-
+
+# upstream doesn't have source code repository
+unrar-nonfree source: upstream-metadata-missing-repository [debian/upstream/metadata]
