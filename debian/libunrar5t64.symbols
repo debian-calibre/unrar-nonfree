@@ -12,10 +12,10 @@ libunrar.so.5 libunrar5t64 #MINVER#
  RARSetChangeVolProc@Base 1:5.9.4
  RARSetPassword@Base 1:5.9.4
  RARSetProcessDataProc@Base 1:5.9.4
- (optional=lto)_ZNSt6vectorIhSaIhEE12emplace_backIJhEEEvDpOT_@Base 1:7.1.1-1~
- (optional=lto)_ZNSt6vectorIhSaIhEE17_M_default_appendEm@Base 1:7.0.6-1.1~
- (optional=lto)_ZNSt6vectorIhSaIhEE17_M_realloc_appendIJhEEEvDpOT_@Base 1:7.1.1-1~
- (optional=lto)_ZNSt6vectorIiSaIiEE12emplace_backIJiEEEvDpOT_@Base 1:7.1.1-1~
- (optional=lto)_ZNSt6vectorIwSaIwEE17_M_default_appendEm@Base 1:7.0.6-1.1~
- _ZTI8RAR_EXIT@Base 1:5.9.4
- _ZTS8RAR_EXIT@Base 1:5.9.4
+ (c++|optional=lto)"void std::vector<unsigned char, std::allocator<unsigned char> >::emplace_back<unsigned char>(unsigned char&&)@Base" 1:7.1.1-1~
+ (c++|optional=lto)"std::vector<unsigned char, std::allocator<unsigned char> >::_M_default_append(unsigned long)@Base" 1:7.0.6-1.1~
+ (c++|optional=lto)"void std::vector<unsigned char, std::allocator<unsigned char> >::_M_realloc_append<unsigned char>(unsigned char&&)@Base" 1:7.1.1-1~
+ (c++|optional=lto)"void std::vector<int, std::allocator<int> >::emplace_back<int>(int&&)@Base" 1:7.1.1-1~
+ (c++|optional=lto)"std::vector<wchar_t, std::allocator<wchar_t> >::_M_default_append(unsigned long)@Base" 1:7.0.6-1.1~
+ (c++)"typeinfo for RAR_EXIT@Base" 1:5.9.4
+ (c++)"typeinfo name for RAR_EXIT@Base" 1:5.9.4
