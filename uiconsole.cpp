@@ -245,6 +245,18 @@ void uiMsgStore::Msg()
     case UIERROR_UNEXPEOF:
       Log(Str[0],St(MLogUnexpEOF));
       break;
+    case UIERROR_TRUNCSERVICE:
+      {
+        const wchar *Type=nullptr;
+        if (wcscmp(Str[1],SUBHEAD_TYPE_QOPEN)==0)
+          Type=St(MHeaderQO);
+        else
+          if (wcscmp(Str[1],SUBHEAD_TYPE_RR)==0)
+            Type=St(MHeaderRR);
+        if (Type!=nullptr)
+          Log(Str[0],St(MTruncService),Type);
+      }
+      break;
     case UIERROR_BADARCHIVE:
       Log(Str[0],St(MBadArc),Str[0]);
       break;
