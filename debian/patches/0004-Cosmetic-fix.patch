@@ -8,13 +8,13 @@ Forwarded: not-needed
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/makefile b/makefile
-index e6082e3..535585c 100644
+index 6f9d7fa..b00e560 100644
 --- a/makefile
 +++ b/makefile
-@@ -2,14 +2,14 @@
- # Makefile for UNIX - unrar
- 
- # Linux using GCC
+@@ -5,14 +5,14 @@
+ # 2024.08.19: -march=native isn't recognized on some platforms such as RISCV64.
+ # Thus we removed it. Clang ARM users can add -march=armv8-a+crypto to enable
+ # ARM NEON crypto.
 -CXX=c++
 -CXXFLAGS=-std=c++11
 -LIBFLAGS=-fPIC

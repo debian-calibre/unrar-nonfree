@@ -11,10 +11,10 @@ Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=866142
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index fb02a13..e6082e3 100644
+index 669c9df..6f9d7fa 100644
 --- a/makefile
 +++ b/makefile
-@@ -6,7 +6,7 @@ CXX=c++
+@@ -9,7 +9,7 @@ CXX=c++
  CXXFLAGS=-std=c++11
  LIBFLAGS=-fPIC
  DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP

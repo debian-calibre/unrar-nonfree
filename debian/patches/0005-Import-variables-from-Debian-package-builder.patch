@@ -8,12 +8,12 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index 535585c..49a79d3 100644
+index b00e560..38cafb5 100644
 --- a/makefile
 +++ b/makefile
-@@ -3,9 +3,9 @@
- 
- # Linux using GCC
+@@ -6,9 +6,9 @@
+ # Thus we removed it. Clang ARM users can add -march=armv8-a+crypto to enable
+ # ARM NEON crypto.
  CXX = c++
 -CXXFLAGS = -std=c++11
 -LIBFLAGS = -fPIC

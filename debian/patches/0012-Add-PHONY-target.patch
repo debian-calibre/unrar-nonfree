@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 3 insertions(+)
 
 diff --git a/makefile b/makefile
-index 416d365..0ed0ea9 100644
+index faab6b5..bf64859 100644
 --- a/makefile
 +++ b/makefile
-@@ -30,6 +30,9 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o smallfn.o global.o file.o filefn.o filc
+@@ -33,6 +33,9 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o smallfn.o global.o file.o filefn.o filc
  .cpp.o:
  	$(COMPILE) -D$(WHAT) -c $<
  

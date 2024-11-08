@@ -14,14 +14,14 @@ Added hardening support (Closes: #694611)
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/makefile b/makefile
-index ce54a02..9e9f824 100644
+index f7fe61a..a309fe0 100644
 --- a/makefile
 +++ b/makefile
-@@ -3,12 +3,12 @@
- 
- # Linux using GCC
+@@ -6,12 +6,12 @@
+ # Thus we removed it. Clang ARM users can add -march=armv8-a+crypto to enable
+ # ARM NEON crypto.
  CXX=c++
--CXXFLAGS=-march=native -O2 -std=c++11 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
+-CXXFLAGS=-O2 -std=c++11 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
 +CXXFLAGS=-std=c++11 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else
  LIBFLAGS=-fPIC
  DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP
@@ -32,7 +32,7 @@ index ce54a02..9e9f824 100644
  DESTDIR=/usr
  
  ##########################
-@@ -59,7 +59,7 @@ lib:	WHAT=RARDLL
+@@ -62,7 +62,7 @@ lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
  lib:	$(OBJECTS) $(LIB_OBJ)
  	@rm -f libunrar.*

@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/makefile b/makefile
-index 6305d5f..541b935 100644
+index 94dc7b7..1b69af4 100644
 --- a/makefile
 +++ b/makefile
-@@ -60,10 +60,14 @@ sfx:	$(OBJECTS)
+@@ -63,10 +63,14 @@ sfx:	$(OBJECTS)
  lib:	WHAT=RARDLL
  lib:	CXXFLAGS+=$(LIBFLAGS)
  lib:	$(OBJECTS) $(LIB_OBJ)

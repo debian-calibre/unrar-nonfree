@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index de8796d..49c3cdc 100644
+index c8d1605..7189554 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
@@ -20,16 +20,16 @@ index de8796d..49c3cdc 100644
 +__attribute__ ((visibility ("default")))
  HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *r)
  {
-   RAROpenArchiveDataEx rx;
-@@ -30,6 +31,7 @@ HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *r)
+   RAROpenArchiveDataEx rx{};
+@@ -29,6 +30,7 @@ HANDLE PASCAL RAROpenArchive(struct RAROpenArchiveData *r)
  }
  
  
 +__attribute__ ((visibility ("default")))
  HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  {
-   DataSet *Data=NULL;
-@@ -164,6 +166,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
+   DataSet *Data=nullptr;
+@@ -175,6 +177,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  }
  
  
@@ -37,7 +37,7 @@ index de8796d..49c3cdc 100644
  int PASCAL RARCloseArchive(HANDLE hArcData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -180,6 +183,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
+@@ -191,6 +194,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
  }
  
  
@@ -45,7 +45,7 @@ index de8796d..49c3cdc 100644
  int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  {
    struct RARHeaderDataEx X{};
-@@ -204,6 +208,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
+@@ -215,6 +219,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  }
  
  
@@ -53,7 +53,7 @@ index de8796d..49c3cdc 100644
  int PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *D)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -421,18 +426,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
+@@ -432,18 +437,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
  }
  
  
@@ -75,7 +75,7 @@ index de8796d..49c3cdc 100644
  void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -440,6 +448,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
+@@ -451,6 +459,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  }
  
  
@@ -83,7 +83,7 @@ index de8796d..49c3cdc 100644
  void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -448,6 +457,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
+@@ -459,6 +468,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
  }
  
  
@@ -91,7 +91,7 @@ index de8796d..49c3cdc 100644
  void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -455,6 +465,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
+@@ -466,6 +476,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
  }
  
  
@@ -99,7 +99,7 @@ index de8796d..49c3cdc 100644
  void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  {
  #ifndef RAR_NOCRYPT
-@@ -467,6 +478,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
+@@ -478,6 +489,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  }
  
  
@@ -108,10 +108,10 @@ index de8796d..49c3cdc 100644
  {
    return RAR_DLL_VERSION;
 diff --git a/dll.hpp b/dll.hpp
-index ac8d53f..62aee4f 100644
+index 3a8ded9..8fc586c 100644
 --- a/dll.hpp
 +++ b/dll.hpp
-@@ -172,18 +172,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
+@@ -173,18 +173,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
  extern "C" {
  #endif
  
@@ -143,11 +143,11 @@ index ac8d53f..62aee4f 100644
  #ifdef __cplusplus
  }
 diff --git a/makefile b/makefile
-index abc6688..416d365 100644
+index 84a8afb..faab6b5 100644
 --- a/makefile
 +++ b/makefile
-@@ -4,7 +4,7 @@
- # Linux using GCC
+@@ -7,7 +7,7 @@
+ # ARM NEON crypto.
  CXX = c++
  CXXFLAGS += -std=c++11
 -LIBFLAGS += -fPIC

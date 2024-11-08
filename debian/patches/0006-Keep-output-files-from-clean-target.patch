@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 2 insertions(+)
 
 diff --git a/makefile b/makefile
-index 49a79d3..e289a1b 100644
+index 38cafb5..1d4f2ea 100644
 --- a/makefile
 +++ b/makefile
-@@ -39,6 +39,8 @@ uninstall:	uninstall-unrar
+@@ -42,6 +42,8 @@ uninstall:	uninstall-unrar
  clean:
  	@rm -f *.bak *~
  	@rm -f $(OBJECTS) $(UNRAR_OBJ) $(LIB_OBJ)
