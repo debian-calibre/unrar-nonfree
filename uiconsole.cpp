@@ -45,10 +45,8 @@ UIASKREP_RESULT uiAskReplace(std::wstring &Name,int64 FileSize,RarTime *FileTime
   if (AllowRename && Choice==5)
   {
     mprintf(St(MAskNewName));
-    if (getwstr(Name))
-      return UIASKREP_R_RENAME;
-    else
-      return UIASKREP_R_SKIP; // Process fwgets failure as if user answered 'No'.
+    getwstr(Name);
+    return UIASKREP_R_RENAME;
   }
   return UIASKREP_R_CANCEL;
 }

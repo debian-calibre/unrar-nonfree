@@ -67,7 +67,7 @@ void Archive::CheckArc(bool EnableBroken)
     // password is incorrect.
     if (!FailedHeaderDecryption)
       uiMsg(UIERROR_BADARCHIVE,FileName);
-    ErrHandler.Exit(RARX_FATAL);
+    ErrHandler.Exit(RARX_BADARC);
   }
 }
 
