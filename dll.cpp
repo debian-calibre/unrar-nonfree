@@ -505,6 +505,8 @@ static int RarErrorToDll(RAR_EXIT ErrCode)
       return ERAR_BAD_PASSWORD;
     case RARX_SUCCESS:
       return ERAR_SUCCESS; // 0.
+    case RARX_BADARC:
+      return ERAR_BAD_ARCHIVE;
     default:
       return ERAR_UNKNOWN;
   }

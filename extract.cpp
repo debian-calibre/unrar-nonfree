@@ -188,12 +188,18 @@ EXTRACT_ARC_CODE CmdExtract::ExtractArchive()
     }
 #endif
 
-    mprintf(St(MNotRAR),ArcName.c_str());
-
+    bool RarExt=false;
 #ifndef SFX_MODULE
-    if (CmpExt(ArcName,L"rar"))
+    RarExt=CmpExt(ArcName,L"rar");
 #endif
-      ErrHandler.SetErrorCode(RARX_WARNING);
+
+    if (RarExt)
+      uiMsg(UIERROR_BADARCHIVE,ArcName); // Non-archive .rar file.
+    else
+      mprintf(St(MNotRAR),ArcName.c_str()); // Non-archive not .rar file, likely in "rar x *.*".
+
+    if (RarExt)
+      ErrHandler.SetErrorCode(RARX_BADARC);
     return EXTRACT_ARC_NEXT;
   }
 
