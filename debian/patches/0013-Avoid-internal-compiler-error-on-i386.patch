@@ -7,10 +7,10 @@ Content-Transfer-Encoding: 8bit
 
 Forwarded: not-needed
 
-SSE intrinsics functions requires "-msse2" (for SSE2) or "-mssse3" (for SSSE3)
+SSE intrinsic functions requires "-msse2" (for SSE2) or "-mssse3" (for SSSE3)
 options for CXXFLAGS on i386 architecture.
 
-Debian's generic i386 platform dose not support SSE instructions, but requres
+Debian's generic i386 platform dose not support SSE instructions, but requires
 "sse2-support" or "sse3-support" for such packages.
 See Debian's "isa-support" source package for more information.
 
