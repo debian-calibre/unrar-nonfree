@@ -1,3 +1,9 @@
+unrar-nonfree (1:7.1.2-2) UNRELEASED; urgency=medium
+
+  * Add notes about internal compilation errors on i386
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 07 Dec 2024 19:45:43 +0900
+
 unrar-nonfree (1:7.1.2-1) unstable; urgency=medium
 
   * New upstream version 7.1.2
