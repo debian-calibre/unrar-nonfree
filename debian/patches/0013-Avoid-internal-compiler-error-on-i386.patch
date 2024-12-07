@@ -7,6 +7,16 @@ Content-Transfer-Encoding: 8bit
 
 Forwarded: not-needed
 
+SSE intrinsics functions requires "-msse2" (for SSE2) or "-mssse3" (for SSSE3)
+options for CXXFLAGS on i386 architecture.
+
+Debian's generic i386 platform dose not support SSE instructions, but requres
+"sse2-support" or "sse3-support" for such packages.
+See Debian's "isa-support" source package for more information.
+
+Debian's generic amd64 platform dose not needs additional compilation options
+because it supports SSE2 by default.
+
 ----
 i686-linux-gnu-g++ -Wdate-time -D_FORTIFY_SOURCE=2 -g -O2 -ffile-prefix-map=/<<PKGBUILDDIR>>=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP -DUNRAR -c blake2s.cpp
 during RTL pass: expand
