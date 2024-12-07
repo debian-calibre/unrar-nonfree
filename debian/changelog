@@ -1,3 +1,9 @@
+unrar-nonfree (1:7.1.2-3) UNRELEASED; urgency=medium
+
+  * Typo fix
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 08 Dec 2024 01:26:42 +0900
+
 unrar-nonfree (1:7.1.2-2) unstable; urgency=medium
 
   * Add notes about internal compilation errors on i386
