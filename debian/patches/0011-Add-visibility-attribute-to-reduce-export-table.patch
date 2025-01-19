@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index 4086409..cb8045d 100644
+index 8ceedf9..551e77c 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
