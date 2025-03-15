@@ -1,3 +1,13 @@
+unrar-nonfree (1:7.1.5-3) UNRELEASED; urgency=medium
+
+  * Describe "-om" option
+  * Describe new options to manpage
+  * Update version in manpage to 7.11
+  * Update manpage
+  * Add misc fixup to manpage
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 15 Mar 2025 15:20:14 +0900
+
 unrar-nonfree (1:7.1.5-2) unstable; urgency=medium
 
   * Upgrade Debian policy to 4.7.2
