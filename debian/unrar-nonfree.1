@@ -13,7 +13,12 @@ command.
 This manual page was written for the Debian GNU/Linux distribution
 because the original program does not have a manual page.
 .br
-Commands and options described here are as of unrar 7.11.
+Commands and options described here are as of
+.B unrar
+7.11.
+.PP
+.B unrar
+is a program for extracting .rar archives.
 .SH USAGE
 .TP
 .B archive
@@ -74,7 +79,7 @@ Extract files with full path.
 Every switch must be separated by a whitespace.
 You cannot put them together.
 .TP
-.B \-
+.B \-\-
 Stop switches scanning.
 .TP
 .B @[+]
@@ -241,6 +246,8 @@ switches=-m5 -s
 switches_a=-m5 -s
 .br
 switches_x=-o+
+.SH SEE ALSO
+rar(1)
 .SH AUTHORS
 This manual page was written by Petr Cech <cech@debian.org> according
 to "unrar" for the Debian GNU/Linux system (but may be used by others).
