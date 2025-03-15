@@ -113,20 +113,26 @@ Exclude paths from names.
 .B \-ep3
 Expand paths to full name.
 .TP
+.B \-ep4<path>
+Exclude the path prefix from names.
+.TP
 .B \-f
 Freshen files.
 .TP
 .B \-id[c,d,n,p,q]
 Display or disable messages.
 .TP
-.B \-kb
-Keep broken extracted files.
-.TP
 .B \-ierr
 Send all messages to stderr.
 .TP
 .B \-inul
 Disable all messages.
+.TP
+.B \-kb
+Keep broken extracted files.
+.TP
+.B \-me[par]
+Set encryption parameters.
 .TP
 .B \-n<file>
 Additionally filter included files.
@@ -143,11 +149,14 @@ Overwrite existing files.
 .B \-o\-
 Do not overwrite existing files.
 .TP
-.B \-ol[a]
-Process symbolic links as the link [absolute paths].
+.B \-ol[a,-]
+Process symbolic links as the link [absolute paths, skip].
 .TP
 .B \-om[-|1][=lst]
-Propagate Mark of the Web
+Propagate Mark of the Web.
+.TP
+.B \-op<path>
+Set the output path for extracted files.
 .TP
 .B \-or
 Rename files automatically.
@@ -155,7 +164,7 @@ Rename files automatically.
 .B \-ow
 Save or restore file owner and group.
 .TP
-.BI \-p password
+.BI \-p[password]
 Set password.
 .TP
 .B \-p\-
@@ -166,6 +175,9 @@ Recurse subdirectories.
 .TP
 .B \-sc<chr>[obj]
 Specify the character set.
+.TP
+.B \-si[name]
+Read data from standard input (stdin).
 .TP
 .B \-sl<size>
 Process files with size less than specified.
