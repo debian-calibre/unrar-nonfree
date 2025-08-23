@@ -1,5 +1,5 @@
 # -*- mode: conf -*-
+Version: 5
 
-version=4
-
-https://www.rarlab.com/rar_add.htm rar/unrarsrc-(.*)\.tar\.gz
+Source: https://www.rarlab.com/rar_add.htm
+Matching-Pattern: rar/unrarsrc-(.*)\.tar\.gz
