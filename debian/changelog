@@ -1,3 +1,9 @@
+unrar-nonfree (1:7.1.10-3) UNRELEASED; urgency=medium
+
+  * Drop Emacs mode line from debian/watch
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 29 Sep 2025 08:09:16 +0900
+
 unrar-nonfree (1:7.1.10-2) unstable; urgency=medium
 
   * Use V5 format for watch file
