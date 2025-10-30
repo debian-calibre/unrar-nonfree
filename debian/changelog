@@ -1,3 +1,11 @@
+unrar-nonfree (1:7.2.1-1) UNRELEASED; urgency=medium
+
+  * Rules-Requires-Root is "no" by default
+  * New upstream version 7.2.1
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 30 Oct 2025 20:02:34 +0900
+
 unrar-nonfree (1:7.1.10-3) unstable; urgency=medium
 
   * Drop Emacs mode line from debian/watch
