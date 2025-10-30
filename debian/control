@@ -13,7 +13,6 @@ Standards-Version: 4.7.2
 Vcs-Browser: https://github.com/debian-calibre/unrar-nonfree
 Vcs-Git: https://github.com/debian-calibre/unrar-nonfree.git
 Homepage: https://www.rarlab.com/
-Rules-Requires-Root: no
 
 Package: unrar
 Architecture: any
