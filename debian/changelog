@@ -1,9 +1,9 @@
-unrar-nonfree (1:7.2.4-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:7.2.4-1) unstable; urgency=medium
 
   * New upstream version 7.2.4
   * Extend copyright years
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 06 Feb 2026 03:27:14 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 06 Feb 2026 03:33:03 +0900
 
 unrar-nonfree (1:7.2.3-2) unstable; urgency=medium
 
