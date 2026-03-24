@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index 45be5a2..bfe7660 100644
+index ee1f266..56db1da 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
@@ -29,7 +29,7 @@ index 45be5a2..bfe7660 100644
  HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  {
    DataSet *Data=nullptr;
-@@ -175,6 +177,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
+@@ -181,6 +183,7 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
  }
  
  
@@ -37,7 +37,7 @@ index 45be5a2..bfe7660 100644
  int PASCAL RARCloseArchive(HANDLE hArcData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -191,6 +194,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
+@@ -197,6 +200,7 @@ int PASCAL RARCloseArchive(HANDLE hArcData)
  }
  
  
@@ -45,7 +45,7 @@ index 45be5a2..bfe7660 100644
  int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  {
    struct RARHeaderDataEx X{};
-@@ -215,6 +219,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
+@@ -221,6 +225,7 @@ int PASCAL RARReadHeader(HANDLE hArcData,struct RARHeaderData *D)
  }
  
  
@@ -53,7 +53,7 @@ index 45be5a2..bfe7660 100644
  int PASCAL RARReadHeaderEx(HANDLE hArcData,struct RARHeaderDataEx *D)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -432,18 +437,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
+@@ -442,18 +447,21 @@ int PASCAL ProcessFile(HANDLE hArcData,int Operation,char *DestPath,char *DestNa
  }
  
  
@@ -75,7 +75,7 @@ index 45be5a2..bfe7660 100644
  void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -451,6 +459,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
+@@ -461,6 +469,7 @@ void PASCAL RARSetChangeVolProc(HANDLE hArcData,CHANGEVOLPROC ChangeVolProc)
  }
  
  
@@ -83,7 +83,7 @@ index 45be5a2..bfe7660 100644
  void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserData)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -459,6 +468,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
+@@ -469,6 +478,7 @@ void PASCAL RARSetCallback(HANDLE hArcData,UNRARCALLBACK Callback,LPARAM UserDat
  }
  
  
@@ -91,7 +91,7 @@ index 45be5a2..bfe7660 100644
  void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataProc)
  {
    DataSet *Data=(DataSet *)hArcData;
-@@ -466,6 +476,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
+@@ -476,6 +486,7 @@ void PASCAL RARSetProcessDataProc(HANDLE hArcData,PROCESSDATAPROC ProcessDataPro
  }
  
  
@@ -99,7 +99,7 @@ index 45be5a2..bfe7660 100644
  void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  {
  #ifndef RAR_NOCRYPT
-@@ -478,6 +489,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
+@@ -488,6 +499,7 @@ void PASCAL RARSetPassword(HANDLE hArcData,char *Password)
  }
  
  
