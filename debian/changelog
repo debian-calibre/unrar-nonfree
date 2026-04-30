@@ -1,8 +1,8 @@
-unrar-nonfree (1:7.2.6-1) UNRELEASED; urgency=medium
+unrar-nonfree (1:7.2.6-1) unstable; urgency=medium
 
   * New upstream version 7.2.6
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 30 Apr 2026 11:03:36 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 30 Apr 2026 11:09:16 +0900
 
 unrar-nonfree (1:7.2.5-2) unstable; urgency=medium
 
