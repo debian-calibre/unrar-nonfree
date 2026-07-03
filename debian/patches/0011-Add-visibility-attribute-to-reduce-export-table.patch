@@ -10,7 +10,7 @@ Forwarded: not-needed
  3 files changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/dll.cpp b/dll.cpp
-index ee1f266..56db1da 100644
+index de84f81..ce7380b 100644
 --- a/dll.cpp
 +++ b/dll.cpp
 @@ -14,6 +14,7 @@ struct DataSet
@@ -108,10 +108,10 @@ index ee1f266..56db1da 100644
  {
    return RAR_DLL_VERSION;
 diff --git a/dll.hpp b/dll.hpp
-index 3a8ded9..8fc586c 100644
+index 448d76a..5b24f01 100644
 --- a/dll.hpp
 +++ b/dll.hpp
-@@ -173,18 +173,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
+@@ -174,18 +174,18 @@ typedef int (PASCAL *PROCESSDATAPROC)(unsigned char *Addr,int Size);
  extern "C" {
  #endif
  
