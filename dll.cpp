@@ -68,8 +68,8 @@ HANDLE PASCAL RAROpenArchiveEx(struct RAROpenArchiveDataEx *r)
 
     // Open shared mode is added by request of dll users, who need to
     // browse and unpack archives while downloading.
-    Data->Cmd.OpenShared = true;
-    if (!Data->Arc.Open(ArcName,FMF_OPENSHARED))
+    Data->Cmd.OpenShared=(r->OpFlags&ROADOF_SHARED)!=0;
+    if (!Data->Arc.Open(ArcName,Data->Cmd.OpenShared ? FMF_OPENSHARED:0))
     {
       r->OpenResult=ERAR_EOPEN;
       delete Data;
