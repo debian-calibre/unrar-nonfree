@@ -489,6 +489,8 @@ inline RARPPM_SEE2_CONTEXT* RARPPM_CONTEXT::makeEscFreq2(ModelPPM *Model,int Dif
 
 inline bool RARPPM_CONTEXT::decodeSymbol2(ModelPPM *Model)
 {
+  if (Model->NumMasked > NumStats) // 2026.07.24: extra security check.
+    return false;
   int count, HiCnt, i=NumStats-Model->NumMasked;
   RARPPM_SEE2_CONTEXT* psee2c=makeEscFreq2(Model,i);
   RARPPM_STATE* ps[256], ** pps=ps, * p=U.Stats-1;
@@ -498,6 +500,12 @@ inline bool RARPPM_CONTEXT::decodeSymbol2(ModelPPM *Model)
     do 
     { 
       p++; 
+
+      // 2026.07.24: Ensure we don't read beyond the state array bounds.
+      // This check might be excessive, but we keep it for extra safety.
+      if (p >= U.Stats + NumStats)
+        return false;  // 'p' is at or past end of valid states.
+
     } while (Model->CharMask[p->Symbol] == Model->EscCount);
     HiCnt += p->Freq;
 
@@ -511,7 +519,7 @@ inline bool RARPPM_CONTEXT::decodeSymbol2(ModelPPM *Model)
   Model->Coder.SubRange.scale += HiCnt;
   count=Model->Coder.GetCurrentCount();
   if (count>=(int)Model->Coder.SubRange.scale)
-    return(false);
+    return false;
   p=*(pps=ps);
   if (count < HiCnt) 
   {

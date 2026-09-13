@@ -4,7 +4,7 @@
 class MarkOfTheWeb
 {
   private:
-    const size_t MOTW_STREAM_MAX_SIZE=1024;
+    const size_t MOTW_STREAM_MAX_SIZE=4096;
     const wchar* MOTW_STREAM_NAME=L":Zone.Identifier"; // Must start from ':'.
 
     int ParseZoneIdStream(std::string &Stream);

@@ -73,7 +73,8 @@
 #define  EARC_VOLNUMBER     0x0008U // Store a number of current volume.
 
 enum HEADER_TYPE {
-  // RAR 5.0 header types.
+  // RAR 5.0 header types. HEAD_UNKNOWN must be maximum value in enum,
+  // because we reject anything larger than it.
   HEAD_MARK=0x00, HEAD_MAIN=0x01, HEAD_FILE=0x02, HEAD_SERVICE=0x03,
   HEAD_CRYPT=0x04, HEAD_ENDARC=0x05, HEAD_UNKNOWN=0xff,
 
@@ -106,9 +107,11 @@ enum HOST_SYSTEM_TYPE {
 
 
 // We also use these values in extra field, so do not modify them.
+// FSREDIR_UNKNOWN must be maximum value in enum, because we reject
+// anything larger than it.
 enum FILE_SYSTEM_REDIRECT {
   FSREDIR_NONE=0, FSREDIR_UNIXSYMLINK, FSREDIR_WINSYMLINK, FSREDIR_JUNCTION,
-  FSREDIR_HARDLINK, FSREDIR_FILECOPY
+  FSREDIR_HARDLINK, FSREDIR_FILECOPY, FSREDIR_UNKNOWN
 };
 
 

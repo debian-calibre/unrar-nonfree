@@ -1,11 +1,13 @@
 #include "rar.hpp"
 
-// If NewFile==NULL, we delete created file after user confirmation.
-// It is useful if we need to overwrite an existing folder or file,
-// but need user confirmation for that.
+// If NewFile==NULL, we delete existing file or folder after user confirmation
+// without creating a new folder. It is useful when user needs to confirm
+// overwriting an existing file or folder to create a folder or link.
 bool FileCreate(CommandData *Cmd,File *NewFile,std::wstring &Name,
-                bool *UserReject,int64 FileSize,RarTime *FileTime,bool WriteOnly)
+                bool *UserReject,int64 FileSize,RarTime *FileTime,
+                FILECR_FLAGS Flags)
 {
+  bool WriteOnly=(Flags & FILECR_WRITEONLY)!=0;
   if (UserReject!=NULL)
     *UserReject=false;
 #ifdef _WIN_ALL
@@ -29,7 +31,12 @@ bool FileCreate(CommandData *Cmd,File *NewFile,std::wstring &Name,
     // autorename below can change the name, so we need to check it again.
     ShortNameChanged=false;
 #endif
-    UIASKREP_RESULT Choice=uiAskReplaceEx(Cmd,Name,FileSize,FileTime,(NewFile==NULL ? UIASKREP_F_NORENAME:0));
+
+    // Hide "Rename" button if source file isn't defined.
+    uint AskRepFlags=(NewFile==nullptr ? UIASKREP_F_NORENAME:0);
+    if ((Flags & FILECR_FOLDER)!=0)
+      AskRepFlags|=UIASKREP_F_SRCFOLDER; // Source is folder.
+    UIASKREP_RESULT Choice=uiAskReplaceEx(Cmd,Name,FileSize,FileTime,(UIASKREP_FLAGS)AskRepFlags);
 
     if (Choice==UIASKREP_R_REPLACE)
       break;

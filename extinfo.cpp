@@ -51,7 +51,7 @@ void SetExtraInfo(CommandData *Cmd,Archive &Arc,const std::wstring &Name)
   if (!Cmd->Test && Cmd->ProcessOwners && Arc.SubHead.CmpName(SUBHEAD_TYPE_ACL))
     ExtractACL(Arc,Name);
   if (Arc.SubHead.CmpName(SUBHEAD_TYPE_STREAM))
-    ExtractStreams(Arc,Name,Cmd->Test);
+    ExtractStreams(Cmd,Arc,Name);
 #endif
 }
 
@@ -112,7 +112,8 @@ bool IsRelativeSymlinkSafe(CommandData *Cmd,const std::wstring &SrcName,std::wst
   // Catch root dir based /path/file paths also as stuff like \\?\.
   // Do not check PrepSrcName here, it can be root based if destination path
   // is a root based.
-  if (IsFullRootPath(SrcName) || IsFullRootPath(TargetName))
+  if (IsFullRootPath(SrcName) || IsFullRootPath(TargetName) || 
+      IsDriveLetter(TargetName))
     return false;
 
   // Number of ".." in link target.

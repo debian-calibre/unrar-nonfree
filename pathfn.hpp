@@ -1,7 +1,7 @@
 #ifndef _RAR_PATHFN_
 #define _RAR_PATHFN_
 
-wchar* PointToName(const wchar *Path);
+const wchar* PointToName(const wchar *Path);
 std::wstring PointToName(const std::wstring &Path);
 size_t GetNamePos(const std::wstring &Path);
 wchar* PointToLastChar(const wchar *Path);
@@ -11,7 +11,7 @@ void SetName(std::wstring &FullName,const std::wstring &Name);
 void SetExt(std::wstring &Name,std::wstring NewExt);
 void RemoveExt(std::wstring &Name);
 void SetSFXExt(std::wstring &SFXName);
-wchar *GetExt(const wchar *Name);
+const wchar *GetExt(const wchar *Name);
 std::wstring GetExt(const std::wstring &Name);
 std::wstring::size_type GetExtPos(const std::wstring &Name);
 bool CmpExt(const std::wstring &Name,const std::wstring &Ext);

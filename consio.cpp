@@ -398,6 +398,8 @@ static bool IsCommentUnsafe(const std::wstring &Data)
 
 void OutComment(const std::wstring &Comment)
 {
+  // After we added Esc filtering to mprintf, this check seems to be excessive.
+  // Still keeping it for now just in case.
   if (IsCommentUnsafe(Comment))
     return;
   const size_t MaxOutSize=0x400;

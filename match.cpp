@@ -23,8 +23,8 @@ bool CmpName(const wchar *Wildcard,const wchar *Name,uint CmpMode)
 
   CmpMode&=MATCH_MODEMASK;
 
-  wchar *Name1=PointToName(Wildcard);
-  wchar *Name2=PointToName(Name);
+  const wchar *Name1=PointToName(Wildcard);
+  const wchar *Name2=PointToName(Name);
 
   if (CmpMode!=MATCH_NAMES)
   {

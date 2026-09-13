@@ -95,21 +95,6 @@ bool CryptData::SetCryptKeys(bool Encrypt,CRYPT_METHOD Method,
 }
 
 
-// Use the current system time to additionally randomize data.
-static void TimeRandomize(byte *RndBuf,size_t BufSize)
-{
-  static uint Count=0;
-  RarTime CurTime;
-  CurTime.SetCurrentTime();
-  uint64 Random=CurTime.GetWin()+clock();
-  for (size_t I=0;I<BufSize;I++)
-  {
-    byte RndByte = byte (Random >> ( (I & 7) * 8 ));
-    RndBuf[I]=byte( (RndByte ^ I) + Count++);
-  }
-}
-
-
 
 
 // Fill buffer with random data.
@@ -124,14 +109,21 @@ void GetRnd(byte *RndBuf,size_t BufSize)
     CryptReleaseContext(hProvider, 0);
   }
 #elif defined(_UNIX)
-  FILE *rndf = fopen("/dev/urandom", "r");
+  FILE *rndf = fopen("/dev/urandom", "rb");
   if (rndf!=NULL)
   {
-    Success=fread(RndBuf, BufSize, 1, rndf) == BufSize;
+    Success=fread(RndBuf, 1, BufSize, rndf) == BufSize;
     fclose(rndf);
   }
 #endif
-  // We use this code only as the last resort if code above failed.
   if (!Success)
-    TimeRandomize(RndBuf,BufSize);
+  {
+#if defined(_WIN_ALL)
+    const wchar *ErrMsg=L"CryptGenRandom";
+#else
+    const wchar *ErrMsg=L"/dev/urandom";
+#endif
+    if (!Success)
+      ErrHandler.OpenError(ErrMsg);
+  }
 }

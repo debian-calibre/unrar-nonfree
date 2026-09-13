@@ -132,7 +132,11 @@ bool LargePageAlloc::AssignPrivilegeBySid(const std::wstring &Sid)
     return false;
 
   PSID UserSid;
-  ConvertStringSidToSid(Sid.c_str(),&UserSid);
+  if (ConvertStringSidToSid(Sid.c_str(),&UserSid)==0)
+  {
+    LsaClose(PolicyHandle);
+    return false;
+  }
 
   LSA_UNICODE_STRING LsaString;
   LsaString.Buffer=(PWSTR)SE_LOCK_MEMORY_NAME;

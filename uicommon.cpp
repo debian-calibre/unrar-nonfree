@@ -29,12 +29,18 @@ UIASKREP_RESULT uiAskReplaceEx(CommandData *Cmd,std::wstring &Name,int64 FileSiz
     // target attributes, so we can delete the symlink below.
     PrepareToDelete(Name);
 
-    // Overwrite the link itself instead of its target.
-    // For normal files we prefer to inherit file attributes, permissions
-    // and hard links.
     FindData FD;
-    if (FindFile::FastFind(Name,&FD,true) && FD.IsLink)
-      DelFile(Name);
+    if (FindFile::FastFind(Name,&FD,true))
+    {
+      // Overwrite the link itself instead of its target.
+      // For normal files we prefer to inherit file attributes, permissions
+      // and hard links.
+      if (FD.IsLink)
+        DelFile(Name);
+      else
+        if (FD.IsDir)
+          DelDir(Name); // To let overwriting a directory with a file.
+    }
   }
 
   if (Choice==UIASKREP_R_REPLACEALL)

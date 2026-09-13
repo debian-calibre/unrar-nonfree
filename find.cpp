@@ -37,13 +37,9 @@ bool FindFile::Next(FindData *fd,bool GetSymLink)
     return false;
 #ifdef _WIN_ALL
   if (FirstCall)
-  {
-    if ((hFind=Win32Find(INVALID_HANDLE_VALUE,FindMask,fd))==INVALID_HANDLE_VALUE)
-      return false;
-  }
-  else
-    if (Win32Find(hFind,FindMask,fd)==INVALID_HANDLE_VALUE)
-      return false;
+    hFind=INVALID_HANDLE_VALUE;
+  if (!Win32Find(hFind,FindMask,fd))
+    return false;
 #else
   if (FirstCall)
   {
@@ -111,8 +107,8 @@ bool FindFile::FastFind(const std::wstring &FindMask,FindData *fd,bool GetSymLin
     return false;
 #endif    
 #ifdef _WIN_ALL
-  HANDLE hFind=Win32Find(INVALID_HANDLE_VALUE,FindMask,fd);
-  if (hFind==INVALID_HANDLE_VALUE)
+  HANDLE hFind=INVALID_HANDLE_VALUE;
+  if (!Win32Find(hFind,FindMask,fd))
     return false;
   FindClose(hFind);
 #elif defined(_UNIX)
@@ -154,10 +150,12 @@ bool FindFile::FastFind(const std::wstring &FindMask,FindData *fd,bool GetSymLin
 
 
 #ifdef _WIN_ALL
-HANDLE FindFile::Win32Find(HANDLE hFind,const std::wstring &Mask,FindData *fd)
+bool FindFile::Win32Find(HANDLE &hFind,const std::wstring &Mask,FindData *fd)
 {
+  fd->Flags=0;
+
   WIN32_FIND_DATA FindData;
-  if (hFind==INVALID_HANDLE_VALUE)
+  if (hFind==INVALID_HANDLE_VALUE) // If first call.
   {
     hFind=FindFirstFile(Mask.c_str(),&FindData);
     if (hFind==INVALID_HANDLE_VALUE)
@@ -177,32 +175,31 @@ HANDLE FindFile::Win32Find(HANDLE hFind,const std::wstring &Mask,FindData *fd)
       fd->Error=SysErr!=ERROR_FILE_NOT_FOUND && 
                 SysErr!=ERROR_PATH_NOT_FOUND &&
                 SysErr!=ERROR_NO_MORE_FILES;
+      return false;
     }
   }
   else
     if (!FindNextFile(hFind,&FindData))
     {
+      FindClose(hFind);
       hFind=INVALID_HANDLE_VALUE;
       fd->Error=GetLastError()!=ERROR_NO_MORE_FILES;
+      return false;
     }
 
-  if (hFind!=INVALID_HANDLE_VALUE)
-  {
-    fd->Name=Mask;
-    SetName(fd->Name,FindData.cFileName);
-    fd->Size=INT32TO64(FindData.nFileSizeHigh,FindData.nFileSizeLow);
-    fd->FileAttr=FindData.dwFileAttributes;
-    fd->ftCreationTime=FindData.ftCreationTime;
-    fd->ftLastAccessTime=FindData.ftLastAccessTime;
-    fd->ftLastWriteTime=FindData.ftLastWriteTime;
-    fd->mtime.SetWinFT(&FindData.ftLastWriteTime);
-    fd->ctime.SetWinFT(&FindData.ftCreationTime);
-    fd->atime.SetWinFT(&FindData.ftLastAccessTime);
+  fd->Name=Mask;
+  SetName(fd->Name,FindData.cFileName);
+  fd->Size=INT32TO64(FindData.nFileSizeHigh,FindData.nFileSizeLow);
+  fd->FileAttr=FindData.dwFileAttributes;
+  fd->ftCreationTime=FindData.ftCreationTime;
+  fd->ftLastAccessTime=FindData.ftLastAccessTime;
+  fd->ftLastWriteTime=FindData.ftLastWriteTime;
+  fd->mtime.SetWinFT(&FindData.ftLastWriteTime);
+  fd->ctime.SetWinFT(&FindData.ftCreationTime);
+  fd->atime.SetWinFT(&FindData.ftLastAccessTime);
 
 
-  }
-  fd->Flags=0;
-  return hFind;
+  return true;
 }
 #endif
 

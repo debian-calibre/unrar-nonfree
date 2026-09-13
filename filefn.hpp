@@ -42,6 +42,7 @@ bool DelFile(const std::wstring &Name);
 bool DelDir(const std::wstring &Name);
 
 #if defined(_WIN_ALL) && !defined(SFX_MODULE)
+bool RecycleFile(std::wstring &Name);
 bool SetFileCompression(const std::wstring &Name,bool State);
 bool SetFileCompression(HANDLE hFile,bool State);
 void ResetFileCache(const std::wstring &Name);

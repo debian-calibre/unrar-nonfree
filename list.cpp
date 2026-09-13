@@ -9,10 +9,18 @@ void ListArchive(CommandData *Cmd)
 {
   int64 SumPackSize=0,SumUnpSize=0;
   uint ArcCount=0,SumFileCount=0;
-  bool Technical=(Cmd->Command[1]=='T');
-  bool ShowService=Technical && Cmd->Command[2]=='A';
-  bool Bare=(Cmd->Command[1]=='B');
-  bool Verbose=(Cmd->Command[0]=='V');
+
+  bool Verbose=(Cmd->Command[0]=='V'); // "v" command.
+
+  bool Technical=false;   // "vt" or "lt" technical details.
+  bool Bare=false;        // "vb" or "lb" bare output.
+  bool ShowService=false; // "va" or "vta" include service blocks.
+  for (wchar Ch : Cmd->Command)
+  {
+    Bare|=(Ch=='B');
+    Technical|=(Ch=='T');
+    ShowService|=(Ch=='A');
+  }
 
   std::wstring ArcName;
   while (Cmd->GetArcName(ArcName))
@@ -118,13 +126,13 @@ void ListArchive(CommandData *Cmd)
               // want to see service blocks only in this case.
               if (!Arc.SubHead.SubBlock || Cmd->DisableNames)
                 FileMatched=Cmd->IsProcessFile(Arc.SubHead,NULL,MATCH_WILDSUBPATH,0,NULL)!=0;
-              if (FileMatched && !Bare)
+              if (FileMatched)
               {
                 // Here we set DisableNames parameter to true regardless of
                 // Cmd->DisableNames. If "vta -idn" are set together, user
                 // wants to see service blocks like RR only.
-                if (Technical && ShowService)
-                  ListFileHeader(Arc,Arc.SubHead,TitleShown,Verbose,true,false,false);
+                if (Technical || ShowService)
+                  ListFileHeader(Arc,Arc.SubHead,TitleShown,Verbose,Technical,Bare,false);
               }
               break;
           }
@@ -230,9 +238,15 @@ void ListFileHeader(Archive &Arc,FileHeader &hd,bool &TitleShown,bool Verbose,bo
   const wchar *Name=hd.FileName.c_str();
   RARFORMAT Format=Arc.Format;
 
-  if (Bare)
+  bool FileBlock=hd.HeaderType==HEAD_FILE;
+
+  std::wstring StreamName; // NTFS stream name.
+  if (!FileBlock && Arc.SubHead.CmpName(SUBHEAD_TYPE_STREAM))
+    StreamName=GetStreamNameNTFS(Arc);
+
+  if (Bare) // Bare "vb" list mode.
   {
-    mprintf(L"%s\n",Name);
+    mprintf(L"%s%s\n",Name,StreamName.c_str()); // Print file name and NTFS stream name, if present.
     return;
   }
 
@@ -263,18 +277,18 @@ void ListFileHeader(Archive &Arc,FileHeader &hd,bool &TitleShown,bool Verbose,bo
         swprintf(RatioStr,ASIZE(RatioStr),L"%u%%",ToPercentUnlim(hd.PackSize,hd.UnpSize));
 
   wchar DateStr[50];
-  hd.mtime.GetText(DateStr,ASIZE(DateStr),Technical);
+  if (hd.mtime.IsSet())
+    hd.mtime.GetText(DateStr,ASIZE(DateStr),Technical);
+  else
+    wcsncpyz(DateStr,L"                ",ASIZE(DateStr));
 
   if (Technical)
   {
     mprintf(L"\n%12s: %s",St(MListName),Name);
 
-    bool FileBlock=hd.HeaderType==HEAD_FILE;
-
-    if (!FileBlock && Arc.SubHead.CmpName(SUBHEAD_TYPE_STREAM))
+    if (!StreamName.empty())
     {
       mprintf(L"\n%12ls: %ls",St(MListType),St(MListStream));
-      std::wstring StreamName=GetStreamNameNTFS(Arc);
       mprintf(L"\n%12ls: %ls",St(MListTarget),StreamName.c_str());
     }
     else
@@ -451,9 +465,12 @@ void ListFileHeader(Archive &Arc,FileHeader &hd,bool &TitleShown,bool Verbose,bo
         mprintf(L"%02x%02x..%02x  ",S[0],S[1],S[31]);
       }
       else
-        mprintf(hd.Dir ? L"          ":L"????????  "); // Missing checksum is ok for folder, not for file.
+        mprintf(L"          "); // Missing checksum, such as for folders or service blocks.
   }
   mprintf(L"%ls",Name);
+
+  if (!StreamName.empty()) // Print NTFS stream name in non-technical "va" list mode.
+    mprintf(L"%ls",StreamName.c_str());
 }
 
 

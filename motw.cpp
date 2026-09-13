@@ -57,13 +57,20 @@ void MarkOfTheWeb::ReadZoneIdStream(const std::wstring &FileName,bool AllFields)
 int MarkOfTheWeb::ParseZoneIdStream(std::string &Stream)
 {
   if (!starts_with(Stream,"[ZoneTransfer]"))
-    return -1; // Not a valid Mark of the Web. Prefer the archive MOTW if any.
+    return -1; // Not a valid Mark of the Web. Prefer the archive MOTW, if any.
 
   std::string::size_type ZoneId=Stream.find("ZoneId=",0);
   if (ZoneId==std::string::npos || !IsDigit(Stream[ZoneId+7]))
     return -1; // Not a valid Mark of the Web.
+  char E=Stream[ZoneId+8];
+  if (E!=0 && E!=' ' && E!='\t' && E!='\r' && E!='\n')
+    return -1; // Not a valid Mark of the Web.
+
   int ZoneIdValue=atoi(&Stream[ZoneId+7]);
   if (ZoneIdValue<0 || ZoneIdValue>4)
+    return -1; // Not a valid Mark of the Web.
+  std::string::size_type ZoneId2=Stream.find("ZoneId=",ZoneId+8);
+  if (ZoneId2!=std::string::npos)
     return -1; // Not a valid Mark of the Web.
 
   if (!AllFields)
@@ -126,7 +133,8 @@ bool MarkOfTheWeb::IsNameConflicting(const std::wstring &StreamName)
 
 
 // Return true and prepare the file stream to write if its ZoneId is stricter
-// than archive ZoneId. If it is missing, less or equally strict, return false.
+// than archive ZoneId. If it is missing, broken, less or equally strict,
+// return false and prefer an archive MOTW.
 bool MarkOfTheWeb::IsFileStreamMoreSecure(std::string &FileStream)
 {
   int StreamZone=ParseZoneIdStream(FileStream);

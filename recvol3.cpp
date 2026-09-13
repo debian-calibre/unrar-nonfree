@@ -122,6 +122,9 @@ bool RecVolumes3::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
   RecVolMask.replace(VolNumStart,std::wstring::npos,L"*.rev");
   size_t BaseNamePartLength=VolNumStart;
 
+  if (BaseNamePartLength==0)
+    return false;
+
   int64 RecFileSize=0;
 
   // We cannot display "Calculating CRC..." message here, because we do not
@@ -171,6 +174,13 @@ bool RecVolumes3::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
       CurFile.TOpen(CurName);
       CurFile.Seek(0,SEEK_END);
       int64 Length=CurFile.Tell();
+
+      if (Length<7) // Too small to be valid, skip to avoid seek error below.
+      {
+        uiMsg(UIERROR_NOTVOLUME,CurName);
+        continue;
+      }
+
       CurFile.Seek(Length-7,SEEK_SET);
       for (int I=0;I<3;I++)
         P[2-I]=CurFile.GetByte()+1;
@@ -221,7 +231,19 @@ bool RecVolumes3::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
     // checks above. Still we keep it here for better clarity and security.
     int SrcPos=FileNumber+P[0]-1;
     if (SrcPos<0 || SrcPos>=ASIZE(SrcFile))
+    {
+      delete NewFile;
       continue;
+    }
+
+    // Such volume number was already used. Skip to avoid memory leak.
+    // Alternatively we could 'delete SrcFile[SrcPos]' and overwrite.
+    if (SrcFile[SrcPos]!=nullptr)
+    {
+      delete NewFile;
+      continue;
+    }
+
     SrcFile[SrcPos]=NewFile;
 
     FoundRecVolumes++;
@@ -296,6 +318,8 @@ bool RecVolumes3::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
         uiMsg(UIERROR_RECVOLFOUND,FoundRecVolumes); // Intentionally not displayed in console mode.
         uiMsg(UIERROR_RECONSTRUCTING);
         ErrHandler.CreateErrorMsg(ArcName);
+
+        delete NewFile;
         return false;
       }
 

@@ -15,6 +15,15 @@ enum PATH_EXCL_MODE {
   EXCL_ABSPATH         // -ep3 (the full path with the disk letter)
 };
 
+
+enum DIR_FILTER_MODE
+{
+  DIRFM_INCLUDE_ALL=0, // Include all directories (default).
+  DIRFM_EXCLUDE_ALL,   // -ed,  exclude all directories.
+  DIRFM_EXCLUDE_EMPTY, // -ed1, exclude empty directories.
+  DIRFM_DIR_ONLY       // -e+d  add directories only, skip files.
+};
+
 enum {
   SOLID_NONE=0,    // Non-solid mode.
   SOLID_NORMAL=1,  // Standard solid mode.
@@ -104,22 +113,22 @@ struct FilterMode
 #define MAX_GENERATE_MASK  128
 
 
-// Here we store simple data types, which we can clear and move all together
-// quickly. Rest of data types goes to CommandData.
+// Store here those types, which we want to initialize all at once
+// from CommandData::Init(). Initializing them from own constructor using
+// *this={} falls into infinite recursion and we do not want to use memset
+// assuming POD types only, so we utilize the derived CommandData class.
 class RAROptions
 {
   public:
-    RAROptions();
     void Init();
 
 
     uint ExclFileAttr;
     uint InclFileAttr;
 
-    // We handle -ed and -e+d with special flags instead of attribute mask,
-    // so it works with both Windows and Unix archives.
-    bool ExclDir;
-    bool InclDir;
+    // We handle -ed and -e+d with the dedicated variable instead of attribute
+    // mask, so it works with both Windows and Unix archives.
+    DIR_FILTER_MODE DirMode;
 
     bool InclAttrSet;
     uint64 WinSize;
@@ -186,9 +195,10 @@ class RAROptions
 
     bool KeepBroken;
     bool OpenShared;
-    bool DeleteFiles;
+    bool DeleteArchive;
 
 #ifdef _WIN_ALL
+    bool DeleteToRecycleBin;
     bool AllowIncompatNames; // Allow names with trailing dots and spaces.
 #endif
 
