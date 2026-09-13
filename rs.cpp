@@ -14,6 +14,7 @@ void RSCoder::Init(int ParSize)
 // Initialize logarithms and exponents Galois field tables.
 void RSCoder::gfInit()
 {
+  gfLog[0]=0; // Just in case, likely excessive, because log(0) is undefined.
   for (int I=0,J=1;I<MAXPAR;I++)
   {
     gfLog[J]=I;

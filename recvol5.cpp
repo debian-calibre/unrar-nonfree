@@ -155,7 +155,7 @@ bool RecVolumes5::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
   std::wstring FirstVolName;
   std::wstring LongestRevName;
 
-  int64 RecFileSize=0;
+  uint64 RecFileSize=0,FirstVolSize=0;
 
   FindFile VolFind;
   VolFind.SetMask(ArcName);
@@ -206,6 +206,9 @@ bool RecVolumes5::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
             VolNum+=(fd.Name[NumPos]-'0')*K;
           if (VolNum==0 || VolNum>MaxVolumes)
             continue;
+          if (FirstVolSize==0)
+            FirstVolSize=Vol->FileLength();
+
           size_t CurSize=RecItems.size();
           if (VolNum>CurSize)
           {
@@ -219,17 +222,19 @@ bool RecVolumes5::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
             VolNameToFirstName(fd.Name,FirstVolName,true);
         }
     }
-    if (ItemPos==-1)
-      delete Vol; // Skip found file, it is not RAR or REV volume.
+
+    // Skip found file if it is not RAR or REV volume. Also skip if found
+    // more REV volumes than needed.
+    if (ItemPos==-1 || (size_t)ItemPos>=RecItems.size())
+      delete Vol;
     else
-      if ((uint)ItemPos<RecItems.size()) // Check if found more REV than needed.
-      {
-        // Store found RAR or REV volume.
-        RecVolItem *Item=&RecItems[ItemPos];
-        Item->f=Vol;
-        Item->New=false;
-        Item->Name=fd.Name;
-      }
+    {
+      // Store found RAR or REV volume.
+      RecVolItem *Item=&RecItems[ItemPos];
+      Item->f=Vol;
+      Item->New=false;
+      Item->Name=fd.Name;
+    }
   }
 
   if (!Silent || FoundRecVolumes!=0)
@@ -328,7 +333,7 @@ bool RecVolumes5::Restore(CommandData *Cmd,const std::wstring &Name,bool Silent)
           ErrHandler.CreateErrorMsg(Item->Name);
         ErrHandler.Exit(UserReject ? RARX_USERBREAK:RARX_CREATE);
       }
-      NewVol->Prealloc(Item->FileSize);
+      NewVol->Prealloc(Min(Item->FileSize,FirstVolSize));
       Item->f=NewVol;
     }
     NextVolumeName(FirstVolName,false);

@@ -17,6 +17,7 @@ enum RAR_EXIT // RAR exit code.
   RARX_BADPWD    =  11,
   RARX_READ      =  12,
   RARX_BADARC    =  13,
+  RARX_DELETE    =  14,
   RARX_USERBREAK = 255
 };
 

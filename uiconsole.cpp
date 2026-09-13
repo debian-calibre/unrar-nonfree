@@ -154,7 +154,11 @@ void uiMsgStore::Msg()
       break;
 #endif
     case UIERROR_FILEATTR:
+#ifdef _UNIX
+      Log(Str[0],St(MErrChangePerm),Str[1]);
+#else
       Log(Str[0],St(MErrChangeAttr),Str[1]);
+#endif
       break;
     case UIERROR_FILECOPY:
       Log(Str[0],St(MCopyError),Str[1],Str[2]);

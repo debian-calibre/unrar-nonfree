@@ -82,8 +82,12 @@ inline void Copy128(byte *dest,const byte *src)
 
 Rijndael::Rijndael()
 {
-  if (S5[0]==0)
+  static bool TablesInitialized=false;
+  if (!TablesInitialized)
+  {
     GenerateTables();
+    TablesInitialized=true;
+  }
   m_uRounds = 0;
   CBCMode = true; // Always true for RAR.
 #ifdef USE_SSE

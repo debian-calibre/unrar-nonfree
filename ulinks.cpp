@@ -78,7 +78,7 @@ static bool ExtractUnixLink30(CommandData *Cmd,ComprDataIO &DataIO,Archive &Arc,
     size_t DataSize=(size_t)Arc.FileHead.PackSize;
     if (DataSize>MAXPATHSIZE)
       return false;
-    std::vector<char> TargetBuf(DataSize+1);
+    std::vector<char> TargetBuf(DataSize);
     if ((size_t)DataIO.UnpRead((byte*)TargetBuf.data(),DataSize)!=DataSize)
       return false;
     std::string Target(TargetBuf.data(),TargetBuf.size());

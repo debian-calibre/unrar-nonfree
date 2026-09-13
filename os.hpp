@@ -38,8 +38,6 @@
 #define _UNICODE // Set _T() macro to convert from narrow to wide strings.
 #endif
 
-#define WINVER _WIN32_WINNT_WINXP
-#define _WIN32_WINNT _WIN32_WINNT_WINXP
 
 #if !defined(ZIPSFX)
 #define RAR_SMP

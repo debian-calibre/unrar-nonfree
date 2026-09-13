@@ -153,7 +153,8 @@ class RarCheckPassword:public CheckPassword
     bool Check(SecPassword *Password)
     {
       byte PswCheck[SIZE_PSWCHECK];
-      Crypt->SetCryptKeys(false,CRYPT_RAR50,Password,Salt,InitV,Lg2Count,NULL,PswCheck);
+      if (!Crypt->SetCryptKeys(false,CRYPT_RAR50,Password,Salt,InitV,Lg2Count,NULL,PswCheck))
+        return false;
       return memcmp(PswCheck,this->PswCheck,sizeof(this->PswCheck))==0;
     }
 };

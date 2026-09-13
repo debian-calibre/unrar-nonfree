@@ -44,6 +44,9 @@ class CmdExtract
     void GetFirstVolIfFullSet(const std::wstring &SrcName,bool NewNumbering,std::wstring &DestName);
 #endif
     bool CheckWinLimit(Archive &Arc,std::wstring &ArcFileName);
+#if !defined(SFX_MODULE) && !defined(RARDLL)
+    void DeleteArchive(Archive &Arc,const std::wstring &ArcName);
+#endif
 
     RarTime StartTime; // Time when extraction started.
 
