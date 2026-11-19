@@ -1,0 +1,5 @@
+# The shared library is installed in a private subdirectory of the multiarch
+# directory and made available through update-alternatives as
+# /usr/lib/<multiarch>/libunrar.so.5.  The ldconfig trigger is required so that
+# ldconfig registers libunrar.so.5 from the alternatives symlink.
+package-has-unnecessary-activation-of-ldconfig-trigger
