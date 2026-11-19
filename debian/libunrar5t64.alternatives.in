@@ -1,0 +1,4 @@
+Name: libunrar.so.5-@DEB_HOST_MULTIARCH@
+Link: /usr/lib/@DEB_HOST_MULTIARCH@/libunrar.so.5
+Alternative: /usr/lib/@DEB_HOST_MULTIARCH@/libunrar/libunrar.so.5
+Priority: 40
